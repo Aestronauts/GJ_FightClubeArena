@@ -10,6 +10,20 @@
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 
+# Wwise
+.backup*
+.cache*
+*.akd
+*.prof
+*.validationcache
+*.wsettings
+*.a
+WwiseSettings.xml
+IncrementalSoundBankData.xml
+WwiseUnityIntegration_Mac_Src.zip
+WwiseUnityIntegration_Windows_Src.zip
+AkWwiseProjectData.asset
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
