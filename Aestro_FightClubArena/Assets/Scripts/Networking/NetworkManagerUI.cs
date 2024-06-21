@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//following https://www.youtube.com/watch?v=3yuBOB3VrCk&ab_channel=CodeMonkey || https://youtu.be/3yuBOB3VrCk?si=DVukWAYhQro0raef&t=1226
+
 /// <summary>
 /// <para> Handles Joining / Hosting of servers </para>
 /// </summary>
