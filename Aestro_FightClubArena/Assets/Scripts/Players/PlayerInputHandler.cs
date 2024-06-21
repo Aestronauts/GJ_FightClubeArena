@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerInputHandler : MonoBehaviour
+public class PlayerInputHandler : NetworkBehaviour
 {
     public float speed = 5.0f;
     public float gravity = -9.81f;
@@ -21,6 +22,9 @@ public class PlayerInputHandler : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!IsOwner) // requires NetworkBehavior to check if this is you (the player)
+            return;
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
