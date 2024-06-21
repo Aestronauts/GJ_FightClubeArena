@@ -49,6 +49,14 @@ public class PlayerInputHandler : MonoBehaviour
         {
             AbilitiesHelper.Ability4();
         }
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayerCameraManager.instance.ShakeCamera(.5f, 2, 2);
+            Debug.Log("Camera Shake attempt");
+        }
     }
 }
