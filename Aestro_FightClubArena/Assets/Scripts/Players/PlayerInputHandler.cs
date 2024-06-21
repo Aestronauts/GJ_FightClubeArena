@@ -22,8 +22,8 @@ public class PlayerInputHandler : NetworkBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!IsOwner) // requires NetworkBehavior to check if this is you (the player)
-            return;
+        //if (!IsOwner) // requires NetworkBehavior to check if this is you (the player)
+            //return;
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
@@ -37,22 +37,12 @@ public class PlayerInputHandler : NetworkBehaviour
         //_controller.Move(velocity * Time.deltaTime);
 
         //will be moved to the Player character manager for networking
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AbilitiesHelper.Ability1();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AbilitiesHelper.Ability2();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AbilitiesHelper.Ability3();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            AbilitiesHelper.Ability4();
-        }
+
+        AbilityOne();
+        AbilityTwo();
+        AbilityThree();
+        AbilityFour();
+       
     }
 
     private void Update()
@@ -63,4 +53,41 @@ public class PlayerInputHandler : NetworkBehaviour
             Debug.Log("Camera Shake attempt");
         }
     }
+
+    private void AbilityOne()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            PlayerCameraManager.instance.ShakeCamera(.4f, .8f, .5f);
+            AbilitiesHelper.Ability1();
+        }
+    }
+    private void AbilityTwo()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            AbilitiesHelper.Ability2();
+        }
+    }
+
+    private void AbilityThree()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            AbilitiesHelper.Ability3();
+        }
+    }
+
+    private void AbilityFour()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            AbilitiesHelper.Ability4();
+        }
+    }
+
+
+
+
+
 }
