@@ -15,4 +15,5 @@ MonoBehaviour:
   name: Fire Bolt
   model: {fileID: 5052831283393963684, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
   damage: 1
+  range: 7
   abilityType: 0
