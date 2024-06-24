@@ -57,7 +57,6 @@ public class PlayerInputHandler : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //two smaller vibrations 
             AbilitiesHelper.Ability2();
             StartCoroutine(TwinFlamesFX());
         }
@@ -69,6 +68,8 @@ public class PlayerInputHandler : NetworkBehaviour
         {
 
             AbilitiesHelper.Ability3();
+            PlayerCameraManager.instance.ShakeCamera(1f, .5f, .6f);
+
         }
     }
 
@@ -82,6 +83,7 @@ public class PlayerInputHandler : NetworkBehaviour
 
     IEnumerator TwinFlamesFX()
     {
+        //Shakes camera, pauses, shakes again 
         PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
         yield return new WaitForSeconds(.5f);
         PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
