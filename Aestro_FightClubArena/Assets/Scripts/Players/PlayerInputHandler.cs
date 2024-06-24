@@ -20,7 +20,7 @@ public class PlayerInputHandler : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //if (!IsOwner) // requires NetworkBehavior to check if this is you (the player)
             //return;
@@ -45,20 +45,11 @@ public class PlayerInputHandler : NetworkBehaviour
        
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerCameraManager.instance.ShakeCamera(.5f, 2, 2);
-            Debug.Log("Camera Shake attempt");
-        }
-    }
-
     private void AbilityOne()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            PlayerCameraManager.instance.ShakeCamera(.4f, .8f, .5f);
+            PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
             AbilitiesHelper.Ability1();
         }
     }
@@ -66,7 +57,9 @@ public class PlayerInputHandler : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            //two smaller vibrations 
             AbilitiesHelper.Ability2();
+            StartCoroutine(TwinFlamesFX());
         }
     }
 
@@ -74,6 +67,7 @@ public class PlayerInputHandler : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+
             AbilitiesHelper.Ability3();
         }
     }
@@ -84,6 +78,13 @@ public class PlayerInputHandler : NetworkBehaviour
         {
             AbilitiesHelper.Ability4();
         }
+    }
+
+    IEnumerator TwinFlamesFX()
+    {
+        PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
+        yield return new WaitForSeconds(.5f);
+        PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
     }
 
 
