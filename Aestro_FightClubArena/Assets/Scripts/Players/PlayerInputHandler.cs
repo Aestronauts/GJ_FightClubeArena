@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerInputHandler : NetworkBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
+    // local variables
     public float speed = 5.0f;
     public float gravity = -9.81f;
 
     private CharacterController _controller;
     private Vector3 velocity;
+
     
     
     // Start is called before the first frame update
@@ -21,9 +22,7 @@ public class PlayerInputHandler : NetworkBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //if (!IsOwner) // requires NetworkBehavior to check if this is you (the player)
-            //return;
+    {       
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
