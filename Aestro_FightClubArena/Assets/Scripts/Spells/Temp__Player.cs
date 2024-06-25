@@ -28,6 +28,7 @@ public class Temp__Player : MonoBehaviour
             //FireBolt.Activate(gameObject);
         }
 
+        // Only activates Fire Bolt Ability for now...
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Mouse Clicked!");
@@ -44,7 +45,8 @@ public class Temp__Player : MonoBehaviour
                 Vector3 castLocation = hit.point;
                 //Add a y-axis value to the Cast Location so that the projectile doesn't aim towards the ground
                 castLocation = new Vector3(castLocation.x, 0.5f, castLocation.z);
-                FireBolt.Activate(gameObject, castLocation);
+                //FireBolt.Activate(gameObject, castLocation);
+                playerCharacterManager.CastAbility(gameObject, "Fire Bolt", castLocation);
             }
         }
     }
