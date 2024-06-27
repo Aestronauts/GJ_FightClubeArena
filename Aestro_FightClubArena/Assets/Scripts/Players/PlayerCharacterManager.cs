@@ -6,8 +6,7 @@ public class PlayerCharacterManager : MonoBehaviour
 {
     public List<GameObject> projectileList = new List<GameObject>();
     AbilityManager abilityManager;
-    public Ability FireBolt;
-    public GameObject model;
+    public GameObject model_FireBolt;
     int damage = 1;
     int range = 7;
     
@@ -31,7 +30,6 @@ public class PlayerCharacterManager : MonoBehaviour
         // TODO: Is there a better way of doing this???
         if (abilityName == "Fire Bolt")
         {
-            //FireBolt.Activate(player_gameObject, castLocation);
             FireFireBolt(player_gameObject, castLocation);
         }
     }
@@ -48,57 +46,39 @@ public class PlayerCharacterManager : MonoBehaviour
         // Spawn location x value has +1 for now so it spawns generally in front of the player
         // TODO: change the spawn location so it is "+1" in the direction of the end location
         Vector3 spawnLocation = new Vector3(parent.transform.position.x + 1, parent.transform.position.y, parent.transform.position.z);
-
         GameObject fireBolt = null;
-
-        bool foundInactiveObj = false;
-        if (projectileList.Count > 0)
+        if (projectileList.Count > 0) fireBolt = CheckForInactiveProjectile();
+        if (fireBolt == null)
         {
-            foreach (GameObject obj in projectileList)
-            {
-                if (!obj.activeSelf)
-                {
-                    Debug.Log("Found an inactive object.");
-                    fireBolt = obj;
-                    foundInactiveObj = true;
-                    break;
-                }
-            }
-            if (!foundInactiveObj)
-            {
-                // if no inactive game objects are found, then the current projectiles are all active,
-                // so we need to instantiate a new projectile
-                Debug.Log("Instantiating a new object.");
-                fireBolt = Instantiate(model, spawnLocation, Quaternion.identity);
-                projectileList.Add(fireBolt);
-            }
-        }
-        else
-        {
-            Debug.Log("Instantiating a new object.");
-            fireBolt = Instantiate(model, spawnLocation, Quaternion.identity);
+            fireBolt = Instantiate(model_FireBolt, spawnLocation, Quaternion.identity);
             projectileList.Add(fireBolt);
         }
-        //projectileList.Add(fireBolt);
-
         fireBolt.transform.position = spawnLocation;
-        
+        SetProjectileInformation(castLocation, spawnLocation, fireBolt);
+        fireBolt.SetActive(true);
+    }
 
-        //GameObject fireBolt = Instantiate(model, spawnLocation, Quaternion.identity);
-        //Debug.Log("simple null test: " + fireBolt);
-        //projectileList.Add(fireBolt);
-        //Debug.Log("1st in list: " + projectileList[0]);
-        //foreach (GameObject obj in projectileList)
-        //{
-        //    Debug.Log("Foreach");
-        //}
+    // CheckForInactiveProjectile() looks through pooled projectiles and returns an inactive
+    //      gameObject projectile that can be reused, returning null if not.
+    private GameObject CheckForInactiveProjectile()
+    {
+        foreach (GameObject obj in projectileList)
+        {
+            if (!obj.activeSelf) return obj;
+        }
+        return null;
+    }
+
+    // SetProjectileInformation() takes a Vector3 cast location and spawn location, as well as
+    //      the GameObject of the fire bolt
+    // Sets relvant information for the projectile, including start & end locations, damage, and range
+    private void SetProjectileInformation(Vector3 castLocation, Vector3 spawnLocation, GameObject fireBolt)
+    {
         Temp_Projectile projectile = fireBolt.GetComponent<Temp_Projectile>();
         projectile.distanceTraveled = 0f;
         projectile.spawnLocation = spawnLocation;
         projectile.endLocation = castLocation;
         projectile.range = range;
         projectile.damage = damage;
-        fireBolt.SetActive(true);
-        //Debug.Log("Damage value set from Ability_FireBolt: " + damage);
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
 {
-    public Ability FireBolt;
-
     // Start is called before the first frame update
     void Start()
     {

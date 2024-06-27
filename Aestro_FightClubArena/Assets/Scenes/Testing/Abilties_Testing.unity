@@ -154,8 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileList: []
-  FireBolt: {fileID: 11400000, guid: 11bc284f4f51d46f7955d306d2e5e479, type: 2}
-  model: {fileID: 5052831283393963684, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
+  model_FireBolt: {fileID: 5052831283393963684, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
 --- !u!4 &13906356
 Transform:
   m_ObjectHideFlags: 0
@@ -183,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918604faddf10420d9cf9e5229d75c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireBolt: {fileID: 0}
 --- !u!1 &125631116
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918604faddf10420d9cf9e5229d75c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireBolt: {fileID: 11400000, guid: 11bc284f4f51d46f7955d306d2e5e479, type: 2}
 --- !u!1 &1431347785
 GameObject:
   m_ObjectHideFlags: 0
