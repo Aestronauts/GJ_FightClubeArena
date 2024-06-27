@@ -10,6 +10,23 @@
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 
+# Wwise
+.backup*
+.cache*
+*.akd
+*.prof
+*.validationcache
+*.wsettings
+*.a
+WwiseSettings.xml
+IncrementalSoundBankData.xml
+WwiseUnityIntegration_Mac_Src.zip
+WwiseUnityIntegration_Windows_Src.zip
+AkWwiseProjectData.asset
+
+# Mac
+.DS_Store
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
@@ -70,3 +87,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Aestro_FightClubArena/Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset
