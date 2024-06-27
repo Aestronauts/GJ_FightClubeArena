@@ -210,9 +210,9 @@ public class DrawOnScreen : MonoBehaviour
         int matchingPixels = 0;
         int totalPixels = drawnPattern.width * drawnPattern.height;
 
-        for (int y = 0; y < drawnPattern.height; y+=2)
+        for (int y = 0; y < drawnPattern.height; y++)
         {
-            for (int x = 0; x < drawnPattern.width; x+=2)
+            for (int x = 0; x < drawnPattern.width; x++)
             {
                 Color drawnPixel = drawnPattern.GetPixel(x, y);
                 Color predefinedPixel = predefinedPattern.GetPixel(x, y);
@@ -224,7 +224,7 @@ public class DrawOnScreen : MonoBehaviour
             }
         }
 
-        float similarity = (float)matchingPixels * 4 / totalPixels;
+        float similarity = (float)matchingPixels /* 4*/ / totalPixels;
         return similarity;
 
 
