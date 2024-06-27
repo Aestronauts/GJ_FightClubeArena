@@ -8,6 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
     // local variables
     public float speed = 5.0f;
     public float gravity = -9.81f;
+    public GameObject mage;
 
     private CharacterController _controller;
     private Vector3 velocity;
@@ -28,6 +29,9 @@ public class PlayerInputHandler : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        
+        Quaternion targetRotation = Quaternion.LookRotation(move);
+        mage.transform.rotation = targetRotation;
 
         _controller.Move(move * speed * Time.deltaTime);
 
