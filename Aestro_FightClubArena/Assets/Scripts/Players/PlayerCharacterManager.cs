@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerCharacterManager : MonoBehaviour
 {
-    public List<GameObject> projectileList = new List<GameObject>();
     AbilityManager abilityManager;
+
+    // TODO: Move all of this information to the abilities manager for concision
+    [Header("Fire Bolt Information")]
+    public List<GameObject> projectileList = new List<GameObject>();
     public GameObject model_FireBolt;
     int damage = 1;
     int range = 7;
+
+    [Header("Fire Pillar Information")]
+    public GameObject FirePillar_gameObject;
     
     // Start is called before the first frame update
     void Start()
@@ -31,6 +37,10 @@ public class PlayerCharacterManager : MonoBehaviour
         if (abilityName == "Fire Bolt")
         {
             FireFireBolt(player_gameObject, castLocation);
+        }
+        else if (abilityName == "Fire Pillar")
+        {
+            Debug.Log("Activating Fire Pillar...");
         }
     }
 

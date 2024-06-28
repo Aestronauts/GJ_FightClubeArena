@@ -6,7 +6,6 @@ public class Temp__Player : MonoBehaviour
 {
     public PlayerCharacterManager playerCharacterManager;
     Camera mainCamera;
-    public Ability FireBolt;
 
     private void Awake()
     {
@@ -22,32 +21,50 @@ public class Temp__Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // To be replaced with a call to the Player Character Manager
-            //FireBolt.Activate(gameObject);
-        }
-
-        // Only activates Fire Bolt Ability for now...
+        // Activates Fire Bolt Ability (left-click)
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse Clicked!");
-            Vector3 mousePosition = Input.mousePosition;
-            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            Vector3? castLocation = GetCastLocation();
+            if (castLocation != null)
             {
-                //Debug.Log("Ray Casted from Camera. Raycast hit info: " + hit.transform);
-                //Debug.Log("Here's that hit info's position: " + hit.transform.position);
-                //Debug.Log("Ray's distance from origin to impact point: " + hit.distance);
+                Vector3 CastLocation = castLocation.GetValueOrDefault();
+                CastLocation = new Vector3(CastLocation.x, 0.5f, CastLocation.z);
+                playerCharacterManager.CastAbility(gameObject, "Fire Bolt", CastLocation);
+            }
 
-                //This one is End Position Data!!! Uses ground plane, so y position value will == 0.
-                Debug.Log("Impact point in world space where the ray hit the collider: " + hit.point);
-                Vector3 castLocation = hit.point;
-                //Add a y-axis value to the Cast Location so that the projectile doesn't aim towards the ground
-                castLocation = new Vector3(castLocation.x, 0.5f, castLocation.z);
-                //FireBolt.Activate(gameObject, castLocation);
-                playerCharacterManager.CastAbility(gameObject, "Fire Bolt", castLocation);
+            ////OLD CODE:
+            //Debug.Log("Mouse Clicked!");
+            //Vector3 mousePosition = Input.mousePosition;
+            //Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+            //if (Physics.Raycast(ray, out RaycastHit hit))
+            //{
+            //    Debug.Log("Impact point in world space where the ray hit the collider: " + hit.point);
+            //    Vector3 castLocation = hit.point;
+            //    //Add a y-axis value to the Cast Location so that the projectile doesn't aim towards the ground
+            //    castLocation = new Vector3(castLocation.x, 0.5f, castLocation.z);
+            //    playerCharacterManager.CastAbility(gameObject, "Fire Bolt", castLocation);
+            //}
+        }
+
+        // Activates Fire Pillar Ability (right-click)
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3? castLocation = GetCastLocation();
+            if (castLocation != null)
+            {
+                Vector3 CastLocation = castLocation.GetValueOrDefault();
+                CastLocation = new Vector3(CastLocation.x, 0.01f, CastLocation.z);
+                playerCharacterManager.CastAbility(gameObject, "Fire Pillar", CastLocation);
             }
         }
+    }
+
+    private Vector3? GetCastLocation()
+    {
+        Vector3? castLocation = null;
+        Vector3 mousePosition = Input.mousePosition;
+        Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit)) castLocation = hit.point;
+        return castLocation;
     }
 }
