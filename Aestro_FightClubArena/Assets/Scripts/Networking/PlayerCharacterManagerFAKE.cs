@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+// animation synching tutorial <https://youtu.be/3yuBOB3VrCk?si=KnmvpwZW_9Di9Y6O&t=2915>
+// unity netcode documentation <https://docs-multiplayer.unity3d.com/netcode/current/components/networktransform/>
+
 public class PlayerCharacterManagerFAKE : NetworkBehaviour
 {
     //script refs
