@@ -14,11 +14,14 @@ public class Temp_Projectile : MonoBehaviour
     public float distanceTraveled = 0f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        playerCharacterManager = FindAnyObjectByType<PlayerCharacterManager>();
+        if(!playerCharacterManager)
+            TryGetComponent<PlayerCharacterManager>(out playerCharacterManager);
+        //playerCharacterManager = FindAnyObjectByType<PlayerCharacterManager>();
         
-        Debug.Log("Player character manager is: " + playerCharacterManager.name);
+        if(playerCharacterManager)
+            Debug.Log("Player character manager is: " + playerCharacterManager.name);
         //Debug.Log("Distance for the projectile to travel: " + Vector3.Distance(spawnLocation, endLocation));
     }
 
