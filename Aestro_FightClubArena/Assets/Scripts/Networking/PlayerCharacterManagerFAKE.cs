@@ -5,6 +5,7 @@ using Unity.Netcode;
 
 // animation synching tutorial <https://youtu.be/3yuBOB3VrCk?si=KnmvpwZW_9Di9Y6O&t=2915>
 // unity netcode documentation <https://docs-multiplayer.unity3d.com/netcode/current/components/networktransform/>
+// NAT PunchThrough <https://docs-multiplayer.unity3d.com/netcode/current/learn/listen-server-host-architecture/#what-is-a-listen-server>
 
 public class PlayerCharacterManagerFAKE : NetworkBehaviour
 {
