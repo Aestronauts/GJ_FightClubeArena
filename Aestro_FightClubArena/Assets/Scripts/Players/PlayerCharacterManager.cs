@@ -5,16 +5,22 @@ using UnityEngine;
 public class PlayerCharacterManager : MonoBehaviour
 {
     AbilityManager abilityManager;
+    public TempEnemy_Abilities tempEnemy;
 
     // TODO: Move all of this information to the abilities manager for concision
     [Header("Fire Bolt Information")]
     public List<GameObject> projectileList = new List<GameObject>();
     public GameObject model_FireBolt;
-    int damage = 1;
-    int range = 7;
+    public int damage = 1;
+    public int range = 7;
 
     [Header("Fire Pillar Information")]
     public GameObject FirePillar_gameObject;
+    public int FP_damage_burst = 3;
+    public int FP_damage_overtime = 1;
+    public int FP_range = 12;
+    public float FP_duration = 3f;
+    public float FP_DPS_rate = 0.75f;
     
     // Start is called before the first frame update
     void Start()
@@ -40,7 +46,7 @@ public class PlayerCharacterManager : MonoBehaviour
         }
         else if (abilityName == "Fire Pillar")
         {
-            Debug.Log("Activating Fire Pillar...");
+            FireFirePillar(player_gameObject, castLocation);
         }
     }
 
@@ -81,7 +87,7 @@ public class PlayerCharacterManager : MonoBehaviour
 
     // SetProjectileInformation() takes a Vector3 cast location and spawn location, as well as
     //      the GameObject of the fire bolt
-    // Sets relvant information for the projectile, including start & end locations, damage, and range
+    // Sets relevant information for the projectile, including start & end locations, damage, and range
     private void SetProjectileInformation(Vector3 castLocation, Vector3 spawnLocation, GameObject fireBolt)
     {
         Temp_Projectile projectile = fireBolt.GetComponent<Temp_Projectile>();
@@ -90,5 +96,33 @@ public class PlayerCharacterManager : MonoBehaviour
         projectile.endLocation = castLocation;
         projectile.range = range;
         projectile.damage = damage;
+    }
+
+    private void FireFirePillar(GameObject parent, Vector3 castLocation)
+    {
+        GameObject firePillar = null;
+        Vector3 finalLocation;
+        // TODO: Pooling for the fire pillar's game object
+        Vector3 parentLocation = new Vector3(parent.transform.position.x, parent.transform.position.y, parent.transform.position.z);
+        float distanceToCastLocation = Vector3.Distance(parentLocation, castLocation);
+        if (distanceToCastLocation > FP_range)
+        {
+            float distPercentage = FP_range / distanceToCastLocation;
+            finalLocation = Vector3.Lerp(parentLocation, castLocation, distPercentage);
+        }
+        else finalLocation = castLocation;
+        firePillar = Instantiate(FirePillar_gameObject, finalLocation, Quaternion.identity);
+        firePillar.transform.position = finalLocation; //redundant until pooling
+        FirePillar FP = firePillar.GetComponent<FirePillar>();
+        FP.damage_burst = FP_damage_burst;
+        FP.damage_overtime = FP_damage_overtime;
+        FP.duration = FP_duration;
+        FP.DPS_rate = FP_DPS_rate;
+    }
+
+    public void ExitFirePillar()
+    {
+        tempEnemy.isInFirePillar = false;
+        tempEnemy.CancelInvoke();
     }
 }

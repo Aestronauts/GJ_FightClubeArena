@@ -10,6 +10,8 @@ public class FirePillar : MonoBehaviour
     public int damage_burst;
     public int damage_overtime;
     public float range;
+    public float duration;
+    public float DPS_rate;
 
     private void Awake()
     {
@@ -19,12 +21,20 @@ public class FirePillar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(DestroyFirePillar());
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         
+    }
+
+    IEnumerator DestroyFirePillar()
+    {
+        yield return new WaitForSeconds(duration);
+        playerCharacterManager.ExitFirePillar();
+        Debug.Log("Fire Pillar is being destroyed, stopping TempEnemy invoke and damage.");
+        Destroy(this.gameObject);
     }
 }
