@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.UI;
 
 // animation synching tutorial <https://youtu.be/3yuBOB3VrCk?si=KnmvpwZW_9Di9Y6O&t=2915>
 // unity netcode documentation <https://docs-multiplayer.unity3d.com/netcode/current/components/networktransform/>
@@ -9,27 +10,56 @@ using Unity.Netcode;
 
 public class PlayerCharacterManagerFAKE : NetworkBehaviour
 {
-    //script refs
+    [Header("REALTIME SCRIPT REFERENCES\n____________________")]
+    // script refs to our own variables
     public PlayerInputHandler ref_PlayerInputHandler;
     public NetworkObject ref_NetworkObject;
     public NetworkManager ref_NetworkManager;
 
-    // network variables
+    [Space]
+    [Header("NETWORK VARIABLES\n____________________")]
+    // HEALTH
     private NetworkVariable<int> playerHealth = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // Owner VS Server (owner is write your own, server is change others)
 
+
+
+    [Space]
+    [Header("REALTIME ASSET REFERENCES\n____________________")]
+    // ref to all clients that have joined
+    public List<NetworkObject> playersJoined_NetObjs = new List<NetworkObject>();
+    // ref to all UI Lobby Cards we've spawned
+    public List<Transform> playerLobbyCardsList = new List<Transform>();
+    // reference to playerModelSpawned
+    public Transform spawnedCharacterModel;
+
+
+    [Space]
+    [Header("STORED ASSET REFERENCES\n____________________")]
+    // the cnavas object that holds all the players who joined
+    [SerializeField]
+    private Transform playerLobbyList;
+    // the prefab for when someone joins
+    [SerializeField]
+    private Transform playerLobbyCard;
+    // an example of an ability we might spawn
     [SerializeField]
     private Transform transAbilityPrefab;
+    // an example of a character we might spawn
+    [SerializeField]
+    private Transform transCharWizard;
 
     private void Awake()
     {
-        if (GameObject.FindAnyObjectByType<NetworkManager>() != null)
+        if (!ref_NetworkManager && GameObject.FindAnyObjectByType<NetworkManager>() != null)
             ref_NetworkManager = GameObject.FindAnyObjectByType<NetworkManager>();
 
         //if we dont have ref to network manager we are offline
         if (!ref_NetworkManager)
         {
-            ref_PlayerInputHandler.enabled = true;
-            ref_NetworkObject.enabled = false;
+            if (ref_PlayerInputHandler)
+                ref_PlayerInputHandler.enabled = true;
+            if (ref_NetworkObject)
+                ref_NetworkObject.enabled = false;
         }
     }
 
@@ -61,29 +91,81 @@ public class PlayerCharacterManagerFAKE : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha8))
             SpawnAbilityServerRpc(new ServerRpcParams());
         if (Input.GetKeyDown(KeyCode.Alpha9))
-            GeneralServerRpc(new ServerRpcParams());
+            SpawnCharacterServerRpc(new ServerRpcParams());
         if (Input.GetKeyDown(KeyCode.Alpha0))
-            GeneralClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new List<ulong> { 1 } } }); // sends a message to the client (1)
+            PlayerJoinedServerRpc(new ServerRpcParams());
+        //GeneralClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new List<ulong> { 1 } } }); // sends a message to the client (1)
+    }
+
+
+    public void NewPlayer(NetworkObject _netObj)
+    {
+        playersJoined_NetObjs.Add(_netObj);
+    }
+
+    //[ServerRpc]
+    //private void GeneralServerRpc(ServerRpcParams _serverRpcParams) // this is where we put commands that the server / host will be asked to the source of truth (like abilities)
+    //{
+    //    if (_serverRpcParams.Receive.SenderClientId == OwnerClientId) // Message was sent by us
+    //        Debug.Log($"GeneralServerRPC: Sender Client = {OwnerClientId} (which was us)");
+    //    else
+    //        Debug.Log($"GeneralServerRPC: Sender Client = {_serverRpcParams.Receive.SenderClientId} (which was NOT us)");
+    //}
+
+    [ServerRpc]
+    private void PlayerJoinedServerRpc(ServerRpcParams _serverRpcParams) // spawn associated UI
+    {
+        bool ableToJoin = false;
+        int uiCardID = 0;
+        foreach( Transform child in playerLobbyList)
+        {
+            if(child.gameObject.activeSelf == false)
+            {
+                child.gameObject.SetActive(true);
+                ableToJoin = true;
+                break;
+            }
+            uiCardID++;
+        }
+
+        if (!ableToJoin)
+            return;
+
+        Transform spawnedUIObj = playerLobbyList.GetChild(uiCardID);
+        playerLobbyCardsList.Add(spawnedUIObj);
+
+        if (playersJoined_NetObjs[playersJoined_NetObjs.Count-1].OwnerClientId == OwnerClientId) // if the sender is also the owner of this client
+        {
+            foreach(Transform child in playerLobbyCard)
+            {
+                if (child.GetComponent<Toggle>())
+                    child.GetComponent<Toggle>().enabled = true;
+            }
+        }
+    }
+
+
+    [ServerRpc]
+    private void SpawnCharacterServerRpc(ServerRpcParams _serverRpcParams) // spawn player model
+    {
+        spawnedCharacterModel = Instantiate(transCharWizard, transform.position, transCharWizard.rotation);
+        spawnedCharacterModel.TryGetComponent<NetworkObject>(out ref_NetworkObject);
+        if (ref_NetworkObject)
+            ref_NetworkObject.Spawn(true);// can despawn or delete   
+        spawnedCharacterModel.TryGetComponent<PlayerInputHandler>(out ref_PlayerInputHandler);
+        Awake();
     }
 
     [ServerRpc]
-    private void SpawnAbilityServerRpc(ServerRpcParams _serverRpcParams) // can pass in a parameter for deciding what to spawn
+    private void SpawnAbilityServerRpc(ServerRpcParams _serverRpcParams) // spawn player ability
     {
-        Transform transAbilityClone = Instantiate(transAbilityPrefab, transform.position, transAbilityPrefab.rotation);
+        Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
         transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
         Temp_Projectile ref_Temp_Projectile = transAbilityClone.GetComponent<Temp_Projectile>();
-        ref_Temp_Projectile.spawnLocation = transform.position;
+        ref_Temp_Projectile.spawnLocation = spawnedCharacterModel.position;
         ref_Temp_Projectile.endLocation = new Vector3(0, 0, 0);
     }
 
-    [ServerRpc]
-    private void GeneralServerRpc(ServerRpcParams _serverRpcParams) // this is where we put commands that the server / host will be asked to the source of truth (like abilities)
-    {
-        if (_serverRpcParams.Receive.SenderClientId == OwnerClientId) // Message was sent by us
-            Debug.Log($"GeneralServerRPC: Sender Client = {OwnerClientId} (which was us)");
-        else
-            Debug.Log($"GeneralServerRPC: Sender Client = {_serverRpcParams.Receive.SenderClientId} (which was NOT us)");
-    }
 
     [ClientRpc]
     private void GeneralClientRpc(ClientRpcParams _clientRpcParams) // for commands or inputs that can be sent to any clients specifically

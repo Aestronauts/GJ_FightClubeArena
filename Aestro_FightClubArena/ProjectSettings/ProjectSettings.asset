@@ -652,7 +652,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: WWISE_ADDRESSABLES_POST_2023
+    Standalone: WWISE_ADDRESSABLES_POST_2023;STEAMWORKS_NET
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
