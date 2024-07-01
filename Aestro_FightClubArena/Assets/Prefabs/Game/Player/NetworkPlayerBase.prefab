@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6168009397314301381}
   - component: {fileID: 4985954968376667940}
   - component: {fileID: 8780077310976903155}
+  - component: {fileID: 4653318465530774886}
   m_Layer: 0
   m_Name: NetworkPlayerBase
   m_TagString: Untagged
@@ -69,6 +70,22 @@ MonoBehaviour:
   ref_PlayerInputHandler: {fileID: 0}
   ref_NetworkObject: {fileID: 0}
   ref_NetworkManager: {fileID: 0}
-  spawnedCharacter: {fileID: 0}
+  playersJoined_NetObjs: []
+  playerLobbyCardsList: []
+  spawnedCharacterModel: {fileID: 0}
+  playerLobbyList: {fileID: 0}
+  playerLobbyCard: {fileID: 0}
   transAbilityPrefab: {fileID: 7628622604673822757, guid: 623351d37c448ee40aaff6e69a161f4d, type: 3}
   transCharWizard: {fileID: 7815141611520830262, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
+--- !u!114 &4653318465530774886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7354317307927650922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f477f63c2172ed4a9315e29b3ace172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

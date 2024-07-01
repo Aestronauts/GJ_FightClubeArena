@@ -61,6 +61,10 @@ public class PlayerCharacterManagerFAKE : NetworkBehaviour
             if (ref_NetworkObject)
                 ref_NetworkObject.enabled = false;
         }
+
+        foreach (Transform child in playerLobbyList)
+            child.gameObject.SetActive(false);
+
     }
 
     public override void OnNetworkSpawn()
