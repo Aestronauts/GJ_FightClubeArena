@@ -7,7 +7,9 @@ using UnityEngine;
 //------- ^ required for unity lobby services
 using System.Collections;
 
-
+// following these websites
+// codemonkey lobby code <https://youtu.be/-KDlEBfCBiU?si=G2x9tyfwr1eG_ia1&t=2894> 
+// codemonkey multiplayer relay tutorial <https://www.youtube.com/watch?v=msPNJ2cxWfw&ab_channel=CodeMonkey>
 
 public class NetworkingLobby : MonoBehaviour
 {
