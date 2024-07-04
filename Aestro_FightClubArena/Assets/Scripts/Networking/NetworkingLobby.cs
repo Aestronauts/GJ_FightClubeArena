@@ -1,13 +1,27 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+//------- ^ required for unity lobby services
+using System.Collections;
+
+
 
 public class NetworkingLobby : MonoBehaviour
 {
+
+    public static NetworkingLobby Instance { get; private set; }
+
+    #region UI Reference Objects
+
+    public Transform networkSpawnClientsContainer;
+    public Transform networkLobbyContainer;
+
+    #endregion UI Reference Objects
+
+    #region Unity Lobby Services Variables
 
     private Lobby hostLob; // holds data for the lobby we create such as players and lobby data
     private Lobby joinedLob; // same as above but if we joined. We always have a joined lobby but we might not always have a host lobby
@@ -16,8 +30,10 @@ public class NetworkingLobby : MonoBehaviour
     private int lobIdSelected = -1;
     QueryResponse queryLobResp;
 
-    public string playerName = "";
+    public string playerName = ""; // the actual data value (from our data dictionary) we want to read for other purposes
     public string playerIcon = "";
+    public int playerIconId = 0;
+    public bool isReady = false;
 
 
     // usernames randomly generated
@@ -27,18 +43,29 @@ public class NetworkingLobby : MonoBehaviour
 
     // special variables for lobby and player data
     // player
-    private string data_PlayerName = "PlayerName";
+    [HideInInspector] public string data_PlayerName = "PlayerName"; // the name of the data dictionary type
+    [HideInInspector] public string data_PlayerIcon = "PlayerIcon";
+    [HideInInspector] public string data_PlayerIsReady = "PlayerIsReady";
     // lobby
-    private string data_LobbyGameMode = "GameMode";
-    private string data_MapEnvironment = "Map";
+    [HideInInspector] public string data_LobbyGameMode = "GameMode";
+    [HideInInspector] public string data_MapEnvironment = "Map";
 
+    // more reference data for available options
+    private List<string> data_Icons = new List<string>() { "icon_char_offline", "icon_char_wizard", "icon_char_warrior", "icon_char_gunner", };
     private List<string> data_GameModes = new List<string>() { "Deathmatch", };
     private List<string> data_MapEnvironments = new List<string>() { "RottenGrove", };
+
+    #endregion unity lobby services variables
+
+    public PlayerCardData ref_PlayerCardData; // helps us update player data when we connect
+         
 
     // Start is called before the first frame update
     private void Start()
     {
-        MakeOnlineAccount();
+        Instance = this;
+        //MakeOnlineAccount();
+        InitializeVars();
     }
 
     public void LateUpdate()
@@ -47,24 +74,15 @@ public class NetworkingLobby : MonoBehaviour
         UpdateLobbyServerData();
     }
 
-    public async void MakeOnlineAccount() // sets up our account as a user that can join unity services
+    private void InitializeVars()
     {
-        await UnityServices.InitializeAsync();
-
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            Debug.Log($"Signed In {AuthenticationService.Instance.PlayerId}");
-        };
-
-        // if we do anonomous
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();// can instead use this with steam to link accounts
-        int RandX = Random.Range(0, possibleNamesPt1.Count - 1);
-        int RandY = Random.Range(0, possibleNamesPt2.Count - 1);
-        int RandZ = Random.Range(0, possibleNamesPt3.Count - 1);
-        playerName = $"{possibleNamesPt1[RandX]} {possibleNamesPt2[RandY]} {possibleNamesPt3[RandZ]}";
+        networkSpawnClientsContainer.gameObject.SetActive(false);
+        networkLobbyContainer.gameObject.SetActive(false);
+        playerIconId = 0;
     }
+    
 
-    #region Lobby Data
+    #region LOBBY HOST DATA
 
     public async void CreateLobby(bool _isPrivate) // creates a new lobby in unity systems and allows us to set it private or public
     {
@@ -198,6 +216,7 @@ public class NetworkingLobby : MonoBehaviour
     #endregion lobby management data
 
     #region LOBBY JOIN DATA
+
     public async void ListLobbies() // Pulls a list of active and public lobbies within our query
     {
         try
@@ -214,11 +233,13 @@ public class NetworkingLobby : MonoBehaviour
             };
             queryLobResp = await Lobbies.Instance.QueryLobbiesAsync();
 
-            Debug.Log($"Lobbies found - {queryLobResp.Results.Count}");
-            foreach (Lobby lob in queryLobResp.Results)
-            {
-                Debug.Log($"Lobby - {lob.Name} - {lob.MaxPlayers} possible player slots - {lob.Data[data_LobbyGameMode].Value} Gamemode");
-            }
+            //Debug.Log($"Lobbies found - {queryLobResp.Results.Count}");
+            //foreach (Lobby lob in queryLobResp.Results)
+            //{
+            //    Debug.Log($"Lobby - {lob.Name} - {lob.MaxPlayers} possible player slots - {lob.Data[data_LobbyGameMode].Value} Gamemode");
+            //}
+
+            LobbyHandler.Instance.RefreshLobbyList(queryLobResp.Results);
         }
         catch (LobbyServiceException e)
         {
@@ -289,8 +310,58 @@ public class NetworkingLobby : MonoBehaviour
     }
     #endregion lobby join data
 
-
     #region PLAYER DATA
+
+    public async void MakeOnlineAccount() // sets up our account as a user that can join unity services
+    {
+        try
+        {
+            await UnityServices.InitializeAsync();
+
+            AuthenticationService.Instance.SignedIn += () =>
+            {
+                Debug.Log($"Signed In {AuthenticationService.Instance.PlayerId}");
+            };
+
+            // if we do anonomous
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();// can instead use this with steam to link accounts
+            int RandX = Random.Range(0, possibleNamesPt1.Count - 1);
+            int RandY = Random.Range(0, possibleNamesPt2.Count - 1);
+            int RandZ = Random.Range(0, possibleNamesPt3.Count - 1);
+            playerName = $"{possibleNamesPt1[RandX]} {possibleNamesPt2[RandY]} {possibleNamesPt3[RandZ]}";
+            playerIconId++;
+            playerIcon = data_Icons[playerIconId];
+
+            // turn on the ui obj so we can find lobbies or make our own match
+            networkLobbyContainer.gameObject.SetActive(true);
+            if (ref_PlayerCardData)
+                ref_PlayerCardData.UpdatePlayerData(); // if we dont have it, it won't update until we try to change our player data / icon through other means
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log($"EXCEPTION: {e}");
+        }
+    }
+
+    public void LogOutOnlineAccount() // sets up our account as a user that can join unity services
+    {
+        try
+        {
+            AuthenticationService.Instance.SignedOut += () =>
+            {
+                Debug.Log($"Signed Out {AuthenticationService.Instance.PlayerId}");
+            };
+            playerIconId = 0;
+            playerIcon = data_Icons[playerIconId];
+
+            // turn off the ui obj so we can't find lobbies or make our own match
+            networkLobbyContainer.gameObject.SetActive(false);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log($"EXCEPTION: {e}");
+        }
+    }
 
     public Player ReturnNewPlayerObj() // a function to setup player data in unity services constistently. Any data we want in a player is created here
     {
@@ -298,19 +369,22 @@ public class NetworkingLobby : MonoBehaviour
         { // here are the player parameters we're setting / creating
             Data = new Dictionary<string, PlayerDataObject> {
                 { data_PlayerName, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
-                { "PlayerIcon", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
+                { data_PlayerIcon, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerIcon) },
             },
         };
 
     }
 
-    public async void UpdatePlayerData(string _newName) // updating player data we send and then save it in services
+    public async void UpdatePlayerData(string _newName, string _newIcon) // updating player data we send and then save it in services
     {
         if (joinedLob == null)
             return;
 
-        if (!string.IsNullOrEmpty(_newName) && _newName != playerName)
+        if (!string.IsNullOrEmpty(_newName))
             playerName = _newName;
+
+        if (!string.IsNullOrEmpty(_newIcon))
+            playerIcon = _newIcon;
 
         try
         {
@@ -318,9 +392,11 @@ public class NetworkingLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, PlayerDataObject> {
                 { data_PlayerName, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
-                //{ "PlayerIcon", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
+                { data_PlayerIcon, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerIcon) },
             },
             });
+
+            //PlayerCardData.Instance.UpdatePlayerData(); // calls our player card instance and updates data that was changes
         }
         catch (LobbyServiceException e)
         {
@@ -347,7 +423,19 @@ public class NetworkingLobby : MonoBehaviour
             PrintPlayersInLobby(joinedLob);
     }
 
+
+    public void CycleIconsFromButton()// meant to allow a single click to cycle us through icons for now. || eventually we should just use the function this calls
+    {
+        playerIconId++;
+
+        if (playerIconId == 0 || playerIconId >= data_Icons.Count)
+            playerIconId = 1;
+
+        playerIcon = data_Icons[playerIconId];
+        UpdatePlayerData(null, playerIcon);
+    }
+
     #endregion player data
 
-
+   
 } // end of NetworkingLobby Class
