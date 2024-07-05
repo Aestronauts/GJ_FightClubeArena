@@ -84,7 +84,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5254694892846302546}
+        m_TargetAssemblyTypeName: RoomCardData, Assembly-CSharp
+        m_MethodName: UpdateReadyCheck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &2346282222691872621
 GameObject:
@@ -592,6 +604,7 @@ GameObject:
   - component: {fileID: 7821591906264802342}
   - component: {fileID: 1593481640749878752}
   - component: {fileID: 1709885976977088845}
+  - component: {fileID: 5254694892846302546}
   m_Layer: 5
   m_Name: UI-Room-List
   m_TagString: Untagged
@@ -680,3 +693,23 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &5254694892846302546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956037423375823657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92855fb0c6b81d44aa3517f8a8b2140c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleGameModeSprites:
+  - {fileID: 21300000, guid: 2fe0505a101060e418b6320cae5a8e5d, type: 3}
+  - {fileID: 21300000, guid: e2a931edcff9f724e999c4edee56aa4a, type: 3}
+  - {fileID: 21300000, guid: 55a288bfaacc76046bec4acc12970a33, type: 3}
+  playerIconImg: {fileID: 3456942750831905821}
+  playerReadyToggle: {fileID: 5275454720901485020}
+  playerTitle: {fileID: 454073706738838033}
+  playerIsReady: 0

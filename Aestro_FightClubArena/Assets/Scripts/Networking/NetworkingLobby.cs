@@ -25,37 +25,50 @@ public class NetworkingLobby : MonoBehaviour
 
     #region Unity Lobby Services Variables
 
-    private Lobby hostLob; // holds data for the lobby we create such as players and lobby data
-    private Lobby joinedLob; // same as above but if we joined. We always have a joined lobby but we might not always have a host lobby
+    public Lobby hostLob; // holds data for the lobby we create such as players and lobby data
+    public Lobby joinedLob; // same as above but if we joined. We always have a joined lobby but we might not always have a host lobby
     private float lobbyHeartbeatTimer = 25f;
     private float lobbyUpdateTimer = 2f;
     private int lobIdSelected = -1;
     QueryResponse queryLobResp;
 
+    // the local reference to variables stored for easy access and for easier updating / comparing
+    // player
+    public string playerId = "";
     public string playerName = ""; // the actual data value (from our data dictionary) we want to read for other purposes
     public string playerIcon = "";
     public int playerIconId = 0;
-    public bool isReady = false;
+    public string playerIsReady = "";
+    // lobby
+    public string joinedLobbyId = "";
+    public string joinedlobbyName = "";
+    public string joinedLobbyIcon = "";
+    public string joinedLobbyMapEnv = "";
+    public string joinedLobbyGameMode = "";
 
-
-    // usernames randomly generated
-    private List<string> possibleNamesPt1 = new List<string>() { "Wild", "Extreme", "GodLike", "Absolute", "Ungodly", "Cheezer", "Deadly", "Uncatchable", "Monster", "Undoubtably", "Remorseful", "Rich", };
-    private List<string> possibleNamesPt2 = new List<string>() { "Cat", "Dawg", "Ninja", "Wizard", "Genious", "Cheater", "McSmokes", "Destroyer", "Feeder", "Theologist", "Human", "StuckUp", };
-    private List<string> possibleNamesPt3 = new List<string>() { "Jr.", "Sr.", "The First", "The Second", "The Third", "In Training", "The Student", "The Master", "The One and Only", "In Accounting", "JK", "UrMom", };
+    
 
     // special variables for lobby and player data
     // player
     [HideInInspector] public string data_PlayerName = "PlayerName"; // the name of the data dictionary type
     [HideInInspector] public string data_PlayerIcon = "PlayerIcon";
     [HideInInspector] public string data_PlayerIsReady = "PlayerIsReady";
-    // lobby
+    // lobby   
     [HideInInspector] public string data_LobbyGameMode = "GameMode";
     [HideInInspector] public string data_MapEnvironment = "Map";
+    [HideInInspector] public string data_LobbyIcon = "LobbyIcon";
 
     // more reference data for available options
-    private List<string> data_Icons = new List<string>() { "icon_char_offline", "icon_char_wizard", "icon_char_warrior", "icon_char_gunner", };
+    private List<string> data_CharacterIcons = new List<string>() { "icon_char_offline", "icon_char_wizard", "icon_char_warrior", "icon_char_gunner", };
     private List<string> data_GameModes = new List<string>() { "Deathmatch", };
     private List<string> data_MapEnvironments = new List<string>() { "RottenGrove", };
+
+
+    // random data for fun
+    // usernames randomly generated
+    private List<string> possibleNamesPt1 = new List<string>() { "Wild", "Extreme", "GodLike", "Absolute", "Ungodly", "Cheezer", "Deadly", "Uncatchable", "Monster", "Undoubtably", "Remorseful", "Rich", };
+    private List<string> possibleNamesPt2 = new List<string>() { "Cat", "Dawg", "Ninja", "Wizard", "Genious", "Cheater", "McSmokes", "Destroyer", "Feeder", "Theologist", "Human", "StuckUp", };
+    private List<string> possibleNamesPt3 = new List<string>() { "Jr.", "Sr.", "The First", "The Second", "The Third", "In Training", "The Student", "The Master", "The One and Only", "In Accounting", "JK", "UrMom", };
 
     #endregion unity lobby services variables
 
@@ -81,6 +94,7 @@ public class NetworkingLobby : MonoBehaviour
         networkSpawnClientsContainer.gameObject.SetActive(false);
         networkLobbyContainer.gameObject.SetActive(false);
         playerIconId = 0;
+        playerIsReady = "false";
     }
     
 
@@ -96,17 +110,20 @@ public class NetworkingLobby : MonoBehaviour
             {
                 IsPrivate = _isPrivate,
                 Player = ReturnNewPlayerObj(),
-                Data = new Dictionary<string, DataObject> {
+                Data = new Dictionary<string, DataObject> {                    
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, data_GameModes[0], DataObject.IndexOptions.S1) },  // gamemode[0] = Deathmatch
                      { data_MapEnvironment, new DataObject(DataObject.VisibilityOptions.Public, data_MapEnvironments[0], DataObject.IndexOptions.S2) }, // map[0] = RottenGrove
+                     { data_LobbyIcon, new DataObject(DataObject.VisibilityOptions.Public, playerIcon, DataObject.IndexOptions.S3) }, // icon will be taken from the host creator's icon
                 },
             };
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobName, lobMaxPlayers, createLobOptions);
             hostLob = lobby;
             joinedLob = hostLob;
+            StoreLobbyData();
 
-            Debug.Log($"Created Lobby - {lobby.Name} - {lobby.MaxPlayers} possible player slots \nLobby Id - {lobby.Id} \nJoinCode - {lobby.LobbyCode}");
+            Debug.Log($"Created Lobby - {lobby.Name} - {lobby.MaxPlayers} possible player slots \nLobby Id - {lobby.Id} \nJoinCode - {lobby.LobbyCode}");            
             PrintPlayersInLobby(joinedLob);
+            CallLobbyHandlerRoomList(joinedLob);
         }
         catch (LobbyServiceException e)
         {
@@ -144,22 +161,39 @@ public class NetworkingLobby : MonoBehaviour
         lobbyUpdateTimer -= Time.deltaTime;
         if (lobbyUpdateTimer <= 0)
         {
-            lobbyUpdateTimer = 2f;
+            lobbyUpdateTimer = 2.5f;
             Lobby lobby = await LobbyService.Instance.GetLobbyAsync(joinedLob.Id);
             joinedLob = lobby;
+            CallLobbyHandlerRoomList(joinedLob);
+            StoreLobbyData();            
         }
 
     }
 
-    public async void UpdateLobbyData(string _gameMode) // allows changing of our hosted lobby's game data like GameMode (can include more variables passed if we want to update more
+    public async void UpdateLobbyData(string _gameMode, string _mapEnv, string _lobIcon) // allows changing of our hosted lobby's game data like GameMode (can include more variables passed if we want to update more
     {
         if (hostLob == null)
             return;
+
+        if (!string.IsNullOrEmpty(_gameMode))
+            joinedLobbyGameMode = _gameMode;
+
+        if (!string.IsNullOrEmpty(_mapEnv))
+            joinedLobbyMapEnv = _mapEnv;
+
+        if (!string.IsNullOrEmpty(_lobIcon))
+            joinedLobbyIcon = _lobIcon;
+
         try
         {
             hostLob = await Lobbies.Instance.UpdateLobbyAsync(hostLob.Id, new UpdateLobbyOptions // update our hosted lobby
             {
-                Data = new Dictionary<string, DataObject> { { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, _gameMode) } } // update data for game mode
+                Data = new Dictionary<string, DataObject> {
+                    { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyGameMode) },// update data for game mode
+                    { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyMapEnv) }, // update map
+                    { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyIcon) }, // update lobby icon
+                } 
+
             });
             joinedLob = hostLob;
             PrintPlayersInLobby(joinedLob);
@@ -241,7 +275,7 @@ public class NetworkingLobby : MonoBehaviour
             //    Debug.Log($"Lobby - {lob.Name} - {lob.MaxPlayers} possible player slots - {lob.Data[data_LobbyGameMode].Value} Gamemode");
             //}
 
-            LobbyHandler.Instance.RefreshLobbyList(queryLobResp.Results);
+            CallLobbyHandlerLobbyList(queryLobResp.Results); // calls another script which will populate the list of rooms            
         }
         catch (LobbyServiceException e)
         {
@@ -259,8 +293,9 @@ public class NetworkingLobby : MonoBehaviour
 
             JoinLobbyByIdOptions joinLobIdOptions = new JoinLobbyByIdOptions { Player = ReturnNewPlayerObj() };
             Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByIdAsync(queryLobResp.Results[_lobId].Id, joinLobIdOptions);
-            joinedLob = joinedLobby;
+            joinedLob = joinedLobby;            
             PrintPlayersInLobby(joinedLob);
+            CallLobbyHandlerRoomList(joinedLob);
         }
         catch (LobbyServiceException e)
         {
@@ -276,8 +311,9 @@ public class NetworkingLobby : MonoBehaviour
         {
             JoinLobbyByCodeOptions joinLobCodeOptions = new JoinLobbyByCodeOptions { Player = ReturnNewPlayerObj() };
             Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByCodeAsync(_lobJoinCode, joinLobCodeOptions);
-            joinedLob = joinedLobby;
+            joinedLob = joinedLobby;            
             PrintPlayersInLobby(joinedLob);
+            CallLobbyHandlerRoomList(joinedLob);
         }
         catch (LobbyServiceException e)
         {
@@ -289,12 +325,28 @@ public class NetworkingLobby : MonoBehaviour
     {
         try
         {
-            await LobbyService.Instance.QuickJoinLobbyAsync();
+            Lobby joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+            joinedLob = joinedLobby;            
+            CallLobbyHandlerRoomList(joinedLob);
+            PrintPlayersInLobby(joinedLob);
+            CallLobbyHandlerRoomList(joinedLob);
         }
         catch (LobbyServiceException e)
         {
             Debug.Log($"EXCEPTION: {e}");
         }
+    }
+
+    public void StoreLobbyData() // just stores local references for the data information so we can easily update and compare across scripts (optional)
+    {
+        if (joinedLob == null)
+            return;
+
+        joinedLobbyId = joinedLob.Id;
+        joinedlobbyName = joinedLob.Name;
+        joinedLobbyIcon = joinedLob.Data[data_LobbyIcon].Value;
+        joinedLobbyMapEnv = joinedLob.Data[data_MapEnvironment].Value;
+        joinedLobbyGameMode = joinedLob.Data[data_LobbyGameMode].Value;
     }
 
     public async void LeaveLobby() // allows user to leave a lobby they have entered or created || if host leaves Unity has automatic host migration but it's random
@@ -304,6 +356,7 @@ public class NetworkingLobby : MonoBehaviour
         try
         {
             await LobbyService.Instance.RemovePlayerAsync(joinedLob.Id, AuthenticationService.Instance.PlayerId);
+            // need to add something here for when we leave lobbies
         }
         catch (LobbyServiceException e)
         {
@@ -323,6 +376,7 @@ public class NetworkingLobby : MonoBehaviour
             AuthenticationService.Instance.SignedIn += () =>
             {
                 Debug.Log($"Signed In {AuthenticationService.Instance.PlayerId}");
+                playerId = AuthenticationService.Instance.PlayerId;
             };
 
             // if we do anonomous
@@ -332,7 +386,7 @@ public class NetworkingLobby : MonoBehaviour
             int RandZ = Random.Range(0, possibleNamesPt3.Count - 1);
             playerName = $"{possibleNamesPt1[RandX]} {possibleNamesPt2[RandY]} {possibleNamesPt3[RandZ]}";
             playerIconId++;
-            playerIcon = data_Icons[playerIconId];
+            playerIcon = data_CharacterIcons[playerIconId];
 
             // turn on the ui obj so we can find lobbies or make our own match
             networkLobbyContainer.gameObject.SetActive(true);
@@ -354,7 +408,7 @@ public class NetworkingLobby : MonoBehaviour
                 Debug.Log($"Signed Out {AuthenticationService.Instance.PlayerId}");
             };
             playerIconId = 0;
-            playerIcon = data_Icons[playerIconId];
+            playerIcon = data_CharacterIcons[playerIconId];
 
             // turn off the ui obj so we can't find lobbies or make our own match
             networkLobbyContainer.gameObject.SetActive(false);
@@ -372,12 +426,13 @@ public class NetworkingLobby : MonoBehaviour
             Data = new Dictionary<string, PlayerDataObject> {
                 { data_PlayerName, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
                 { data_PlayerIcon, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerIcon) },
+                { data_PlayerIsReady, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerIsReady) },
             },
         };
 
     }
 
-    public async void UpdatePlayerData(string _newName, string _newIcon) // updating player data we send and then save it in services
+    public async void UpdatePlayerData(string _newName, string _newIcon, string _isReady) // updating player data we send and then save it in services
     {
         if (joinedLob == null)
             return;
@@ -388,6 +443,9 @@ public class NetworkingLobby : MonoBehaviour
         if (!string.IsNullOrEmpty(_newIcon))
             playerIcon = _newIcon;
 
+        if (!string.IsNullOrEmpty(_isReady))
+            playerIsReady = _isReady;
+
         try
         {
             await LobbyService.Instance.UpdatePlayerAsync(joinedLob.Id, AuthenticationService.Instance.PlayerId, new UpdatePlayerOptions
@@ -395,6 +453,7 @@ public class NetworkingLobby : MonoBehaviour
                 Data = new Dictionary<string, PlayerDataObject> {
                 { data_PlayerName, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
                 { data_PlayerIcon, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerIcon) },
+                { data_PlayerIsReady, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerIsReady) },
             },
             });
 
@@ -405,7 +464,7 @@ public class NetworkingLobby : MonoBehaviour
             Debug.Log($"EXCEPTION: {e}");
         }
     }
-    
+
 
     public void PrintPlayersInLobby(Lobby _lob) // a log for reading information from the players in a given lobby
     {
@@ -413,10 +472,10 @@ public class NetworkingLobby : MonoBehaviour
             return;
 
         Debug.Log($"Lobby Name: {_lob.Name} \nLobby Mode: {_lob.Data[data_LobbyGameMode].Value} \nLobby Map: {_lob.Data[data_MapEnvironment].Value}");
+
         foreach (Player player in _lob.Players)
-        {
             Debug.Log($"Player Data: ...\nID - {player.Id} \nPlayerName - {player.Data[data_PlayerName].Value}");
-        }
+
     }
 
     public void CheckDataOfJoinedLobby()// testing purposes only for testing updated information after joining a lobby
@@ -430,14 +489,42 @@ public class NetworkingLobby : MonoBehaviour
     {
         playerIconId++;
 
-        if (playerIconId == 0 || playerIconId >= data_Icons.Count)
+        if (playerIconId == 0 || playerIconId >= data_CharacterIcons.Count)
             playerIconId = 1;
 
-        playerIcon = data_Icons[playerIconId];
-        UpdatePlayerData(null, playerIcon);
+        playerIcon = data_CharacterIcons[playerIconId];
+        UpdatePlayerData(null, playerIcon, null);
     }
 
     #endregion player data
 
-   
+    #region CALLING EXTERNAL SOURCES
+
+    private void CallLobbyHandlerLobbyList(List<Lobby> _lobbyList)
+    {
+        try
+        {
+            LobbyHandler.Instance.RefreshLobbyList(_lobbyList);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log($"EXCEPTION: {e}");
+        }
+    }
+
+    private void CallLobbyHandlerRoomList(Lobby _joinedLobby) // sets up a room / updates the room for a specific lobby
+    {
+        try
+        {
+            LobbyHandler.Instance.RefreshRoomData(_joinedLobby);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log($"EXCEPTION: {e}");
+        }
+        
+    }
+
+    #endregion calling external sources
+
 } // end of NetworkingLobby Class

@@ -72,6 +72,8 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
             // send the player information for this specific room card
             if (ref_roomCardData)
                 ref_roomCardData.UpdatePlayerData(playerFound);
+            if (playerFound.Id == PlayerCardData.Instance.playerId)
+                ref_roomCardData.playerReadyToggle.interactable = true;
         }
 
     }
