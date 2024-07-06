@@ -7,9 +7,16 @@ using UnityEngine;
 //------- ^ required for unity lobby services
 using System.Collections;
 
-// following these websites
-// codemonkey lobby code <https://youtu.be/-KDlEBfCBiU?si=G2x9tyfwr1eG_ia1&t=2894> 
-// codemonkey multiplayer relay tutorial <https://www.youtube.com/watch?v=msPNJ2cxWfw&ab_channel=CodeMonkey>
+/// <notes>
+/// following these websites
+/// codemonkey lobby code <https://youtu.be/-KDlEBfCBiU?si=G2x9tyfwr1eG_ia1&t=2894> 
+/// codemonkey multiplayer relay tutorial <https://www.youtube.com/watch?v=msPNJ2cxWfw&ab_channel=CodeMonkey>
+///
+/// Lobby imposes some limits on the parameters you can provide when creating a lobby:
+/// Players in a lobby: 100
+/// Lobby data values: 20
+/// Player data values: 10
+/// </notes>
 
 public class NetworkingLobby : MonoBehaviour
 {
@@ -29,7 +36,6 @@ public class NetworkingLobby : MonoBehaviour
     public Lobby joinedLob; // same as above but if we joined. We always have a joined lobby but we might not always have a host lobby
     private float lobbyHeartbeatTimer = 25f;
     private float lobbyUpdateTimer = 2f;
-    private int lobIdSelected = -1;
     QueryResponse queryLobResp;
 
     // the local reference to variables stored for easy access and for easier updating / comparing
@@ -283,16 +289,19 @@ public class NetworkingLobby : MonoBehaviour
         }
     }
 
-    public async void JoinLobbyId(int _lobId) // joins lobby by an ID, which is most easily gathered by querying the possible lobbies
+    public async void JoinLobbyId(string _lobId) // joins lobby by an ID, which is most easily gathered by querying the possible lobbies
     {
-        lobIdSelected = _lobId;
+        if (string.IsNullOrEmpty(_lobId))
+            return;
+
         try
         {
-            if (_lobId == -1 || queryLobResp == null)
-                return;
+            //if (_lobId == -1 || queryLobResp == null)
+            //    return;
 
             JoinLobbyByIdOptions joinLobIdOptions = new JoinLobbyByIdOptions { Player = ReturnNewPlayerObj() };
-            Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByIdAsync(queryLobResp.Results[_lobId].Id, joinLobIdOptions);
+            Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByIdAsync(_lobId, joinLobIdOptions);
+            //Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByIdAsync(queryLobResp.Results[_lobId].Id, joinLobIdOptions); // if we want to join by an INT from our queried results
             joinedLob = joinedLobby;            
             PrintPlayersInLobby(joinedLob);
             CallLobbyHandlerRoomList(joinedLob);

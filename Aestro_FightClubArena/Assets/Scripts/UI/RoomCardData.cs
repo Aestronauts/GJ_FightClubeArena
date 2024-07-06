@@ -37,6 +37,8 @@ public class RoomCardData : MonoBehaviour
                 playerIconImg.sprite = iconImage;
             }
         }
+
+        UpdateReadyCheck();
     }
 
     public void UpdateReadyCheck() // this needs to tell the networking lobby that we are ready

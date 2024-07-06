@@ -18,18 +18,21 @@ public class LobbyCardData : MonoBehaviour // this goes on and handles the lobby
 
     public void UpdateLobbyData(Lobby _lobbyRef)
     {
-        myLobbyReference = _lobbyRef;
+        
 
-        if (myLobbyReference == null)
+        if (_lobbyRef == null)
             return;
 
+        myLobbyReference = _lobbyRef;
+
         //lobbyTitle.text = myLobbyReference.Data[NetworkingLobby.Instance.data_LobbyGameMode].Value;
+        myLobbyName = _lobbyRef.Name;
         lobbyTitle.text = _lobbyRef.Name;
         lobbyPlayerCount.text = $"{myLobbyReference.Players.Count}/{myLobbyReference.MaxPlayers}";
 
         foreach (Sprite iconImage in possibleGameModeSprites)
         {
-            if (iconImage.name == NetworkingLobby.Instance.playerIcon)
+            if (iconImage.name == _lobbyRef.Data[NetworkingLobby.Instance.data_LobbyIcon].Value)
             {
                 lobbyIcon.sprite = iconImage;
             }
@@ -42,6 +45,7 @@ public class LobbyCardData : MonoBehaviour // this goes on and handles the lobby
         if(myLobbyReference == null)
             return;
 
-        NetworkingLobby.Instance.JoinLobbyCode(myLobbyReference.LobbyCode);        
+        NetworkingLobby.Instance.JoinLobbyId(myLobbyReference.Id);
+        print($"tried to join by lobby ID: {myLobbyReference.Id}");
     }
 }
