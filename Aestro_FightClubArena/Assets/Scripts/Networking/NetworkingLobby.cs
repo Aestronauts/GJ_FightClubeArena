@@ -412,7 +412,7 @@ public class NetworkingLobby : MonoBehaviour
     {
         try
         {
-            AuthenticationService.Instance.SignedOut += () =>
+            AuthenticationService.Instance.SignOut(true); // adding true clears our anonymous credentials
             {
                 Debug.Log($"Signed Out {AuthenticationService.Instance.PlayerId}");
             };
@@ -421,6 +421,8 @@ public class NetworkingLobby : MonoBehaviour
 
             // turn off the ui obj so we can't find lobbies or make our own match
             networkLobbyContainer.gameObject.SetActive(false);
+            if (ref_PlayerCardData)
+                ref_PlayerCardData.UpdatePlayerData();
         }
         catch (LobbyServiceException e)
         {
