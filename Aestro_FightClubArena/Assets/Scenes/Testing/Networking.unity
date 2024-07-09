@@ -284,11 +284,17 @@ MonoBehaviour:
   playerIcon: 
   playerIconId: 0
   playerIsReady: 
+  joinedLobbyId: 
+  joinedlobbyName: 
+  joinedLobbyIcon: 
+  joinedLobbyMapEnv: 
+  joinedLobbyGameMode: 
   data_PlayerName: PlayerName
   data_PlayerIcon: PlayerIcon
   data_PlayerIsReady: PlayerIsReady
   data_LobbyGameMode: GameMode
   data_MapEnvironment: Map
+  data_LobbyIcon: LobbyIcon
   ref_PlayerCardData: {fileID: 1709448999}
 --- !u!1 &53556453
 GameObject:

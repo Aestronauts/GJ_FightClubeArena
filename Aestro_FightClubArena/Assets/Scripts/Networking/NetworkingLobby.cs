@@ -507,6 +507,11 @@ public class NetworkingLobby : MonoBehaviour
         UpdatePlayerData(null, playerIcon, null);
     }
 
+    public void ClearLocalPlayerData()
+    {
+        // resets player and visual data when called
+    }
+
     #endregion player data
 
     #region CALLING EXTERNAL SOURCES
