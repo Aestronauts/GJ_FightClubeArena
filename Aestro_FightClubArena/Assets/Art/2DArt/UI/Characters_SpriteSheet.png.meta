@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Characters_SpriteSheet_0
+      name: Characters_SpriteSheet_Gunslinger
       rect:
         serializedVersion: 2
         x: 31
@@ -118,7 +118,7 @@ TextureImporter:
         width: 231
         height: 372
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_1
+      name: Characters_SpriteSheet_Wizard
       rect:
         serializedVersion: 2
         x: 559
@@ -139,7 +139,7 @@ TextureImporter:
         width: 362
         height: 318
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_2
+      name: Characters_Icon_Gunslinger
       rect:
         serializedVersion: 2
         x: 125
@@ -160,7 +160,7 @@ TextureImporter:
         width: 79
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_3
+      name: Characters_Icon_Wizard
       rect:
         serializedVersion: 2
         x: 678
@@ -181,7 +181,7 @@ TextureImporter:
         width: 93
         height: 93
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_4
+      name: Characters_SpriteSheet_Dummy
       rect:
         serializedVersion: 2
         x: 64
@@ -202,7 +202,7 @@ TextureImporter:
         width: 166
         height: 318
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_5
+      name: Characters_SpriteSheet_Warrior
       rect:
         serializedVersion: 2
         x: 559
@@ -223,7 +223,7 @@ TextureImporter:
         width: 354
         height: 338
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_6
+      name: Characters_Icon_Dummy
       rect:
         serializedVersion: 2
         x: 126
@@ -244,7 +244,7 @@ TextureImporter:
         width: 83
         height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,7 +257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_SpriteSheet_7
+      name: Characters_Icon_Warrior
       rect:
         serializedVersion: 2
         x: 743
@@ -265,7 +265,7 @@ TextureImporter:
         width: 92
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,14 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Characters_SpriteSheet_0: 941176505
-      Characters_SpriteSheet_1: 490951506
-      Characters_SpriteSheet_2: 82772897
-      Characters_SpriteSheet_3: -823407233
-      Characters_SpriteSheet_4: 782086328
-      Characters_SpriteSheet_5: 1671576195
-      Characters_SpriteSheet_6: -1375609604
-      Characters_SpriteSheet_7: -2058608032
+      Characters_Icon_Dummy: -1375609604
+      Characters_Icon_Gunslinger: 82772897
+      Characters_Icon_Warrior: -2058608032
+      Characters_Icon_Wizard: -823407233
+      Characters_SpriteSheet_Dummy: 782086328
+      Characters_SpriteSheet_Gunslinger: 941176505
+      Characters_SpriteSheet_Warrior: 1671576195
+      Characters_SpriteSheet_Wizard: 490951506
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
