@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public GameObject Environment1;
     public GameObject Environment2;
     public GameObject FireMage;
+    public GameObject Character2;
+    public GameObject Character3;
 
     // Start is called before the first frame update
     void Start()
