@@ -19,11 +19,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject Environment1;
-    public GameObject Environment2;
-    public GameObject FireMage;
-    public GameObject Character2;
-    public GameObject Character3;
+    //public GameObject Environment1;
+    //public GameObject Environment2;
+    //public GameObject FireMage;
+    //public GameObject Character2;
+    //public GameObject Character3;
+
+    private Transform environment;
+    private Transform player1;
+    private Transform player2;
 
     // Start is called before the first frame update
     void Start()
@@ -35,5 +39,17 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // SetMatchStartData() takes a list of transforms that are either players or the map
+    // if bool isMap is true, then the list is just one item, and it's the map
+    public void SetMatchStartData(List<Transform> transforms, bool isMap)
+    {
+        if (isMap && transforms.Count == 1) environment = transforms[0];
+        else
+        {
+            player1 = transforms[0];
+            player2 = transforms[1];
+        }
     }
 }
