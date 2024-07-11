@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
     private Transform player1;
     private Transform player2;
 
+    private List<Transform> spawnedEnvironments = new List<Transform>();
+
+    private Vector3 environmentSpawnLocation = new Vector3(0,0,0);
+    private Vector3 player1SpawnLocation = new Vector3(-7, 0, 0);
+    private Vector3 player2SpawnLocation = new Vector3(7, 0, 0);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,11 +51,28 @@ public class GameManager : MonoBehaviour
     // if bool isMap is true, then the list is just one item, and it's the map
     public void SetMatchStartData(List<Transform> transforms, bool isMap)
     {
-        if (isMap && transforms.Count == 1) environment = transforms[0];
+        if (isMap && transforms.Count == 1)
+        {
+            environment = transforms[0];
+            SpawnEnvironment();
+        }
         else
         {
             player1 = transforms[0];
             player2 = transforms[1];
+            SpawnPlayers();
         }
+    }
+
+    private void SpawnEnvironment()
+    {
+        Transform newEnvironment = Instantiate(environment, environmentSpawnLocation, Quaternion.identity);
+        spawnedEnvironments.Add(newEnvironment);
+    }
+
+    private void SpawnPlayers()
+    {
+        Instantiate(player1, player1SpawnLocation, Quaternion.identity);
+        Instantiate(player2, player2SpawnLocation, Quaternion.identity);
     }
 }
