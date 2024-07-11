@@ -84,7 +84,10 @@ public class NetworkingLobby : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Instance = this;
+        if (NetworkingLobby.Instance != null && NetworkingLobby.Instance != this)
+            Destroy(this.gameObject);
+        else
+            Instance = this;
         //MakeOnlineAccount();
         InitializeVars();
     }
