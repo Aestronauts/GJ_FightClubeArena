@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     //public GameObject Character3;
 
     private Transform environment;
-    public Transform player1;
-    private Transform player2;
+    public Transform player1, player1_Obj;
+    public Transform player2, player2_Obj;
 
     private List<Transform> spawnedEnvironments = new List<Transform>();
 
@@ -52,8 +52,8 @@ public class GameManager : MonoBehaviour
     // if bool isMap is true, then the list is just one item, and it's the map
     public void SetMatchStartData(List<Transform> playerTransforms, Transform mapTransform)
     {
-        player1 = playerTransforms[0];
-        player2 = playerTransforms[1];
+        player1_Obj = playerTransforms[0];
+        player2_Obj = playerTransforms[1];
         environment = mapTransform;
 
         SpawnPlayers();
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPlayers()
     {
-        Instantiate(player1, player1SpawnLocation, Quaternion.identity);
-        Instantiate(player2, player2SpawnLocation, Quaternion.identity);
+        player1 = Instantiate(player1_Obj, player1SpawnLocation, Quaternion.identity);
+        player2 = Instantiate(player2_Obj, player2SpawnLocation, Quaternion.identity);
     }
 }

@@ -63,9 +63,9 @@ public class PlayerInputHandler : MonoBehaviour
             else
             {
                 //cast ability
-                Debug.Log("Casting Ability from PlayerInputHandler.cs");
-                GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                g.transform.position = DrawResult.Value;
+                //Debug.Log("Casting Ability from PlayerInputHandler.cs");
+                //GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //g.transform.position = DrawResult.Value;
                 PlayerCharacterManager.instance.CastAbility(GameManager.Instance.player1.gameObject, "Fire Bolt", DrawResult.Value);
             }
         }

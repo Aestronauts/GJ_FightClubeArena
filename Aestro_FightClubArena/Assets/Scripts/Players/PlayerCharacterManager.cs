@@ -14,7 +14,7 @@ public class PlayerCharacterManager : MonoBehaviour
     public List<GameObject> projectileList = new List<GameObject>();
     public GameObject model_FireBolt;
     public int damage = 1;
-    public int range = 7;
+    public int range = 15;
 
     [Header("Fire Pillar Information")]
     public GameObject FirePillar_gameObject;
