@@ -206,8 +206,8 @@ public class PlayerPracticeManager : MonoBehaviour
 
         }
         storeSelectedCharacters = charactersSelected;
-        // take this out
-        CallPlayerManager(storeSelectedCharacters, mapModelsByOrder[0]);
+        obj_UI_Holder_CharSelect.gameObject.SetActive(false); // turns off character select        
+        CallPlayerManager(storeSelectedCharacters, mapModelsByOrder[0]); // take this out
     }
 
     #endregion func: character select
