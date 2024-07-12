@@ -221,6 +221,26 @@ public class PlayerPracticeManager : MonoBehaviour
         // start selection
     }
 
+    public void ChangeMapSelectId(int _newSelectionId)
+    {
+        if (mapOptionOutline.Count == 0 || characterVisIcons.Count == 0)
+            return;
+
+        characterOptionOutline[charSelectId].GetComponent<Outline>().effectDistance = Vector2.zero;
+
+        charSelectId = _newSelectionId;
+
+        if (charSelectId > characterOptionOutline.Count - 1 || charSelectId > characterVisIcons.Count - 1)
+            charSelectId = 0;
+        if (charSelectId < 0)
+            charSelectId = characterOptionOutline.Count - 1;
+        // because ZERO = training dummy, we dont want to let the player select that
+        if (charSelectId == 0)
+            charSelectId++;
+
+        characterOptionOutline[charSelectId].GetComponent<Outline>().effectDistance = outlineSelection;
+        UpdateAllCardData();
+    }
 
     #endregion fun: map select
 
