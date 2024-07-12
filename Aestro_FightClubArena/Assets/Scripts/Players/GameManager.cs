@@ -47,21 +47,29 @@ public class GameManager : MonoBehaviour
         
     }
 
-    // SetMatchStartData() takes a list of transforms that are either players or the map
+    // SetMatchStartData() takes a list of transforms that are both players' models and
+    //      a singular tranform that is the environment map to spawn
     // if bool isMap is true, then the list is just one item, and it's the map
-    public void SetMatchStartData(List<Transform> transforms, bool isMap)
+    public void SetMatchStartData(List<Transform> playerTransforms, Transform mapTransform)
     {
-        if (isMap && transforms.Count == 1)
-        {
-            environment = transforms[0];
-            SpawnEnvironment();
-        }
-        else
-        {
-            player1 = transforms[0];
-            player2 = transforms[1];
-            SpawnPlayers();
-        }
+        player1 = playerTransforms[0];
+        player2 = playerTransforms[1];
+        environment = mapTransform;
+
+        SpawnPlayers();
+        SpawnEnvironment();
+
+        //if (isMap && transforms.Count == 1)
+        //{
+        //    environment = transforms[0];
+        //    SpawnEnvironment();
+        //}
+        //else
+        //{
+        //    player1 = transforms[0];
+        //    player2 = transforms[1];
+        //    SpawnPlayers();
+        //}
     }
 
     private void SpawnEnvironment()
