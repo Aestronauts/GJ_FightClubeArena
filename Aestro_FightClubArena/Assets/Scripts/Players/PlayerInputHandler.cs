@@ -45,7 +45,28 @@ public class PlayerInputHandler : MonoBehaviour
         AbilityTwo();
         AbilityThree();
         AbilityFour();
-       
+        //drawing
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            DrawOnScreen.instance.StartDrawing();
+        }
+
+        // Check for mouse button up
+        if (Input.GetMouseButtonUp(0))
+        {
+            KeyValuePair<string, Vector3> DrawResult = DrawOnScreen.instance.StopDrawing();
+            if (DrawResult.Key == null)
+            {
+                Debug.Log("Invalid!");
+            }
+            else
+            {
+                //cast ability
+                GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                g.transform.position = DrawResult.Value;
+            }
+        }
     }
 
     private void AbilityOne()

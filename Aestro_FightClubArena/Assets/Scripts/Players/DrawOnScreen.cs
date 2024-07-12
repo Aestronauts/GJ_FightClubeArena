@@ -2,9 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using System.Threading.Tasks;
 
 public class DrawOnScreen : MonoBehaviour
 {
+    public static DrawOnScreen instance;
+
     public Material lineMaterial;
     public float lineWidth = 0.1f;
     public Camera strokesCamera;
@@ -20,10 +23,19 @@ public class DrawOnScreen : MonoBehaviour
     public TextMeshProUGUI text1;
 
 
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this);
+        }
+        instance = this;
+    }
+
     void Update()
     {
         // Check for mouse button down
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             StartDrawing();
         }
@@ -32,7 +44,7 @@ public class DrawOnScreen : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             StopDrawing();
-        }
+        }*/
 
         // If the mouse is being dragged, draw
         if (isDrawing)
@@ -41,7 +53,7 @@ public class DrawOnScreen : MonoBehaviour
         }
     }
 
-    void StartDrawing()
+    public void StartDrawing()
     {
         isDrawing = true;
 
@@ -50,6 +62,7 @@ public class DrawOnScreen : MonoBehaviour
 
         // Add a LineRenderer component and set its properties
         currentLineRenderer = lineObj.AddComponent<LineRenderer>();
+        currentLineRenderer.gameObject.layer = 6;
         currentLineRenderer.material = lineMaterial;
         currentLineRenderer.startWidth = lineWidth;
         currentLineRenderer.endWidth = lineWidth;
@@ -58,13 +71,16 @@ public class DrawOnScreen : MonoBehaviour
         drawnPositions.Clear();
     }
 
-    void StopDrawing()
+    public KeyValuePair<string,Vector3> StopDrawing()
     {
         isDrawing = false;
+        Vector2 centroid = CalculateCentroid2D(drawnPositions);
+        
         string s = "Comparison\n";
         float HighestSimilarity = 0;
         int HighestIndex = 0;
         List<string> letters = new List<string> { "a", "b", "c" };
+
         for (int i = 0; i < predefinedPattern.Count; i++) {
             float similarity = CompareWithPredefinedPattern(predefinedPattern[i]);
             s += i + ":   " + similarity.ToString() + "\n";
@@ -76,15 +92,24 @@ public class DrawOnScreen : MonoBehaviour
         }
         s += "Matching: " + letters[HighestIndex] + " with similarity " + HighestSimilarity;
         Debug.Log(s);
-        text1.text = s;
+        if (text1 != null)
+        {
+            text1.text = s;
+        }
         ClearDrawing();
+        Vector3 v = MapTo3DGround(centroid);
+        if (v != new Vector3(0, -100, 0))
+        {
+            return new KeyValuePair<string, Vector3>(letters[HighestIndex], v);
+        }
+        return new KeyValuePair<string, Vector3>();
     }
 
     void Draw()
     {
         // Get the mouse position in screen space
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 10f; // Set a fixed distance from the camera
+        mousePosition.z = 1f; // Set a fixed distance from the camera
 
         // Convert the screen space mouse position to world space
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -266,4 +291,42 @@ public class DrawOnScreen : MonoBehaviour
 
         return resizedPattern;
     }
+    Vector2 CalculateCentroid2D(List<Vector3> positions)
+    {
+        if (positions.Count == 0)
+        {
+            return Vector2.zero;
+        }
+
+        Vector2 sum = Vector2.zero;
+        foreach (Vector3 pos in positions)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
+            sum += new Vector2(screenPos.x, screenPos.y);
+        }
+
+        return sum / positions.Count;
+    }
+
+    Vector3 MapTo3DGround(Vector2 screenPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenPosition.x, screenPosition.y, 0));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // Assuming the ground is at a specific layer
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Vector3 groundPosition = hit.point;
+                Debug.Log("Ground Position: " + groundPosition);
+                return groundPosition;
+                //GameObject g= GameObject.CreatePrimitive(PrimitiveType.Cube);
+                //g.transform.position = groundPosition;
+                // Perform further actions with the ground position
+            }
+        }
+        return new Vector3(0,-100,0);
+    }
+
 }
