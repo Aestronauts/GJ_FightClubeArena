@@ -14,9 +14,11 @@ public class PlayerPracticeManager : MonoBehaviour
     public static PlayerPracticeManager Instance { get; private set; }
 
     public enum GAMEMODE {Practice, MultiplayerOnline, };
+
     public GAMEMODE selectedGamemode;
     public int numberOfPlayers = 2;
     private int localPlayerID = 0;
+
 
     #region Variables: Character Select
     [Tooltip("The Different UI Objects under our canvas that hold relevant data to selecting characters")]
@@ -35,12 +37,26 @@ public class PlayerPracticeManager : MonoBehaviour
     private Vector2 outlineSelection = new Vector2(15, -15);
     #endregion var: character select
 
+
     #region Variables: Map Select
     [Tooltip("The Different UI Objects under our canvas that hold relevant data to selecting a map")]
     public Transform obj_UI_Holder_MapSelect, obj_UI_Holder_MapOptions, obj_UI_Holder_MapVisual;
+    [Tooltip("The map icons that we can select from during character select")]
+    public List<Outline> mapOptionOutline = new List<Outline>();
+    // the map option we have selected
+    private int mapSelectId = 0;
     #endregion var: map select
 
+
     #region Variables: Model References
+    [Tooltip("The list of player models / characters that should be organized to match the character selection icons / cards. Each character's selection during character selection will then be used to pass the data to another script as a new list")]
+    public List<Transform> playerModelsByOrder = new List<Transform>();
+    [Tooltip("The list of map models that should be organized to match the map selection icons / cards. The map selection will then be used to pass the data to another script as a new list")]
+    public List<Transform> mapModelsByOrder = new List<Transform>();
+    // the list we will populate as we selected characters
+    private List<Transform> storeSelectedCharacters = new List<Transform>();
+    // the map we will store as we select our map
+    private Transform storeSelectedMap;
     #endregion var: model references
 
     public void Awake()
@@ -54,9 +70,16 @@ public class PlayerPracticeManager : MonoBehaviour
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            ChangeCharacterSelectId(charSelectId + 1);
+        {
+            if (obj_UI_Holder_CharSelect.gameObject.activeSelf == true)
+                ChangeCharacterSelectId(charSelectId + 1);
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            ChangeCharacterSelectId(charSelectId - 1);
+        {
+            if(obj_UI_Holder_CharSelect.gameObject.activeSelf == true)
+                ChangeCharacterSelectId(charSelectId - 1);
+        }
     }
 
     public void SelectedPracticeMode()
@@ -65,17 +88,22 @@ public class PlayerPracticeManager : MonoBehaviour
         obj_UI_Holder_CharSelect.gameObject.SetActive(true); // turns on character select
         ChangeCharacterSelectId(0); // sets character select ID to be 0 / first available option
     }
+  
 
-    public void OpenMapSelect()
+    public  void CallPlayerManager(List<Transform> _charactersToSpawn, Transform _mapToSpawn)
     {
-
+        GameManager.Instance.SetMatchStartData(_charactersToSpawn, _mapToSpawn);
     }
+
 
     #region Functions: Character Select
 
     public void ChangeCharacterSelectByButton(Button pressedButton)
     {
-        for(int i = 0; i < characterOptionOutline.Count; i++)
+        if (obj_UI_Holder_CharSelect.gameObject.activeSelf == false)
+            return;
+
+        for (int i = 0; i < characterOptionOutline.Count; i++)
         {
             if (pressedButton.transform == characterOptionOutline[i].transform)
             {
@@ -115,7 +143,6 @@ public class PlayerPracticeManager : MonoBehaviour
                 return;
         }
 
-
         for(int i = 0; i < numberOfPlayers; i++)
         {
             Transform uiParent = null;
@@ -152,9 +179,49 @@ public class PlayerPracticeManager : MonoBehaviour
             }
             
         }
+
+    }
+    
+    public void ReadCharacterSelectionData()
+    {
+        if (playerModelsByOrder.Count == 0)
+            return;
+
+        List<Transform> charactersSelected = new List<Transform>();
+
+        // loop through the different cards we have spawned for character select        
+        foreach (CharacterSelectCard _charSelCard in charCardsList)
+        {
+            int charId = 0;
+            foreach (Sprite _iconAvailable in characterVisIcons)
+            {
+                if (_charSelCard.characterSprite.sprite == _iconAvailable)
+                {
+                    charactersSelected.Add(playerModelsByOrder[charId]);
+                    break;
+                }
+                else
+                    charId++;
+            }
+
+        }
+        storeSelectedCharacters = charactersSelected;
+        // take this out
+        CallPlayerManager(storeSelectedCharacters, mapModelsByOrder[0]);
+    }
+
+    #endregion func: character select
+
+    #region Functions: Map Select
+
+    public void OpenMapSelect()
+    {
+        // open up the map scene
+        obj_UI_Holder_MapOptions.gameObject.SetActive(true);
+        // start selection
     }
 
 
-    #endregion func: character select
+    #endregion fun: map select
 
 }// end of PlayerPracticeManager class
