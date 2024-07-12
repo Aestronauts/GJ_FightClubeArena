@@ -11,6 +11,8 @@ using TMPro;
 /// </summary>
 public class PlayerPracticeManager : MonoBehaviour
 {
+    public static PlayerPracticeManager Instance { get; private set; }
+
     public enum GAMEMODE {Practice, MultiplayerOnline, };
     public GAMEMODE selectedGamemode;
     public int numberOfPlayers = 2;
@@ -34,10 +36,20 @@ public class PlayerPracticeManager : MonoBehaviour
     #endregion var: character select
 
     #region Variables: Map Select
+    [Tooltip("The Different UI Objects under our canvas that hold relevant data to selecting a map")]
+    public Transform obj_UI_Holder_MapSelect, obj_UI_Holder_MapOptions, obj_UI_Holder_MapVisual;
     #endregion var: map select
 
     #region Variables: Model References
     #endregion var: model references
+
+    public void Awake()
+    {
+        if (PlayerPracticeManager.Instance != null && PlayerPracticeManager.Instance != this)
+            Destroy(this.gameObject);
+        else
+            Instance = this;
+    }
 
     public void Update()
     {
@@ -50,8 +62,13 @@ public class PlayerPracticeManager : MonoBehaviour
     public void SelectedPracticeMode()
     {
         selectedGamemode = GAMEMODE.Practice;
-        obj_UI_Holder_CharSelect.gameObject.SetActive(true);
-        ChangeCharacterSelectId(0);
+        obj_UI_Holder_CharSelect.gameObject.SetActive(true); // turns on character select
+        ChangeCharacterSelectId(0); // sets character select ID to be 0 / first available option
+    }
+
+    public void OpenMapSelect()
+    {
+
     }
 
     #region Functions: Character Select

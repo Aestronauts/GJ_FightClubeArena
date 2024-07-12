@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCharacterManager : MonoBehaviour
 {
+    public static PlayerCharacterManager instance { get; private set; }
+
     AbilityManager abilityManager;
     public TempEnemy_Abilities tempEnemy;
 
@@ -21,7 +23,15 @@ public class PlayerCharacterManager : MonoBehaviour
     public int FP_range = 12;
     public float FP_duration = 3f;
     public float FP_DPS_rate = 0.75f;
-    
+
+    private void Awake()
+    {
+        if (PlayerCharacterManager.instance != null && PlayerCharacterManager.instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

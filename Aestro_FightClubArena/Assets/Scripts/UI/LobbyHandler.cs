@@ -22,7 +22,11 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
 
     private void Awake()
     {
-        Instance = this;
+        if (LobbyHandler.Instance != null && LobbyHandler.Instance != this)
+            Destroy(this.gameObject);
+        else
+            Instance = this;
+       
         lobbyCardTemplate.gameObject.SetActive(false);
     }   
 

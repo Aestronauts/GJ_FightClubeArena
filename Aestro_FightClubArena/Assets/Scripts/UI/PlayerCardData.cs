@@ -16,7 +16,10 @@ public class PlayerCardData : MonoBehaviour // the ui handler for player data wh
 
     private void Awake()
     {
-        Instance = this;        
+        if (PlayerCardData.Instance != null && PlayerCardData.Instance != this)
+            Destroy(this.gameObject);
+        else
+            Instance = this;
     }
 
     public void UpdatePlayerData()
