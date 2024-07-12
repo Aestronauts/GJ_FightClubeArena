@@ -40,15 +40,17 @@ Material:
     - _Alpha: 0.7
     - _FresnelPower: 0.77
     - _FresnelStrength: 2.29
-    - _Glow: 1
-    - _Opacity: 0.49
+    - _Glow: 2.19
+    - _Opacity: -0.13
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RefractionStrength: 1
     m_Colors:
-    - _Color: {r: 0.76116633, g: 0.30495724, b: 0.8396226, a: 0}
-    - _Color_2: {r: 0.5170832, g: 0, b: 0.5660378, a: 0}
-    - _HighlightColor: {r: 0.9254854, g: 0.48584908, b: 1, a: 0}
+    - _Color: {r: 0.67058825, g: 0.21176471, b: 0.41590953, a: 0}
+    - _Color3: {r: 0, g: 0.34431645, b: 0.6792453, a: 0}
+    - _Color_2: {r: 0.43529412, g: 0.1529412, b: 0.23763567, a: 0}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
+    - _HighlightColor: {r: 1, g: 0.5803922, b: 0.8590544, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3724103173786325036
 MonoBehaviour:
