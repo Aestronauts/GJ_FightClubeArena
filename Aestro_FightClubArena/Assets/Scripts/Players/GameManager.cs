@@ -26,14 +26,14 @@ public class GameManager : MonoBehaviour
     //public GameObject Character3;
 
     private Transform environment;
-    private Transform player1;
+    public Transform player1;
     private Transform player2;
 
     private List<Transform> spawnedEnvironments = new List<Transform>();
 
     private Vector3 environmentSpawnLocation = new Vector3(0,0,0);
-    private Vector3 player1SpawnLocation = new Vector3(-7, 0, 0);
-    private Vector3 player2SpawnLocation = new Vector3(7, 0, 0);
+    private Vector3 player1SpawnLocation = new Vector3(0, 0, 3);
+    private Vector3 player2SpawnLocation = new Vector3(0, 0, -3);
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnvironment()
     {
         Transform newEnvironment = Instantiate(environment, environmentSpawnLocation, Quaternion.identity);
+        newEnvironment.transform.Rotate(0, -90, 0);
         spawnedEnvironments.Add(newEnvironment);
     }
 
