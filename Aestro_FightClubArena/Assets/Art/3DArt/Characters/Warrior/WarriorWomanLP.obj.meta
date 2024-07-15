@@ -7,7 +7,32 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Body_lowFBXASC046005SG
+    second: {fileID: 2100000, guid: 36b5620b754f6364fb06fa08e456b060, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body_lowFBXASC046005SG2
+    second: {fileID: 2100000, guid: 593aa260d9de7314f8e7585033a74ae1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body_lowFBXASC046005SG3
+    second: {fileID: 2100000, guid: d4e7b941221f2e3479789cb705cc5daf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GirlSG
+    second: {fileID: 2100000, guid: 761273a569dd1f040bc242217a77e743, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: face2_warriorMat
+    second: {fileID: 2100000, guid: 5616d92ca5915af44af206ca37a30491, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface1SG
     second: {fileID: 2100000, guid: 5616d92ca5915af44af206ca37a30491, type: 2}
   - first:
       type: UnityEngine:Material
