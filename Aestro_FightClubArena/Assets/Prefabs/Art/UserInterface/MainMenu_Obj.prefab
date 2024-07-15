@@ -2679,8 +2679,8 @@ MonoBehaviour:
   - {fileID: 7815141611520830262, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
   - {fileID: 7701488958109651105, guid: 97ef46fdac40c314aa283a94ac654a20, type: 3}
   mapModelsByOrder:
+  - {fileID: 2233031940504927829, guid: 683452651aac46d438154d4dba338278, type: 3}
   - {fileID: 957020081481122933, guid: 8dad4dc60f79b49059bc3d613b7ec0df, type: 3}
-  - {fileID: 3800020319984717701, guid: 1577de834c3e2fd4ea92f13d87cf26ca, type: 3}
 --- !u!1 &4501130696671222638
 GameObject:
   m_ObjectHideFlags: 0
