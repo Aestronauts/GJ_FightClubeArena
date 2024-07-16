@@ -12,13 +12,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     private CharacterController _controller;
     private Vector3 velocity;
+    
+    private float originalY;
 
-    
-    
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
+        originalY = transform.position.y;
     }
 
     // Update is called once per frame
@@ -30,10 +31,22 @@ public class PlayerInputHandler : MonoBehaviour
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         
-        Quaternion targetRotation = Quaternion.LookRotation(move);
-        mage.transform.rotation = targetRotation;
-
+        if (move != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            mage.transform.rotation = Quaternion.Slerp(mage.transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+        
         _controller.Move(move * speed * Time.deltaTime);
+        
+        velocity.y = -2f;
+        
+        if (transform.position.y > originalY)
+        {
+            Vector3 clampedPosition = transform.position;
+            clampedPosition.y = originalY;
+            transform.position = clampedPosition;
+        }
 
         //if we want to jump
         //velocity.y += gravity * Time.deltaTime;

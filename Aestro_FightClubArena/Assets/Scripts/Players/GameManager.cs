@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     private List<Transform> spawnedEnvironments = new List<Transform>();
 
     private Vector3 environmentSpawnLocation = new Vector3(0,0,0);
-    private Vector3 player1SpawnLocation = new Vector3(7, 0, 3);
-    private Vector3 player2SpawnLocation = new Vector3(-3, 0, -3);
+    private Vector3 player1SpawnLocation = new Vector3(7, -1, 3);
+    private Vector3 player2SpawnLocation = new Vector3(-3, -1, -3);
 
     // Start is called before the first frame update
     void Start()
