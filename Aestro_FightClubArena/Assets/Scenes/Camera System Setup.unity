@@ -444,6 +444,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9defe0503bf46c4958799d6e85a4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempEnemy: {fileID: 0}
+  projectileList: []
+  model_FireBolt: {fileID: 0}
+  damage: 1
+  range: 15
+  FirePillar_gameObject: {fileID: 0}
+  FP_damage_burst: 3
+  FP_damage_overtime: 1
+  FP_range: 12
+  FP_duration: 3
+  FP_DPS_rate: 0.75
 --- !u!1 &475073371
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,6 +484,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9defe0503bf46c4958799d6e85a4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempEnemy: {fileID: 0}
+  projectileList: []
+  model_FireBolt: {fileID: 0}
+  damage: 1
+  range: 15
+  FirePillar_gameObject: {fileID: 0}
+  FP_damage_burst: 3
+  FP_damage_overtime: 1
+  FP_range: 12
+  FP_duration: 3
+  FP_DPS_rate: 0.75
 --- !u!4 &475073373
 Transform:
   m_ObjectHideFlags: 0
@@ -597,7 +619,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5760889573605124354, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -607,6 +630,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3870527129052904089, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1667391378}
+    - targetCorrespondingSourceObject: {fileID: 3870527129052904089, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1667391379}
   m_SourcePrefab: {fileID: 100100000, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
 --- !u!1 &1667391376 stripped
 GameObject:
@@ -647,7 +673,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCharacterManager: {fileID: 475073372}
-  FireBolt: {fileID: 11400000, guid: 11bc284f4f51d46f7955d306d2e5e479, type: 2}
+--- !u!95 &1667391379
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667391376}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3de8950c156e65c40aa228ff23299bf3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2076129065
 GameObject:
   m_ObjectHideFlags: 0
