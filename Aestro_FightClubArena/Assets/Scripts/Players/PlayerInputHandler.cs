@@ -14,12 +14,15 @@ public class PlayerInputHandler : MonoBehaviour
     private Vector3 velocity;
     
     private float originalY;
+    
+    private Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
         originalY = transform.position.y;
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -62,6 +65,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            RotateToMouse();
             DrawOnScreen.instance.StartDrawing();
         }
 
@@ -126,6 +130,28 @@ public class PlayerInputHandler : MonoBehaviour
         PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
         yield return new WaitForSeconds(.5f);
         PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
+    }
+    
+    void RotateToMouse()
+    {
+        // Get the mouse position in screen space
+        Vector3 mouseScreenPosition = Input.mousePosition;
+
+        // Convert the screen position to a point in the world
+        Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        if (groundPlane.Raycast(ray, out float distance))
+        {
+            Vector3 mouseWorldPosition = ray.GetPoint(distance);
+
+            // Calculate the direction vector from the character to the mouse position
+            Vector3 direction = mouseWorldPosition - transform.position;
+            direction.y = 0; // Keep the direction strictly horizontal
+
+            // Rotate the character to face the calculated direction
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            mage.transform.rotation = targetRotation;
+        }
     }
 
 
