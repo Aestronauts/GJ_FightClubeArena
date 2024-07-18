@@ -50,7 +50,7 @@ public class PlayerCharacterManager : MonoBehaviour
     {
         // Choose "if" logic by matching the given ability name
         // TODO: Is there a better way of doing this???
-        if (abilityName == "Fire Bolt")
+        if (abilityName == "Firebolt")
         {
             FireFireBolt(player_gameObject, castLocation);
         }
