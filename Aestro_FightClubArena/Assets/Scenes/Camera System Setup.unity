@@ -929,11 +929,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1.3237613e-15
+      value: -0.000000026005676
       objectReference: {fileID: 0}
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.292999e-16
+      value: 0.00000001455621
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.w
