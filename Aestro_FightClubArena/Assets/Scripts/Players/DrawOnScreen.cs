@@ -79,7 +79,7 @@ public class DrawOnScreen : MonoBehaviour
         string s = "Comparison\n";
         float HighestSimilarity = 0;
         int HighestIndex = 0;
-        List<string> letters = new List<string> { "Firebolt", "Twin Firebolt", "Fire Pillar", "Extinguish", "Flame Thrower", "Blink" };
+        List<string> letters = new List<string> { "Firebolt", "Twin Firebolt", "Fire Pillar", "Extinguish", "Blink" };
 
         for (int i = 0; i < predefinedPattern.Count; i++) {
             float similarity = CompareWithPredefinedPattern(predefinedPattern[i]);
