@@ -49,7 +49,9 @@ MonoBehaviour:
   strokesCamera: {fileID: 0}
   comparisonThreshold: 0.1
   predefinedPattern:
-  - {fileID: 2800000, guid: b72b422c124050a4b85f77371a6e9ad1, type: 3}
-  - {fileID: 2800000, guid: bb1fff56380a52a4080fbebeae32018c, type: 3}
-  - {fileID: 2800000, guid: e3f2cabb17c2b19419d0ba3927e62453, type: 3}
+  - {fileID: 2800000, guid: 4df89721b19220e40aa8271b75d60b97, type: 3}
+  - {fileID: 2800000, guid: 53defc73da520234dbccb2bf8a2ae6e0, type: 3}
+  - {fileID: 2800000, guid: 3a58259a54ef09644bcbe11ab222717a, type: 3}
+  - {fileID: 2800000, guid: 4445841dc44ca454ca888ef37dd0e311, type: 3}
+  - {fileID: 2800000, guid: 9e7caef1e1c5dd24f968d707e6e9601a, type: 3}
   text1: {fileID: 0}

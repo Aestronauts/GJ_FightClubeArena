@@ -11,6 +11,7 @@ public class PlayerInputHandler : MonoBehaviour
     public GameObject mage;
 
     private CharacterController _controller;
+    private Animator _mageAnimator;
     private Vector3 velocity;
     
     private float originalY;
@@ -23,6 +24,9 @@ public class PlayerInputHandler : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         originalY = transform.position.y;
         mainCamera = Camera.main;
+
+        _mageAnimator = mage.GetComponent<Animator>();
+        if (_mageAnimator == null) Debug.LogError("Mage Animator Null");
     }
 
     // Update is called once per frame
@@ -33,13 +37,21 @@ public class PlayerInputHandler : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
-        
+
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move);
             mage.transform.rotation = Quaternion.Slerp(mage.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            _mageAnimator.SetTrigger("isWalking");
+            Debug.Log("Walking"); 
         }
-        
+        else
+        {
+            _mageAnimator.SetTrigger("isIdle");
+            Debug.Log("Idle");
+
+        }
+
         _controller.Move(move * speed * Time.deltaTime);
         
         velocity.y = -2f;
@@ -66,12 +78,15 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RotateToMouse();
-            DrawOnScreen.instance.StartDrawing();
+            if(DrawOnScreen.instance != null) DrawOnScreen.instance.StartDrawing();
+
         }
 
         // Check for mouse button up
         if (Input.GetMouseButtonUp(0))
         {
+            if (DrawOnScreen.instance == null) return;
+            
             KeyValuePair<string, Vector3> DrawResult = DrawOnScreen.instance.StopDrawing();
             if (DrawResult.Key == null)
             {
@@ -93,6 +108,7 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
+            _mageAnimator.SetTrigger("isBasicAttacks");
             AbilitiesHelper.Ability1();
         }
     }
@@ -100,6 +116,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            _mageAnimator.SetTrigger("isTwinFlames");
             AbilitiesHelper.Ability2();
             StartCoroutine(TwinFlamesFX());
         }
@@ -109,7 +126,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-
+            _mageAnimator.SetTrigger("isFirePillar");
             AbilitiesHelper.Ability3();
             PlayerCameraManager.instance.ShakeCamera(1f, .5f, .6f);
 
