@@ -11,7 +11,7 @@ public class PlayerInputHandler : MonoBehaviour
     public GameObject mage;
 
     private CharacterController _controller;
-    private Animator _mageAnimator;
+    public Animator _mageAnimator;
     private Vector3 velocity;
     
     private float originalY;
