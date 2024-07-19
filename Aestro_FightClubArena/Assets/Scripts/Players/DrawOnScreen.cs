@@ -81,8 +81,10 @@ public class DrawOnScreen : MonoBehaviour
         int HighestIndex = 0;
         List<string> letters = new List<string> { "Firebolt", "Twin Firebolt", "Fire Pillar", "Extinguish", "Blink" };
 
+        Texture2D PlayerDrawnTexture = ExtractPattern();
+
         for (int i = 0; i < predefinedPattern.Count; i++) {
-            float similarity = CompareWithPredefinedPattern(predefinedPattern[i]);
+            float similarity = ComparePatterns(PlayerDrawnTexture, predefinedPattern[i]);
             s += i + ":   " + similarity.ToString() + "\n";
             if (similarity > HighestSimilarity)
             {
@@ -132,14 +134,32 @@ public class DrawOnScreen : MonoBehaviour
         drawnPositions.Clear();
     }
 
-    float CompareWithPredefinedPattern(Texture2D texture)
+    Rect GetBoundingBox(List<Vector3> positions)
     {
-        if (predefinedPattern == null)
+        if (positions.Count == 0)
         {
-            Debug.LogWarning("No predefined pattern assigned.");
-            return 0;
+            return new Rect();
         }
 
+        float minX = float.MaxValue;
+        float minY = float.MaxValue;
+        float maxX = float.MinValue;
+        float maxY = float.MinValue;
+
+        foreach (Vector3 pos in positions)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
+            minX = Mathf.Min(minX, screenPos.x);
+            minY = Mathf.Min(minY, screenPos.y);
+            maxX = Mathf.Max(maxX, screenPos.x);
+            maxY = Mathf.Max(maxY, screenPos.y);
+        }
+
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    Texture2D ExtractPattern()
+    {
         // Enable the strokes camera
         strokesCamera.enabled = true;
 
@@ -165,46 +185,14 @@ public class DrawOnScreen : MonoBehaviour
         // Extract the bounding box of the drawn pattern
         Rect boundingBox = GetBoundingBox(drawnPositions);
 
-        // Get the extracted pattern texture
-        Texture2D extractedPattern = ExtractPattern(drawnPattern, boundingBox);
 
-        // Compare the extracted pattern with the predefined pattern
-        return ComparePatterns(extractedPattern, texture);
-    }
-
-    Rect GetBoundingBox(List<Vector3> positions)
-    {
-        if (positions.Count == 0)
-        {
-            return new Rect();
-        }
-
-        float minX = float.MaxValue;
-        float minY = float.MaxValue;
-        float maxX = float.MinValue;
-        float maxY = float.MinValue;
-
-        foreach (Vector3 pos in positions)
-        {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
-            minX = Mathf.Min(minX, screenPos.x);
-            minY = Mathf.Min(minY, screenPos.y);
-            maxX = Mathf.Max(maxX, screenPos.x);
-            maxY = Mathf.Max(maxY, screenPos.y);
-        }
-
-        return new Rect(minX, minY, maxX - minX, maxY - minY);
-    }
-
-    Texture2D ExtractPattern(Texture2D source, Rect boundingBox)
-    {
-        int x = Mathf.FloorToInt(Mathf.Clamp(boundingBox.xMin, 0, source.width));
-        int y = Mathf.FloorToInt(Mathf.Clamp(boundingBox.yMin, 0, source.height));
-        int width = Mathf.FloorToInt(Mathf.Clamp(boundingBox.width, 0, source.width - x));
-        int height = Mathf.FloorToInt(Mathf.Clamp(boundingBox.height, 0, source.height - y));
+        int x = Mathf.FloorToInt(Mathf.Clamp(boundingBox.xMin, 0, drawnPattern.width));
+        int y = Mathf.FloorToInt(Mathf.Clamp(boundingBox.yMin, 0, drawnPattern.height));
+        int width = Mathf.FloorToInt(Mathf.Clamp(boundingBox.width, 0, drawnPattern.width - x));
+        int height = Mathf.FloorToInt(Mathf.Clamp(boundingBox.height, 0, drawnPattern.height - y));
 
         // Extract the pixels from the source texture
-        Color[] pixels = source.GetPixels(x, y, width, height);
+        Color[] pixels = drawnPattern.GetPixels(x, y, width, height);
 
         // Create a new texture and set the extracted pixels
         Texture2D extractedPattern = new Texture2D(width, height, TextureFormat.RGBA32, false);
