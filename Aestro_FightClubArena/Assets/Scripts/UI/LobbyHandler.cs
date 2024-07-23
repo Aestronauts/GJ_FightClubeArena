@@ -19,6 +19,8 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
     [SerializeField] private Transform roomRootContainer;
     [Tooltip("The Root Canvas Object that is the room Obj and will be duplicated")]
     [SerializeField] private Transform roomCardTemplate;
+    [Tooltip("The Root Canvas Object that holds the Lobby buttons to change settings or start-up a game)")]
+    [SerializeField] private Transform roomOptionsContianer;
 
     private void Awake()
     {
@@ -59,6 +61,8 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
     {
         if (roomRootContainer)
             roomRootContainer.gameObject.SetActive(true);
+        else
+            return;
 
         foreach (Transform child in roomRootContainer) // remove current entries
         {
@@ -79,6 +83,11 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
             if (playerFound.Id == PlayerCardData.Instance.playerId)
                 ref_roomCardData.playerReadyToggle.interactable = true;
         }
+
+        if (NetworkingLobby.Instance.hostLob != null && roomOptionsContianer)
+            roomOptionsContianer.gameObject.SetActive(true);
+        else if (NetworkingLobby.Instance.hostLob == null && roomOptionsContianer)
+            roomOptionsContianer.gameObject.SetActive(false);
 
     }
 

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// <para> the specific data that each card in a networking lobby references </para>
+/// </summary>
 public class RoomCardData : MonoBehaviour
 {
 

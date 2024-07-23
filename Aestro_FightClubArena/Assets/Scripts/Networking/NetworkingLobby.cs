@@ -47,12 +47,14 @@ public class NetworkingLobby : MonoBehaviour
     public string playerIsReady = "";
     // lobby
     public string joinedLobbyId = "";
-    public string joinedlobbyName = "";
+    public string joinedlobbyName = "";    
     public string joinedLobbyIcon = "";
     public string joinedLobbyMapEnv = "";
     public string joinedLobbyGameMode = "";
+    public string joinedLobbyServerJoinCode = "";
+    public int lobMaxPlayers = 8;
 
-    
+
 
     // special variables for lobby and player data
     // player
@@ -63,6 +65,7 @@ public class NetworkingLobby : MonoBehaviour
     [HideInInspector] public string data_LobbyGameMode = "GameMode";
     [HideInInspector] public string data_MapEnvironment = "Map";
     [HideInInspector] public string data_LobbyIcon = "LobbyIcon";
+    [HideInInspector] public string data_LobbyServerJoinCode = "ServerJoinCode";
 
     // more reference data for available options
     private List<string> data_CharacterIcons = new List<string>() { "icon_char_offline", "icon_char_wizard", "icon_char_warrior", "icon_char_gunner", };
@@ -96,6 +99,7 @@ public class NetworkingLobby : MonoBehaviour
     {
         KeepLobbyActive();
         UpdateLobbyServerData();
+        CheckToJoinServerByCode();
     }
 
     private void InitializeVars()
@@ -114,7 +118,6 @@ public class NetworkingLobby : MonoBehaviour
         try
         {
             string lobName = $"{playerName}'s Lobby";
-            int lobMaxPlayers = 8;
             CreateLobbyOptions createLobOptions = new CreateLobbyOptions
             {
                 IsPrivate = _isPrivate,
@@ -122,7 +125,8 @@ public class NetworkingLobby : MonoBehaviour
                 Data = new Dictionary<string, DataObject> {                    
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, data_GameModes[0], DataObject.IndexOptions.S1) },  // gamemode[0] = Deathmatch
                      { data_MapEnvironment, new DataObject(DataObject.VisibilityOptions.Public, data_MapEnvironments[0], DataObject.IndexOptions.S2) }, // map[0] = RottenGrove
-                     { data_LobbyIcon, new DataObject(DataObject.VisibilityOptions.Public, playerIcon, DataObject.IndexOptions.S3) }, // icon will be taken from the host creator's icon
+                     { data_LobbyIcon, new DataObject(DataObject.VisibilityOptions.Public, playerIcon) }, // icon will be taken from the host creator's icon
+                     { data_LobbyServerJoinCode, new DataObject(DataObject.VisibilityOptions.Member, joinedLobbyServerJoinCode) }, // the join code data for joining a server
                 },
             };
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobName, lobMaxPlayers, createLobOptions);
@@ -179,7 +183,7 @@ public class NetworkingLobby : MonoBehaviour
 
     }
 
-    public async void UpdateLobbyData(string _gameMode, string _mapEnv, string _lobIcon) // allows changing of our hosted lobby's game data like GameMode (can include more variables passed if we want to update more
+    public async void UpdateLobbyData(string _gameMode, string _mapEnv, string _lobIcon, string _serverJoinCode) // allows changing of our hosted lobby's game data like GameMode (can include more variables passed if we want to update more
     {
         if (hostLob == null)
             return;
@@ -193,6 +197,9 @@ public class NetworkingLobby : MonoBehaviour
         if (!string.IsNullOrEmpty(_lobIcon))
             joinedLobbyIcon = _lobIcon;
 
+        if (!string.IsNullOrEmpty(_serverJoinCode))
+            joinedLobbyServerJoinCode = _serverJoinCode;
+
         try
         {
             hostLob = await Lobbies.Instance.UpdateLobbyAsync(hostLob.Id, new UpdateLobbyOptions // update our hosted lobby
@@ -201,6 +208,7 @@ public class NetworkingLobby : MonoBehaviour
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyGameMode) },// update data for game mode
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyMapEnv) }, // update map
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyIcon) }, // update lobby icon
+                    { data_LobbyServerJoinCode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyServerJoinCode) }, // update server join code
                 } 
 
             });
@@ -339,7 +347,6 @@ public class NetworkingLobby : MonoBehaviour
         {
             Lobby joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
             joinedLob = joinedLobby;            
-            CallLobbyHandlerRoomList(joinedLob);
             PrintPlayersInLobby(joinedLob);
             CallLobbyHandlerRoomList(joinedLob);
         }
@@ -359,6 +366,7 @@ public class NetworkingLobby : MonoBehaviour
         joinedLobbyIcon = joinedLob.Data[data_LobbyIcon].Value;
         joinedLobbyMapEnv = joinedLob.Data[data_MapEnvironment].Value;
         joinedLobbyGameMode = joinedLob.Data[data_LobbyGameMode].Value;
+        joinedLobbyServerJoinCode = joinedLob.Data[data_LobbyServerJoinCode].Value;
     }
 
     public async void LeaveLobby() // allows user to leave a lobby they have entered or created || if host leaves Unity has automatic host migration but it's random
@@ -521,27 +529,20 @@ public class NetworkingLobby : MonoBehaviour
 
     private void CallLobbyHandlerLobbyList(List<Lobby> _lobbyList)
     {
-        try
-        {
+        if (LobbyHandler.Instance)
             LobbyHandler.Instance.RefreshLobbyList(_lobbyList);
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.Log($"EXCEPTION: {e}");
-        }
     }
 
     private void CallLobbyHandlerRoomList(Lobby _joinedLobby) // sets up a room / updates the room for a specific lobby
     {
-        try
-        {
-            LobbyHandler.Instance.RefreshRoomData(_joinedLobby);
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.Log($"EXCEPTION: {e}");
-        }
-        
+        if(LobbyHandler.Instance)
+            LobbyHandler.Instance.RefreshRoomData(_joinedLobby);     
+    }
+
+    private void CheckToJoinServerByCode() // as soon as we have a code, we should join
+    {
+        if (joinedLob != null && !string.IsNullOrEmpty(joinedLobbyServerJoinCode) && NetworkingRelayManager.Instance != null && hostLob == null)
+            NetworkingRelayManager.Instance.JoinRelay(joinedLobbyServerJoinCode);
     }
 
     #endregion calling external sources

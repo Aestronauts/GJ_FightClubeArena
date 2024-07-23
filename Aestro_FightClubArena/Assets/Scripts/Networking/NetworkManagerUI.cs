@@ -8,7 +8,7 @@ using TMPro;
 //following https://www.youtube.com/watch?v=3yuBOB3VrCk&ab_channel=CodeMonkey || https://youtu.be/3yuBOB3VrCk?si=DVukWAYhQro0raef&t=1226
 
 /// <summary>
-/// <para> Handles Joining / Hosting of servers </para>
+/// <para> Handles Joining / Hosting of servers from the old style of port forwarding / LAN options... this one does not connect to a server. We mostly change this through Unity's Transport (script attached to a game object in-scene) </para>
 /// </summary>
 public class NetworkManagerUI : MonoBehaviour
 {
