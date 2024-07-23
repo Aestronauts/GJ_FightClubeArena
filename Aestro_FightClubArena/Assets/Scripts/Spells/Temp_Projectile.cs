@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Temp_Projectile : MonoBehaviour
 {
-    public PlayerCharacterManager playerCharacterManager;
+    //public PlayerCharacterManager playerCharacterManager;
+    public AbilityManager abilityManager;
 
     public Vector3 spawnLocation;
     public Vector3 endLocation;
@@ -13,19 +14,19 @@ public class Temp_Projectile : MonoBehaviour
     public float range;
     public float distanceTraveled = 0f;
 
-    // Start is called before the first frame update
+    // // Start is called before the first frame update
     void Awake()
     {
         //if(!playerCharacterManager)
         //    TryGetComponent<PlayerCharacterManager>(out playerCharacterManager);
-        playerCharacterManager = FindAnyObjectByType<PlayerCharacterManager>();
-
+        abilityManager = FindAnyObjectByType<AbilityManager>();
+    
         //if(playerCharacterManager)
         //    Debug.Log("Player character manager is: " + playerCharacterManager.name);
         //Debug.Log("Distance for the projectile to travel: " + Vector3.Distance(spawnLocation, endLocation));
     }
-
-    // Update is called once per frame
+    
+    // // Update is called once per frame
     void FixedUpdate()
     {
         if (distanceTraveled < range && transform.position != endLocation)
@@ -33,7 +34,10 @@ public class Temp_Projectile : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, endLocation, projectileSpeed * Time.deltaTime);
             distanceTraveled = Vector3.Distance(spawnLocation, transform.position);
         }
+    
         if (distanceTraveled >= range || transform.position == endLocation)
+        {
             gameObject.SetActive(false);
+        }
     }
 }

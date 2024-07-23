@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6372455418324378627}
   - component: {fileID: -1582135657888933205}
   m_Layer: 0
-  m_Name: Temp_Projectile
+  m_Name: FireBolt
   m_TagString: Fire Bolt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

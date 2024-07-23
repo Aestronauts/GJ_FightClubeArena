@@ -154,10 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tempEnemy: {fileID: 1610448645}
-  projectileList: []
-  model_FireBolt: {fileID: 5052831283393963684, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
-  damage: 1
-  range: 7
   FirePillar_gameObject: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
   FP_damage_burst: 3
   FP_damage_overtime: 1
@@ -191,6 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918604faddf10420d9cf9e5229d75c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectilesHolder: {fileID: 360578285}
+  FireBoltPrefab: {fileID: 5052831283393963684, guid: dba8e11018721754ab716b7cc88be387, type: 3}
+  ProjectileList: []
+  FireBoltDamage: 5
+  FireBoltRange: 15
 --- !u!1 &125631116
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,8 +272,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125631116}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.48842534, y: -0.000000026005676, z: 0.00000001455621, w: 0.8726057}
-  m_LocalPosition: {x: 0, y: 31.3, z: -19.2}
+  m_LocalRotation: {x: 0.5356874, y: -0.000000020547605, z: 0.000000013035146, w: 0.84441644}
+  m_LocalPosition: {x: 0, y: 15.5, z: -7.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -551,6 +552,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &360578284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 360578285}
+  m_Layer: 0
+  m_Name: ProjectilesHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &360578285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360578284}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.0925586, y: 0.11419234, z: -1.6913972}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -933,6 +965,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918604faddf10420d9cf9e5229d75c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectilesHolder: {fileID: 0}
+  FireBoltPrefab: {fileID: 0}
+  ProjectileList: []
+  FireBoltDamage: 5
+  FireBoltRange: 15
 --- !u!1001 &1219712523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -943,19 +980,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1.3237613e-15
+      value: -0.000000020547605
       objectReference: {fileID: 0}
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.292999e-16
+      value: 0.000000013035146
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000026005676
+      value: -0.000000020547605
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00000001455621
+      value: 0.000000013035146
       objectReference: {fileID: 0}
     - target: {fileID: 1341423051852565980, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1620,6 +1657,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7366175728010679908, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
+      propertyPath: range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -7366175728010679908, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
+      propertyPath: damage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4422810458210577730, guid: 237f24333f5cc4fcb8761841aed1fd6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.28
@@ -1697,3 +1742,4 @@ SceneRoots:
   - {fileID: 947660268}
   - {fileID: 647813935}
   - {fileID: 1219712523}
+  - {fileID: 360578285}

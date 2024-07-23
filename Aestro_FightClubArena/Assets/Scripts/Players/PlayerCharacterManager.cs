@@ -2,19 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AbilityManager))]
 public class PlayerCharacterManager : MonoBehaviour
 {
     public static PlayerCharacterManager instance { get; private set; }
 
     AbilityManager abilityManager;
     public TempEnemy_Abilities tempEnemy;
-
-    // TODO: Move all of this information to the abilities manager for concision
-    [Header("Fire Bolt Information")]
-    public List<GameObject> projectileList = new List<GameObject>();
-    public GameObject model_FireBolt;
-    public int damage = 1;
-    public int range = 15;
 
     [Header("Fire Pillar Information")]
     public GameObject FirePillar_gameObject;
@@ -52,7 +46,8 @@ public class PlayerCharacterManager : MonoBehaviour
         // TODO: Is there a better way of doing this???
         if (abilityName == "Firebolt")
         {
-            FireFireBolt(player_gameObject, castLocation);
+            AbilitiesHelper.FireProjectile(player_gameObject, castLocation, 
+                abilityManager.ProjectileList, abilityManager.FireBoltPrefab, abilityManager.ProjectilesHolder);
         }
         else if (abilityName == "Fire Pillar")
         {
@@ -65,47 +60,6 @@ public class PlayerCharacterManager : MonoBehaviour
     public void ReceivedDamage(GameObject player_gameObject, int damage)
     {
         // TODO: Updates the health of the player that received damage
-    }
-
-    public void FireFireBolt(GameObject parent, Vector3 castLocation)
-    {
-        // Spawn location x value has +1 for now so it spawns generally in front of the player
-        // TODO: change the spawn location so it is "+1" in the direction of the end location
-        Vector3 spawnLocation = new Vector3(parent.transform.position.x + 1, parent.transform.position.y, parent.transform.position.z);
-        GameObject fireBolt = null;
-        if (projectileList.Count > 0) fireBolt = CheckForInactiveProjectile();
-        if (fireBolt == null)
-        {
-            fireBolt = Instantiate(model_FireBolt, spawnLocation, Quaternion.identity);
-            projectileList.Add(fireBolt);
-        }
-        fireBolt.transform.position = spawnLocation;
-        SetProjectileInformation(castLocation, spawnLocation, fireBolt);
-        fireBolt.SetActive(true);
-    }
-
-    // CheckForInactiveProjectile() looks through pooled projectiles and returns an inactive
-    //      gameObject projectile that can be reused, returning null if not.
-    private GameObject CheckForInactiveProjectile()
-    {
-        foreach (GameObject obj in projectileList)
-        {
-            if (!obj.activeSelf) return obj;
-        }
-        return null;
-    }
-
-    // SetProjectileInformation() takes a Vector3 cast location and spawn location, as well as
-    //      the GameObject of the fire bolt
-    // Sets relevant information for the projectile, including start & end locations, damage, and range
-    private void SetProjectileInformation(Vector3 castLocation, Vector3 spawnLocation, GameObject fireBolt)
-    {
-        Temp_Projectile projectile = fireBolt.GetComponent<Temp_Projectile>();
-        projectile.distanceTraveled = 0f;
-        projectile.spawnLocation = spawnLocation;
-        projectile.endLocation = castLocation;
-        projectile.range = range;
-        projectile.damage = damage;
     }
 
     private void FireFirePillar(GameObject parent, Vector3 castLocation)
