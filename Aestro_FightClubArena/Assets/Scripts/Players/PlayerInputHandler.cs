@@ -109,7 +109,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             PlayerCameraManager.instance.ShakeCamera(.2f, .5f, 1);
             _mageAnimator.SetTrigger("isBasicAttacks");
-            AbilitiesHelper.Ability1();
+            //AbilitiesHelper.Ability1();
         }
     }
     private void AbilityTwo()

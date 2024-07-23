@@ -206,8 +206,8 @@ public class NetworkingLobby : MonoBehaviour
             {
                 Data = new Dictionary<string, DataObject> {
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyGameMode) },// update data for game mode
-                    { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyMapEnv) }, // update map
-                    { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyIcon) }, // update lobby icon
+                    { data_MapEnvironment, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyMapEnv) }, // update map
+                    { data_LobbyIcon, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyIcon) }, // update lobby icon
                     { data_LobbyServerJoinCode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyServerJoinCode) }, // update server join code
                 } 
 
