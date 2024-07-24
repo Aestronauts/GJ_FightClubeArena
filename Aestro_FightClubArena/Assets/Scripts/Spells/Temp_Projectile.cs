@@ -42,4 +42,13 @@ public class Temp_Projectile : MonoBehaviour
         }
         
     }
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("InvisWall"))
+        {
+            // Disable the bullet when it hits another collider
+            gameObject.SetActive(false);
+        }
+    }
 }

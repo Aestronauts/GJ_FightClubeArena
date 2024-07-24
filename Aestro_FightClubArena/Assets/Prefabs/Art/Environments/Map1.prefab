@@ -5324,6 +5324,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2627870247053648953, guid: c8d09d7c23904aa4e8a25362e8840fda, type: 3}
+      propertyPath: m_TagString
+      value: InvisWall
+      objectReference: {fileID: 0}
+    - target: {fileID: -1455328989643715623, guid: c8d09d7c23904aa4e8a25362e8840fda, type: 3}
+      propertyPath: m_TagString
+      value: InvisWall
+      objectReference: {fileID: 0}
     - target: {fileID: -37445397394511822, guid: c8d09d7c23904aa4e8a25362e8840fda, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5331,6 +5339,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c8d09d7c23904aa4e8a25362e8840fda, type: 3}
       propertyPath: m_Name
       value: PondColliders
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c8d09d7c23904aa4e8a25362e8840fda, type: 3}
+      propertyPath: m_TagString
+      value: InvisWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554189617647370119, guid: c8d09d7c23904aa4e8a25362e8840fda, type: 3}
+      propertyPath: m_TagString
+      value: InvisWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8202,6 +8218,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d9c75220b863b26449bed50c6106cb67, type: 3}
       propertyPath: m_Name
       value: EdgeCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d9c75220b863b26449bed50c6106cb67, type: 3}
+      propertyPath: m_TagString
+      value: InvisWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
