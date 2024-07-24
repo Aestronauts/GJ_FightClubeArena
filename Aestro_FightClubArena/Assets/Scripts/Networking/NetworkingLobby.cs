@@ -208,7 +208,7 @@ public class NetworkingLobby : MonoBehaviour
                     { data_LobbyGameMode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyGameMode) },// update data for game mode
                     { data_MapEnvironment, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyMapEnv) }, // update map
                     { data_LobbyIcon, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyIcon) }, // update lobby icon
-                    { data_LobbyServerJoinCode, new DataObject(DataObject.VisibilityOptions.Public, joinedLobbyServerJoinCode) }, // update server join code
+                    { data_LobbyServerJoinCode, new DataObject(DataObject.VisibilityOptions.Member, joinedLobbyServerJoinCode) }, // update server join code
                 } 
 
             });
@@ -541,6 +541,8 @@ public class NetworkingLobby : MonoBehaviour
 
     private void CheckToJoinServerByCode() // as soon as we have a code, we should join
     {
+        print($"Server Join Code: {joinedLobbyServerJoinCode}");
+
         if (joinedLob != null && !string.IsNullOrEmpty(joinedLobbyServerJoinCode) && NetworkingRelayManager.Instance != null && hostLob == null)
             NetworkingRelayManager.Instance.JoinRelay(joinedLobbyServerJoinCode);
     }

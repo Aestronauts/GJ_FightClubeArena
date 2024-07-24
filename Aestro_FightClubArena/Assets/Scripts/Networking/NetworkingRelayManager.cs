@@ -48,7 +48,11 @@ public class NetworkingRelayManager : MonoBehaviour
 
             NetworkManager.Singleton.StartHost();
 
-            NetworkingLobby.Instance.UpdateLobbyData(null, null, null, joinCodyRelay);
+            if (NetworkingLobby.Instance) // if we have the lobby handler, send the lobby data for each lobby to take
+            {
+                NetworkingLobby.Instance.UpdateLobbyData(null, null, null, joinCodyRelay);
+                NetworkingLobby.Instance.UpdateLobbyServerData();
+            }
         }
         catch (RelayServiceException e)
         {
