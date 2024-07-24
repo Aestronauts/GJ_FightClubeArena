@@ -50,6 +50,7 @@ public class NetworkingRelayManager : MonoBehaviour
 
             if (NetworkingLobby.Instance) // if we have the lobby handler, send the lobby data for each lobby to take
             {
+                NetworkingLobby.Instance.joinedLobbyServer = true;
                 NetworkingLobby.Instance.UpdateLobbyData(null, null, null, joinCodyRelay);
                 NetworkingLobby.Instance.UpdateLobbyServerData();
             }

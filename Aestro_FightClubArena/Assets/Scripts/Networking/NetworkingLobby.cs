@@ -32,11 +32,13 @@ public class NetworkingLobby : MonoBehaviour
 
     #region Unity Lobby Services Variables
 
+    public bool joinedLobbyServer = false;
     public Lobby hostLob; // holds data for the lobby we create such as players and lobby data
     public Lobby joinedLob; // same as above but if we joined. We always have a joined lobby but we might not always have a host lobby
     private float lobbyHeartbeatTimer = 25f;
     private float lobbyUpdateTimer = 2f;
     QueryResponse queryLobResp;
+    
 
     // the local reference to variables stored for easy access and for easier updating / comparing
     // player
@@ -543,8 +545,11 @@ public class NetworkingLobby : MonoBehaviour
     {
         print($"Server Join Code: {joinedLobbyServerJoinCode}");
 
-        if (joinedLob != null && !string.IsNullOrEmpty(joinedLobbyServerJoinCode) && NetworkingRelayManager.Instance != null && hostLob == null)
+        if (joinedLob != null && !string.IsNullOrEmpty(joinedLobbyServerJoinCode) && NetworkingRelayManager.Instance != null && !joinedLobbyServer)
+        {
             NetworkingRelayManager.Instance.JoinRelay(joinedLobbyServerJoinCode);
+            joinedLobbyServer = true;
+        }
     }
 
     #endregion calling external sources
