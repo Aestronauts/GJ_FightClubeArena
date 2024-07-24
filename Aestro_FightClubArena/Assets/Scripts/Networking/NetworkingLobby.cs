@@ -547,6 +547,7 @@ public class NetworkingLobby : MonoBehaviour
 
         if (joinedLob != null && !string.IsNullOrEmpty(joinedLobbyServerJoinCode) && NetworkingRelayManager.Instance != null && !joinedLobbyServer)
         {
+            // there is an issue with the data reference to prefabs and object transofrms <https://discussions.unity.com/t/scene-objects-assigned-same-globalobjectidhash-value/882913/21>            
             NetworkingRelayManager.Instance.JoinRelay(joinedLobbyServerJoinCode);
             joinedLobbyServer = true;
         }

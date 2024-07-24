@@ -35,7 +35,7 @@ public class PlayerCharacterManagerFAKE : NetworkBehaviour
 
     [Space]
     [Header("STORED ASSET REFERENCES\n____________________")]
-    // the cnavas object that holds all the players who joined
+    // the canvas object that holds all the players who joined
     [SerializeField]
     private Transform playerLobbyList;
     // the prefab for when someone joins
@@ -62,8 +62,11 @@ public class PlayerCharacterManagerFAKE : NetworkBehaviour
                 ref_NetworkObject.enabled = false;
         }
 
-        foreach (Transform child in playerLobbyList)
-            child.gameObject.SetActive(false);
+        if (playerLobbyList!=null && playerLobbyList.childCount > 0)
+        {
+            foreach (Transform child in playerLobbyList)
+                child.gameObject.SetActive(false);
+        }
 
     }
 

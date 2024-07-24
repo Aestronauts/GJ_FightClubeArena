@@ -135,10 +135,6 @@ GameObject:
   - component: {fileID: 42365662}
   - component: {fileID: 42365661}
   - component: {fileID: 42365660}
-  - component: {fileID: 42365664}
-  - component: {fileID: 42365666}
-  - component: {fileID: 42365665}
-  - component: {fileID: 42365667}
   m_Layer: 5
   m_Name: Canvas - Networking
   m_TagString: Untagged
@@ -229,90 +225,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &42365664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42365659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1293909848
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &42365665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42365659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 381f7607600d6e94083890316e510086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lobbyRootContainer: {fileID: 1328078836}
-  lobbyCardTemplate: {fileID: 2421565154349121049}
-  roomRootContainer: {fileID: 887791044}
-  roomCardTemplate: {fileID: 93203180}
-  roomOptionsContianer: {fileID: 99608169}
---- !u!114 &42365666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42365659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f477f63c2172ed4a9315e29b3ace172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  networkSpawnClientsContainer: {fileID: 53556454}
-  networkLobbyContainer: {fileID: 454344015}
-  playerId: 
-  playerName: 
-  playerIcon: 
-  playerIconId: 0
-  playerIsReady: 
-  joinedLobbyId: 
-  joinedlobbyName: 
-  joinedLobbyIcon: 
-  joinedLobbyMapEnv: 
-  joinedLobbyGameMode: 
-  joinedLobbyServerJoinCode: 
-  lobMaxPlayers: 8
-  data_PlayerName: PlayerName
-  data_PlayerIcon: PlayerIcon
-  data_PlayerIsReady: PlayerIsReady
-  data_LobbyGameMode: GameMode
-  data_MapEnvironment: Map
-  data_LobbyIcon: LobbyIcon
-  data_LobbyServerJoinCode: ServerJoinCode
-  ref_PlayerCardData: {fileID: 1709448999}
---- !u!114 &42365667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42365659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e8aec47675ed74fae1666e40ecfb30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &53556453
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,79 +362,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53556453}
   m_CullTransparentMesh: 1
---- !u!1001 &62743685
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4985954968376667940, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 1073690938
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985954968376667940, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2060051931
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168009397314301381, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7354317307927650922, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: m_Name
-      value: NetworkPlayerBase
-      objectReference: {fileID: 0}
-    - target: {fileID: 8780077310976903155, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: playerLobbyCard
-      value: 
-      objectReference: {fileID: 2421565155290169941, guid: 6fcbca4d7afde854e82ee7edcefb7ef1, type: 3}
-    - target: {fileID: 8780077310976903155, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
-      propertyPath: playerLobbyList
-      value: 
-      objectReference: {fileID: 887791044}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cec0c234919fdff449f9ff2c61ba1c5d, type: 3}
 --- !u!1 &72934477
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +445,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42365666}
+      - m_Target: {fileID: 1989215563}
         m_TargetAssemblyTypeName: NetworkingLobby, Assembly-CSharp
         m_MethodName: CreateLobby
         m_Mode: 6
@@ -664,14 +503,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 887791044}
     m_Modifications:
-    - target: {fileID: 1709885976977088845, guid: 6fcbca4d7afde854e82ee7edcefb7ef1, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 360264164
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709885976977088845, guid: 6fcbca4d7afde854e82ee7edcefb7ef1, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 3879437541
-      objectReference: {fileID: 0}
     - target: {fileID: 2421565155290169941, guid: 6fcbca4d7afde854e82ee7edcefb7ef1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -759,6 +590,10 @@ PrefabInstance:
     - target: {fileID: 8956037423375823657, guid: 6fcbca4d7afde854e82ee7edcefb7ef1, type: 3}
       propertyPath: m_Name
       value: UI-Room-List
+      objectReference: {fileID: 0}
+    - target: {fileID: 8956037423375823657, guid: 6fcbca4d7afde854e82ee7edcefb7ef1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1234,6 +1069,111 @@ Transform:
   m_Children: []
   m_Father: {fileID: 341968005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &310924964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 310924967}
+  - component: {fileID: 310924966}
+  - component: {fileID: 310924965}
+  m_Layer: 0
+  m_Name: New Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!102 &310924965
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310924964}
+  m_Text: 'Things to try
+
+    - changing scenes into an empty scene (then spawning
+    data)
+
+    - removing instance requirements so we dont have to delete / shutdown
+
+    -
+    figuring out how to load both characters correctly through the playerJoiner'
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &310924966
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310924964}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &310924967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310924964}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.41, y: 3.76, z: 0.47677088}
+  m_LocalScale: {x: 0.27522, y: 0.27522, z: 0.27522}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &341968004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,6 +1381,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1212130353}
+  - {fileID: 1542648819}
+  - {fileID: 1989215562}
+  - {fileID: 491467296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1624,6 +1567,59 @@ MonoBehaviour:
   buttonHost: {fileID: 2053909407}
   buttonServer: {fileID: 155871068}
   buttonClient: {fileID: 957051489}
+--- !u!1 &491467295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 491467296}
+  - component: {fileID: 491467297}
+  m_Layer: 0
+  m_Name: Manager_Lobbies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &491467296
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491467295}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 475759009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &491467297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491467295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381f7607600d6e94083890316e510086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobbyRootContainer: {fileID: 1328078836}
+  lobbyCardTemplate: {fileID: 2421565154349121049}
+  roomRootContainer: {fileID: 887791044}
+  roomCardTemplate: {fileID: 93203180}
+  roomOptionsContianer: {fileID: 99608169}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,7 +1955,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42365666}
+      - m_Target: {fileID: 1989215563}
         m_TargetAssemblyTypeName: NetworkingLobby, Assembly-CSharp
         m_MethodName: ListLobbies
         m_Mode: 1
@@ -2818,7 +2814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42365667}
+      - m_Target: {fileID: 1542648818}
         m_TargetAssemblyTypeName: NetworkingRelayManager, Assembly-CSharp
         m_MethodName: CreateRelay
         m_Mode: 1
@@ -3004,7 +3000,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42365666}
+      - m_Target: {fileID: 1989215563}
         m_TargetAssemblyTypeName: NetworkingLobby, Assembly-CSharp
         m_MethodName: LeaveLobby
         m_Mode: 1
@@ -3377,7 +3373,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 42365666}
+      - m_Target: {fileID: 1989215563}
         m_TargetAssemblyTypeName: NetworkingLobby, Assembly-CSharp
         m_MethodName: QuickJoinLobby
         m_Mode: 1
@@ -3607,6 +3603,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356841359}
   m_CullTransparentMesh: 1
+--- !u!1 &1542648817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1542648819}
+  - component: {fileID: 1542648818}
+  m_Layer: 0
+  m_Name: Manager_RelayServer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1542648818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542648817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e8aec47675ed74fae1666e40ecfb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &1542648819
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542648817}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 475759009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1548004369
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,6 +4225,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829237848}
   m_CullTransparentMesh: 1
+--- !u!1 &1989215561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1989215562}
+  - component: {fileID: 1989215563}
+  m_Layer: 0
+  m_Name: Manager_LobbyCoreData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1989215562
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989215561}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 475759009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1989215563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989215561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f477f63c2172ed4a9315e29b3ace172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkSpawnClientsContainer: {fileID: 53556454}
+  networkLobbyContainer: {fileID: 454344015}
+  joinedLobbyServer: 0
+  playerId: 
+  playerName: 
+  playerIcon: 
+  playerIconId: 0
+  playerIsReady: 
+  joinedLobbyId: 
+  joinedlobbyName: 
+  joinedLobbyIcon: 
+  joinedLobbyMapEnv: 
+  joinedLobbyGameMode: 
+  joinedLobbyServerJoinCode: 
+  lobMaxPlayers: 8
+  data_PlayerName: PlayerName
+  data_PlayerIcon: PlayerIcon
+  data_PlayerIsReady: PlayerIsReady
+  data_LobbyGameMode: GameMode
+  data_MapEnvironment: Map
+  data_LobbyIcon: LobbyIcon
+  data_LobbyServerJoinCode: ServerJoinCode
+  ref_PlayerCardData: {fileID: 1709448999}
 --- !u!1 &2053909405
 GameObject:
   m_ObjectHideFlags: 0
@@ -4327,14 +4442,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1328078836}
     m_Modifications:
-    - target: {fileID: 1762595258519729147, guid: 3aa772cce29d6344e9a39d07085fd026, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 1219117046
-      objectReference: {fileID: 0}
-    - target: {fileID: 1762595258519729147, guid: 3aa772cce29d6344e9a39d07085fd026, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 1882371569
-      objectReference: {fileID: 0}
     - target: {fileID: 2723779873447038030, guid: 3aa772cce29d6344e9a39d07085fd026, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -2.0269012
@@ -4447,15 +4554,27 @@ PrefabInstance:
     - target: {fileID: 771952401260950840, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 42365666}
+      objectReference: {fileID: 1989215563}
+    - target: {fileID: 771952401260950840, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CycleIconsFromButton
+      objectReference: {fileID: 0}
     - target: {fileID: 1393744359459120543, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 42365666}
+      objectReference: {fileID: 1989215563}
+    - target: {fileID: 1393744359459120543, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MakeOnlineAccount
+      objectReference: {fileID: 0}
     - target: {fileID: 3548812000593202992, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 42365666}
+      objectReference: {fileID: 1989215563}
+    - target: {fileID: 3548812000593202992, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LogOutOnlineAccount
+      objectReference: {fileID: 0}
     - target: {fileID: 4618515495033728665, guid: cb9200a9bcf20e9498ddb12b2e3cf205, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4655,6 +4774,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 341968005}
   - {fileID: 475759009}
-  - {fileID: 62743685}
   - {fileID: 42365663}
   - {fileID: 1014618549}
+  - {fileID: 310924967}

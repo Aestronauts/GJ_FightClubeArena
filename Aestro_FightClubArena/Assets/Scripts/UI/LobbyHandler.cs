@@ -28,9 +28,10 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
             Destroy(this.gameObject);
         else
             Instance = this;
-       
+
         lobbyCardTemplate.gameObject.SetActive(false);
-    }   
+        roomCardTemplate.gameObject.SetActive(false);
+    }
 
     public void RefreshLobbyList(List<Lobby> _lobbyList)
     {
@@ -91,7 +92,9 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
 
     }
 
-
-
+    public void DeleteReferenceObjs()
+    {
+        //Destroy(lobbyRootContainer);
+    }
 
 }

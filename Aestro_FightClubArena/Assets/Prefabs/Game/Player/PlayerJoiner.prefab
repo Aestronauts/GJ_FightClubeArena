@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3878220386749561436}
   - component: {fileID: 8180886059455960799}
+  - component: {fileID: -2201424158470577062}
   m_Layer: 0
   m_Name: PlayerJoiner
   m_TagString: Untagged
@@ -53,3 +54,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &-2201424158470577062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113226561094992289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a593a154cfce00f45ba05dc779713bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ref_NetworkObject: {fileID: 0}
+  ref_PlayerCharacterManagerFAKE: {fileID: 0}
+  ref_NetworkManager: {fileID: 0}
