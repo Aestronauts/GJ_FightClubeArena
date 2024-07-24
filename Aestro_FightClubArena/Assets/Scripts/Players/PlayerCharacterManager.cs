@@ -43,7 +43,8 @@ public class PlayerCharacterManager : MonoBehaviour
         }
         else if (abilityName == "Fire Pillar")
         {
-            AbilitiesHelper.FireFirePillar(player_gameObject, castLocation, abilityManager,abilityManager.ProjectilesHolder);
+            AbilitiesHelper.FireFirePillar(player_gameObject, castLocation, abilityManager,abilityManager.ProjectilesHolder, 
+                abilityManager.FirePillarProjectileList, this);
         }
         else if (abilityName == "Twin Firebolt")
         {
@@ -57,11 +58,5 @@ public class PlayerCharacterManager : MonoBehaviour
     public void ReceivedDamage(GameObject player_gameObject, int damage)
     {
         // TODO: Updates the health of the player that received damage
-    }
-
-    public void ExitFirePillar()
-    {
-        tempEnemy.isInFirePillar = false;
-        tempEnemy.CancelInvoke();
     }
 }

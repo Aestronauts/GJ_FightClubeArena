@@ -52,7 +52,8 @@ public class AbilitiesHelper
         return null;
     }
     
-    public static void FireFirePillar(GameObject parent, Vector3 castLocation, AbilityManager abilityManager,Transform projectilesHolder)
+    public static void FireFirePillar(GameObject parent, Vector3 castLocation, AbilityManager abilityManager,Transform projectilesHolder, List<GameObject> projectileList,
+        MonoBehaviour coroutineStarter)
     {
         GameObject firePillar = null;
         Vector3 finalLocation;
@@ -65,13 +66,24 @@ public class AbilitiesHelper
             finalLocation = Vector3.Lerp(parentLocation, castLocation, distPercentage);
         }
         else finalLocation = castLocation;
-        firePillar = Object.Instantiate(abilityManager.FirePillar_gameObject, finalLocation, Quaternion.identity,projectilesHolder);
+        
+        if (projectileList.Count > 0) firePillar = CheckForInactiveProjectile(projectileList);
+        if (firePillar == null)
+        {
+            firePillar = Object.Instantiate(abilityManager.FirePillar_gameObject, finalLocation, Quaternion.identity,projectilesHolder);
+            projectileList.Add(firePillar);
+        }
+        
         firePillar.transform.position = finalLocation; //redundant until pooling
         FirePillar FP = firePillar.GetComponent<FirePillar>();
         FP.damage_burst = abilityManager.FP_damage_burst;
         FP.damage_overtime = abilityManager.FP_damage_overtime;
         FP.duration = abilityManager.FP_duration;
         FP.DPS_rate = abilityManager.FP_DPS_rate;
+        
+        firePillar.SetActive(true);
+        
+        coroutineStarter.StartCoroutine(DestroyFirePillar(FP.duration, firePillar));
     }
     
     public static void TwinFireProjectile(GameObject parent, Vector3 castLocation, List<GameObject> projectileList, GameObject projectile, Transform projectilesHolder)
@@ -89,6 +101,20 @@ public class AbilitiesHelper
         fireBolt.transform.position = spawnLocation;
         SetTwinFireboltProjectileInformation(castLocation, spawnLocation, fireBolt);
         fireBolt.SetActive(true);
+    }
+    
+    static IEnumerator DestroyFirePillar(float duration, GameObject gameObject)
+    {
+        yield return new WaitForSeconds(duration);
+        //AbilitiesHelper.ExitFirePillar(playerCharacterManager.tempEnemy);
+        Debug.Log("Fire Pillar is being destroyed, stopping TempEnemy invoke and damage.");
+        gameObject.SetActive(false);
+    }
+    
+    public static void ExitFirePillar(TempEnemy_Abilities tempEnemy)
+    {
+        tempEnemy.isInFirePillar = false;
+        tempEnemy.CancelInvoke();
     }
 
     public static void Ability1()

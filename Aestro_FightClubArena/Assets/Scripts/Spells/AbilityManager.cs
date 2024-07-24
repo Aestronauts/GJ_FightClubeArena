@@ -20,6 +20,7 @@ public class AbilityManager : MonoBehaviour
     
     [Header("Fire Pillar Information")]
     public GameObject FirePillar_gameObject;
+    [HideInInspector]public List<GameObject> FirePillarProjectileList = new List<GameObject>();
     public int FP_damage_burst = 3;
     public int FP_damage_overtime = 1;
     public int FP_range = 12;

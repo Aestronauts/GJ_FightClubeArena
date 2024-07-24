@@ -48,7 +48,7 @@ public class PlayerInputHandler : MonoBehaviour
         else
         {
             _mageAnimator.SetTrigger("isIdle");
-            Debug.Log("Idle");
+           // Debug.Log("Idle");
 
         }
 
