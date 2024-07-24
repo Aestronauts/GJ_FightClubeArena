@@ -2,21 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AbilityManager))]
 public class PlayerCharacterManager : MonoBehaviour
 {
     public static PlayerCharacterManager instance { get; private set; }
 
-    AbilityManager abilityManager;
+    public AbilityManager abilityManager;
+    //AbilityManager abilityManager;
     public TempEnemy_Abilities tempEnemy;
-
-    [Header("Fire Pillar Information")]
-    public GameObject FirePillar_gameObject;
-    public int FP_damage_burst = 3;
-    public int FP_damage_overtime = 1;
-    public int FP_range = 12;
-    public float FP_duration = 3f;
-    public float FP_DPS_rate = 0.75f;
 
     private void Awake()
     {
@@ -29,7 +21,7 @@ public class PlayerCharacterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        abilityManager = GetComponent<AbilityManager>();
+        //abilityManager = GetComponent<AbilityManager>();
     }
 
     // Update is called once per frame
@@ -47,11 +39,16 @@ public class PlayerCharacterManager : MonoBehaviour
         if (abilityName == "Firebolt")
         {
             AbilitiesHelper.FireProjectile(player_gameObject, castLocation, 
-                abilityManager.ProjectileList, abilityManager.FireBoltPrefab, abilityManager.ProjectilesHolder);
+                abilityManager.FireboltProjectileList, abilityManager.FireBoltPrefab, abilityManager.ProjectilesHolder);
         }
         else if (abilityName == "Fire Pillar")
         {
-            FireFirePillar(player_gameObject, castLocation);
+            AbilitiesHelper.FireFirePillar(player_gameObject, castLocation, abilityManager,abilityManager.ProjectilesHolder);
+        }
+        else if (abilityName == "Twin Firebolt")
+        {
+            AbilitiesHelper.TwinFireProjectile(player_gameObject, castLocation, 
+                abilityManager.TwinFireboltProjectileList, abilityManager.TwinFireBoltPrefab, abilityManager.ProjectilesHolder);
         }
     }
 
@@ -60,28 +57,6 @@ public class PlayerCharacterManager : MonoBehaviour
     public void ReceivedDamage(GameObject player_gameObject, int damage)
     {
         // TODO: Updates the health of the player that received damage
-    }
-
-    private void FireFirePillar(GameObject parent, Vector3 castLocation)
-    {
-        GameObject firePillar = null;
-        Vector3 finalLocation;
-        // TODO: Pooling for the fire pillar's game object
-        Vector3 parentLocation = new Vector3(parent.transform.position.x, parent.transform.position.y, parent.transform.position.z);
-        float distanceToCastLocation = Vector3.Distance(parentLocation, castLocation);
-        if (distanceToCastLocation > FP_range)
-        {
-            float distPercentage = FP_range / distanceToCastLocation;
-            finalLocation = Vector3.Lerp(parentLocation, castLocation, distPercentage);
-        }
-        else finalLocation = castLocation;
-        firePillar = Instantiate(FirePillar_gameObject, finalLocation, Quaternion.identity);
-        firePillar.transform.position = finalLocation; //redundant until pooling
-        FirePillar FP = firePillar.GetComponent<FirePillar>();
-        FP.damage_burst = FP_damage_burst;
-        FP.damage_overtime = FP_damage_overtime;
-        FP.duration = FP_duration;
-        FP.DPS_rate = FP_DPS_rate;
     }
 
     public void ExitFirePillar()

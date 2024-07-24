@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,7 @@ public class Temp_Projectile : MonoBehaviour
         //    Debug.Log("Player character manager is: " + playerCharacterManager.name);
         //Debug.Log("Distance for the projectile to travel: " + Vector3.Distance(spawnLocation, endLocation));
     }
-    
+
     // // Update is called once per frame
     void FixedUpdate()
     {
@@ -39,5 +40,6 @@ public class Temp_Projectile : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        
     }
 }
