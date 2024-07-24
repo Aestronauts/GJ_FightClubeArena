@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -7366175728010679908}
   - component: {fileID: 6372455418324378627}
   - component: {fileID: -1582135657888933205}
-  - component: {fileID: 813435485715282667}
   m_Layer: 0
   m_Name: FireBolt
   m_TagString: Fire Bolt
@@ -180,15 +179,3 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &813435485715282667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5052831283393963684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e81650ba67119fe47bf13b6a081716b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
