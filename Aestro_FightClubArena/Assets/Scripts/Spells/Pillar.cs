@@ -23,7 +23,7 @@ public class Pillar : MonoBehaviour
         if (other.gameObject.tag == "Fire Bolt")
         {
             AbilityBehavior projectile = other.gameObject.GetComponent<AbilityBehavior>();
-            health -= projectile.damage;
+            health -= projectile.abilityParameters.damage;
             Debug.Log("Damage Dealt to Pillar! Remaining health: " + health);
             Destroy(other.gameObject);
             if (health == 0) Destroy(this.gameObject);

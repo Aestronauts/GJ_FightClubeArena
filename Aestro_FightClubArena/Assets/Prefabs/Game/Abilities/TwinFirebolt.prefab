@@ -272,15 +272,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityManager: {fileID: 0}
+  abilityParameters:
+    abilityPrefab: {fileID: 5052831283393963684}
+    projectileSpeed: 10
+    damage: 3
+    range: 20
+    damageOvertime: 0
+    duration: 0
+    DPS_rate: 0
+    abilityDrawing: {fileID: 0}
   spawnLocation: {x: 0, y: 0, z: 0}
   endLocation: {x: 0, y: 0, z: 0}
-  projectileSpeed: 10
-  damage: 5
-  range: 20
   distanceTraveled: 0
-  damageOvertime: 0
-  duration: 0
-  DPS_rate: 0
 --- !u!114 &6372455418324378627
 MonoBehaviour:
   m_ObjectHideFlags: 0

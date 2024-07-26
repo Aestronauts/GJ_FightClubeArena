@@ -58,8 +58,8 @@ public class Ability_FireBolt : Ability
         AbilityBehavior projectile = fireBolt.GetComponent<AbilityBehavior>();
         projectile.spawnLocation = spawnLocation;
         projectile.endLocation = castLocation;
-        projectile.range = range;
-        projectile.damage = damage;
+        projectile.abilityParameters.range = range;
+        projectile.abilityParameters.damage = damage;
         //Debug.Log("Damage value set from Ability_FireBolt: " + damage);
     }
 }

@@ -5,37 +5,34 @@ using UnityEngine;
 
 public class AbilityBehavior : MonoBehaviour
 {
-    public AbilityManager abilityManager;
+   // public AbilityManager abilityManager;
 
-    public Vector3 spawnLocation;
-    public Vector3 endLocation;
-    public float projectileSpeed = 50f;
-    public int damage;
-    public float range;
-    public float distanceTraveled = 0f;
-    
-    public int damageOvertime;
-    public float duration;
-    public float DPS_rate;
+    public AbilityData abilityParameters;
+
+    [HideInInspector]public Vector3 spawnLocation;
+    [HideInInspector]public Vector3 endLocation;
+    [HideInInspector]public float distanceTraveled = 0f;
+
+    [HideInInspector]public int abilityID;
 
     // // Start is called before the first frame update
     void Awake()
     {
-        abilityManager = FindAnyObjectByType<AbilityManager>();
+     //   abilityManager = FindAnyObjectByType<AbilityManager>();
     }
 
     // // Update is called once per frame
     void FixedUpdate()
     {
-        if (duration == 0)
+        if (AbilityManager.instance.abilitiesList[abilityID].duration == 0)
         {
-            if (distanceTraveled < range && transform.position != endLocation)
+            if (distanceTraveled < abilityParameters.range && transform.position != endLocation)
             {
-                transform.position = Vector3.MoveTowards(transform.position, endLocation, projectileSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, endLocation, abilityParameters.projectileSpeed * Time.deltaTime);
                 distanceTraveled = Vector3.Distance(spawnLocation, transform.position);
             }
     
-            if (distanceTraveled >= range || transform.position == endLocation)
+            if (distanceTraveled >= abilityParameters.range || transform.position == endLocation)
             {
                 gameObject.SetActive(false);
             }

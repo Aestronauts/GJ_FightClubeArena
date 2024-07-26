@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilitiesHelper
 {
     public static void SpawnAbility(GameObject parent, Vector3 spawnLocation, Vector3 castLocation, 
-        List<GameObject> projectileList, GameObject projectilePrefab, Transform projectilesHolder, float range, int damage, MonoBehaviour coroutineStarter)
+        List<GameObject> projectileList, Transform projectilesHolder, MonoBehaviour coroutineStarter, List<AbilityData> abilityData, int abilityID)
     {
         // Spawn location x value has +1 for now so it spawns generally in front of the player
         // TODO: change the spawn location so it is "+1" in the direction of the end location
@@ -14,28 +14,28 @@ public class AbilitiesHelper
         if (projectileList.Count > 0) projectile = CheckForInactiveAbilityPrefab(projectileList);
         if (projectile == null)
         {
-            projectile = Object.Instantiate(projectilePrefab, spawnLocation, Quaternion.identity, projectilesHolder);
+            projectile = Object.Instantiate(abilityData[abilityID].abilityPrefab, spawnLocation, Quaternion.identity, projectilesHolder);
             projectileList.Add(projectile);
         }
         projectile.transform.localPosition = spawnLocation;
         AbilityBehavior projectileInfo = projectile.GetComponent<AbilityBehavior>();
-        SetProjectileInformation(projectileInfo,castLocation, spawnLocation, damage,range);
+        projectileInfo.abilityID = abilityID;
+        SetProjectileInformation(projectileInfo,castLocation, spawnLocation);
         projectile.SetActive(true);
 
         //DisableAbility(projectileInfo.duration, projectile);
-        if (projectileInfo.duration != 0)
+        if (abilityData[abilityID].duration != 0)
         {
-            coroutineStarter.StartCoroutine(DisableAbility(projectileInfo.duration, projectile));
+            coroutineStarter.StartCoroutine(DisableAbility(abilityData[abilityID].duration, projectile));
         }
     }
-    private static void SetProjectileInformation(AbilityBehavior projectileInfo, Vector3 castLocation, Vector3 spawnLocation, 
-        int damage, float range)
+    private static void SetProjectileInformation(AbilityBehavior projectileInfo, Vector3 castLocation, Vector3 spawnLocation)
     {
         projectileInfo.distanceTraveled = 0f;
         projectileInfo.spawnLocation = spawnLocation;
         projectileInfo.endLocation = castLocation;
-        projectileInfo.range = range;
-        projectileInfo.damage = damage;
+        // projectileInfo.abilityParameters.range = range;
+        // projectileInfo.abilityParameters.damage = damage;
         //projectileInfo.projectileSpeed = projectileSpeed;
         // projectileInfo.damageOvertime;
         // projectileInfo.duration;

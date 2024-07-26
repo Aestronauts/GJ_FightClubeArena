@@ -249,7 +249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125631116}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5356874, y: -0.000000020547605, z: 0.000000013035146, w: 0.84441644}
+  m_LocalRotation: {x: 0.5356874, y: 0.0000000205476, z: -0.000000013035144, w: 0.84441644}
   m_LocalPosition: {x: 0, y: 15.5, z: -7.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -943,18 +943,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectilesHolder: {fileID: 360578285}
-  FireBoltPrefab: {fileID: 5052831283393963684, guid: dba8e11018721754ab716b7cc88be387, type: 3}
+  firebolt:
+    abilityID: 0
+    abilityPrefab: {fileID: 5052831283393963684, guid: dba8e11018721754ab716b7cc88be387, type: 3}
+    projectileSpeed: 50
+    damage: 2
+    range: 20
+    damageOvertime: 0
+    duration: 0
+    DPS_rate: 0
+    abilityDrawing: {fileID: 0}
+  firePillar:
+    abilityID: 0
+    abilityPrefab: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
+    projectileSpeed: 50
+    damage: 8
+    range: 12
+    damageOvertime: 1
+    duration: 3
+    DPS_rate: 1
+    abilityDrawing: {fileID: 0}
+  twinFirebolt:
+    abilityID: 0
+    abilityPrefab: {fileID: 5052831283393963684, guid: 6c15af87bcad50c43ae3f9a65b8c9069, type: 3}
+    projectileSpeed: 50
+    damage: 5
+    range: 10
+    damageOvertime: 0
+    duration: 0
+    DPS_rate: 0
+    abilityDrawing: {fileID: 0}
+  abilitiesList:
+  - abilityID: 0
+    abilityPrefab: {fileID: 5052831283393963684, guid: dba8e11018721754ab716b7cc88be387, type: 3}
+    projectileSpeed: 10
+    damage: 2
+    range: 20
+    damageOvertime: 0
+    duration: 0
+    DPS_rate: 0
+    abilityDrawing: {fileID: 0}
+  - abilityID: 0
+    abilityPrefab: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
+    projectileSpeed: 0
+    damage: 10
+    range: 20
+    damageOvertime: 0
+    duration: 3
+    DPS_rate: 0
+    abilityDrawing: {fileID: 0}
+  - abilityID: 0
+    abilityPrefab: {fileID: 5052831283393963684, guid: 6c15af87bcad50c43ae3f9a65b8c9069, type: 3}
+    projectileSpeed: 10
+    damage: 2
+    range: 15
+    damageOvertime: 0
+    duration: 0
+    DPS_rate: 0
+    abilityDrawing: {fileID: 0}
   FireboltProjectileList: []
-  FireBoltDamage: 5
-  FireBoltRange: 15
-  TwinFireBoltPrefab: {fileID: 5052831283393963684, guid: 6c15af87bcad50c43ae3f9a65b8c9069, type: 3}
   TwinFireboltProjectileList: []
-  TwinFireBoltDamage: 8
-  TwinFireBoltRange: 8
-  FirePillarPrefab: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
   FirePillarProjectileList: []
-  FirePillarDamage: 3
-  FirePillarRange: 12
 --- !u!1001 &1219712523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -973,11 +1022,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000020547605
+      value: 0.0000000205476
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000013035146
+      value: -0.000000013035144
       objectReference: {fileID: 0}
     - target: {fileID: 1341423051852565980, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalPosition.x

@@ -27,9 +27,9 @@ public class TempEnemy_Abilities : MonoBehaviour
         if (other.tag == "Fire Bolt")
         {
             AbilityBehavior projectile = other.gameObject.GetComponent<AbilityBehavior>();
-            health -= projectile.damage;
+            health -= projectile.abilityParameters.damage;
             Debug.Log("Damage Dealt to TempEnemy in OnTriggerEnter! Remaining health: " + health);
-            playerCharacterManager.ReceivedDamage(gameObject, projectile.damage);
+            playerCharacterManager.ReceivedDamage(gameObject, projectile.abilityParameters.damage);
             Destroy(other.gameObject);
             if (health == 0) Destroy(this.gameObject);
         }

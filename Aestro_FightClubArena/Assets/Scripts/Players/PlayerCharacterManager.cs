@@ -32,7 +32,7 @@ public class PlayerCharacterManager : MonoBehaviour
 
     // Takes the game object of the player that casted the ability, the ability's name, and the cast location
     // Uses the provided information to then Activate the correct ability
-    public void CastAbility(GameObject player_gameObject, string abilityName, Vector3 castLocation)
+    public void CastAbility(GameObject player_gameObject, string abilityName, Vector3 castLocation, int abilityID)
     {
         Transform spawnPoint = player_gameObject.GetComponent<PlayerInputHandler>().abilitySpawnPoint;
         // Choose "if" logic by matching the given ability name
@@ -40,20 +40,20 @@ public class PlayerCharacterManager : MonoBehaviour
         if (abilityName == "Firebolt")
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
-                abilityManager.FireboltProjectileList, abilityManager.FireBoltPrefab, 
-                abilityManager.ProjectilesHolder, abilityManager.FireBoltRange, abilityManager.FireBoltDamage, this);
+                abilityManager.FireboltProjectileList,  
+                abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
         }
         else if (abilityName == "Fire Pillar")
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, castLocation,castLocation,
-                abilityManager.FirePillarProjectileList, abilityManager.FirePillarPrefab, 
-                abilityManager.ProjectilesHolder, abilityManager.FirePillarRange, abilityManager.FirePillarDamage,this);
+                abilityManager.FirePillarProjectileList,
+                abilityManager.ProjectilesHolder,this,abilityManager.abilitiesList,abilityID);
         }
         else if (abilityName == "Twin Firebolt")
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
-                abilityManager.TwinFireboltProjectileList, abilityManager.TwinFireBoltPrefab, 
-                abilityManager.ProjectilesHolder, abilityManager.TwinFireBoltRange, abilityManager.TwinFireBoltDamage,this);
+                abilityManager.TwinFireboltProjectileList,
+                abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
         }
     }
 
