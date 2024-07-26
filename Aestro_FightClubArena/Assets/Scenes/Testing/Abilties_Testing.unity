@@ -559,7 +559,7 @@ Transform:
   m_GameObject: {fileID: 360578284}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0925586, y: 0.11419234, z: -1.6913972}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -954,10 +954,7 @@ MonoBehaviour:
   FirePillarPrefab: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
   FirePillarProjectileList: []
   FirePillarDamage: 3
-  FP_damage_overtime: 1
   FirePillarRange: 12
-  FP_duration: 3
-  FP_DPS_rate: 0.75
 --- !u!1001 &1219712523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -968,11 +965,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000020547605
+      value: 0.0000000205476
       objectReference: {fileID: 0}
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000013035146
+      value: -0.000000013035144
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y

@@ -22,20 +22,5 @@ public class AbilityManager : MonoBehaviour
     public GameObject FirePillarPrefab;
     [HideInInspector]public List<GameObject> FirePillarProjectileList = new List<GameObject>();
     public int FirePillarDamage = 3;
-    public int FP_damage_overtime = 1;
     public int FirePillarRange = 12;
-    public float FP_duration = 3f;
-    public float FP_DPS_rate = 0.75f;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

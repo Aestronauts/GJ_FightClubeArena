@@ -17,7 +17,7 @@ public class AbilitiesHelper
             projectile = Object.Instantiate(projectilePrefab, spawnLocation, Quaternion.identity, projectilesHolder);
             projectileList.Add(projectile);
         }
-        projectile.transform.position = spawnLocation;
+        projectile.transform.localPosition = spawnLocation;
         AbilityBehavior projectileInfo = projectile.GetComponent<AbilityBehavior>();
         SetProjectileInformation(projectileInfo,castLocation, spawnLocation, damage,range);
         projectile.SetActive(true);

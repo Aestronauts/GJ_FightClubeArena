@@ -34,15 +34,12 @@ public class PlayerCharacterManager : MonoBehaviour
     // Uses the provided information to then Activate the correct ability
     public void CastAbility(GameObject player_gameObject, string abilityName, Vector3 castLocation)
     {
-      //  Vector3 spawnLocation = new Vector3(player_gameObject.transform.position.x+1, player_gameObject.transform.position.y, player_gameObject.transform.position.z);
-
+        Transform spawnPoint = player_gameObject.GetComponent<PlayerInputHandler>().abilitySpawnPoint;
         // Choose "if" logic by matching the given ability name
         // TODO: Is there a better way of doing this???
         if (abilityName == "Firebolt")
         {
-            Vector3 spawnLocation = new Vector3(player_gameObject.transform.position.x+1, player_gameObject.transform.position.y, player_gameObject.transform.position.z);
-
-            AbilitiesHelper.SpawnAbility(player_gameObject, spawnLocation,castLocation,
+            AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.FireboltProjectileList, abilityManager.FireBoltPrefab, 
                 abilityManager.ProjectilesHolder, abilityManager.FireBoltRange, abilityManager.FireBoltDamage, this);
         }
@@ -54,9 +51,7 @@ public class PlayerCharacterManager : MonoBehaviour
         }
         else if (abilityName == "Twin Firebolt")
         {
-            Vector3 spawnLocation = new Vector3(player_gameObject.transform.position.x+1, player_gameObject.transform.position.y+1, player_gameObject.transform.position.z);
-
-            AbilitiesHelper.SpawnAbility(player_gameObject, spawnLocation,castLocation,
+            AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.TwinFireboltProjectileList, abilityManager.TwinFireBoltPrefab, 
                 abilityManager.ProjectilesHolder, abilityManager.TwinFireBoltRange, abilityManager.TwinFireBoltDamage,this);
         }

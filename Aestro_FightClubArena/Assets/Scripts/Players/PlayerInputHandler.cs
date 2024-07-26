@@ -12,6 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private CharacterController _controller;
     public Animator _mageAnimator;
+    public Transform abilitySpawnPoint;
     private Vector3 velocity;
     
     private float originalY;

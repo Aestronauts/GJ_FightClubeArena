@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1818087384204556287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8613800131391721675}
+  m_Layer: 0
+  m_Name: AbilitySpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8613800131391721675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818087384204556287}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.36891627, y: 0.50362146, z: 0.66540307}
+  m_LocalScale: {x: 0.6769106, y: 0.6769106, z: 0.6769106}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7101759971570417845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2755678196992663128
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 509847767
+  GlobalObjectIdHash: 1332322881
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -217,6 +248,7 @@ MonoBehaviour:
   gravity: -9.81
   mage: {fileID: 7621592218309712399}
   _mageAnimator: {fileID: 3778143804288588495}
+  abilitySpawnPoint: {fileID: 8613800131391721675}
 --- !u!114 &2520619925976139486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +497,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: e2b642d58257b7043b36ac1807b85fee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8613800131391721675}
     - targetCorrespondingSourceObject: {fileID: 3860942720698961127, guid: e2b642d58257b7043b36ac1807b85fee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8550596845785153951}
