@@ -54,6 +54,9 @@ public class NetworkingRelayManager : MonoBehaviour
                 NetworkingLobby.Instance.UpdateLobbyData(null, null, null, joinCodyRelay);
                 NetworkingLobby.Instance.UpdateLobbyServerData();
             }
+
+            if(LobbyHandler.Instance)
+                LobbyHandler.Instance.HideUI();
         }
         catch (RelayServiceException e)
         {
@@ -83,6 +86,8 @@ public class NetworkingRelayManager : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
             NetworkManager.Singleton.StartClient();
+            if (LobbyHandler.Instance)
+                LobbyHandler.Instance.HideUI();
         }
         catch (RelayServiceException e)
         {

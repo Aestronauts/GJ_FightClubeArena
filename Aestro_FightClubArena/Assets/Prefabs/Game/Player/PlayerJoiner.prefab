@@ -67,5 +67,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ref_NetworkObject: {fileID: 0}
-  ref_PlayerCharacterManagerFAKE: {fileID: 0}
   ref_NetworkManager: {fileID: 0}
+  ref_PlayerInputHandler: {fileID: 0}
+  playersJoined_NetObjs: []
+  playerLobbyCardsList: []
+  spawnedCharacterModel: {fileID: 0}
+  transAbilityPrefab: {fileID: 4422810458210577730, guid: dba8e11018721754ab716b7cc88be387, type: 3}
+  transCharacterModels:
+  - {fileID: 7815141611520830262, guid: 08abb74468f7d04429475f57b200a64d, type: 3}

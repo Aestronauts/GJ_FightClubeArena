@@ -543,7 +543,8 @@ public class NetworkingLobby : MonoBehaviour
 
     private void CheckToJoinServerByCode() // as soon as we have a code, we should join
     {
-        print($"Server Join Code: {joinedLobbyServerJoinCode}");
+        if(!string.IsNullOrEmpty(joinedLobbyServerJoinCode))
+            print($"Server Join Code: {joinedLobbyServerJoinCode}");
 
         if (joinedLob != null && !string.IsNullOrEmpty(joinedLobbyServerJoinCode) && NetworkingRelayManager.Instance != null && !joinedLobbyServer)
         {

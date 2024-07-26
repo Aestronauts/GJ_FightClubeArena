@@ -10,6 +10,9 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
 {
     public static LobbyHandler Instance { get; private set; }
 
+    [Tooltip("The Root Canvas Object that holds ALL ui")]
+    [SerializeField] private Transform uiNetworkingRootContainer;
+
     [Tooltip("The Root Canvas Object that holds the lobby Obj")]
     [SerializeField] private Transform lobbyRootContainer;
     [Tooltip("The Root Canvas Object that is the lobby Obj and will be duplicated")]
@@ -92,9 +95,10 @@ public class LobbyHandler : MonoBehaviour // the UI handler for lobby population
 
     }
 
-    public void DeleteReferenceObjs()
+    public void HideUI()
     {
-        //Destroy(lobbyRootContainer);
+        if (uiNetworkingRootContainer)
+            uiNetworkingRootContainer.gameObject.SetActive(false);
     }
 
 }
