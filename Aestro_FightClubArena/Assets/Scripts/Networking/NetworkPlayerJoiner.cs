@@ -143,9 +143,10 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         {
             ref_NetworkObject.Spawn(true);// can despawn or delete   
             ref_NetworkObject.ChangeOwnership(_serverRpcParams.Receive.SenderClientId);
+            
         }
         spawnedCharacterModel.TryGetComponent<PlayerInputHandler>(out ref_PlayerInputHandler);
-        //Awake();
+        ref_PlayerInputHandler.enabled = IsOwner;        
     }
 
     [ServerRpc(RequireOwnership = false)]
