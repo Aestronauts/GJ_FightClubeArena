@@ -37,12 +37,12 @@ public class PlayerInputHandler : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        Vector3 move = Vector3.right * moveX + Vector3.forward * moveZ;
 
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move);
-            mage.transform.rotation = Quaternion.Slerp(mage.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(mage.transform.rotation, targetRotation, Time.deltaTime * 10f);
             _mageAnimator.SetTrigger("isWalking");
             Debug.Log("Walking"); 
         }
