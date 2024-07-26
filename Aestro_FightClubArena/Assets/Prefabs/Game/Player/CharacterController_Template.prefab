@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: -4221746772234577670}
   - component: {fileID: 3643507189566444433}
   m_Layer: 0
-  m_Name: TestingCharacterController
+  m_Name: CharacterController_Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,6 +247,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedMove: 5
   speedRotation: 10
+  rotateTowardsMouse: 1
+  layerForMouseDetection:
+    serializedVersion: 2
+    m_Bits: 8
   _controller: {fileID: 3123378633958899345}
   objectToRotate: {fileID: 7815141611520830262}
   modelAnimator: {fileID: 3778143804288588495}

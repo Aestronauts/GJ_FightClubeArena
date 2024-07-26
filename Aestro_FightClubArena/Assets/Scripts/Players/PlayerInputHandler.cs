@@ -13,11 +13,15 @@ public class PlayerInputHandler : MonoBehaviour
     ///  Our Public Movement Variables References
     /// </summary>
     [Space]
-    [Header("SPEED VARIABLES\n________________")]
+    [Header("MOVEMENT VARIABLES\n________________")]
     [Tooltip("The Multiplier Speed Our Character Moves By")]
-    public float speedMove = 5.0f;    
+    public float speedMove = 5.0f;
     [Tooltip("The Multiplier Speed Our Character Rotates By")]
     public float speedRotation = 10f;
+    [Tooltip("When true, our Object To Rotate will try to look at the mouse || THIS REQUIRES THE GROUND TO BE SET TO A SPECIFIC LAYER ||. When false, they will just look forward in the direction they move")]
+    public bool rotateTowardsMouse = true;
+    [Tooltip("Set The Layer(s) Our Mouse Can detect for player casting and looking at")]
+    public LayerMask layerForMouseDetection;
 
     /// <summary>
     ///  Our Public Component References
@@ -41,7 +45,7 @@ public class PlayerInputHandler : MonoBehaviour
     [Tooltip("The movement Number recieved from using the input-axis")]
     private float moveX, moveZ;
     [Tooltip("The move direction based on our movement number")]
-    private Vector3 moveDir;    
+    private Vector3 moveDir;
     [Tooltip("The input axises we will read to get the move data")]
     private string axisHorizontal = "Horizontal", axisVertical = "Vertical";
     //[Tooltip("")]
@@ -55,7 +59,7 @@ public class PlayerInputHandler : MonoBehaviour
     [Tooltip("The (Main) Camera we will be using to move / adjust")]
     private Camera mainCamera;
 
-   
+
     private void Start()
     {
         // store var
@@ -66,12 +70,12 @@ public class PlayerInputHandler : MonoBehaviour
             objectToRotate = transform;
         if (Camera.main)
             mainCamera = Camera.main;
-        if(!modelAnimator)
+        if (!modelAnimator)
             objectToRotate.TryGetComponent<Animator>(out modelAnimator);
-        if(!_controller)
+        if (!_controller)
             TryGetComponent<CharacterController>(out _controller);
-        
-        
+
+
         ErrorCheck();
     }
 
@@ -83,11 +87,11 @@ public class PlayerInputHandler : MonoBehaviour
         return false;
     }
 
-    
+
     private void Update()
     {
         if (ErrorCheck())
-            return;
+            return;        
 
         CheckForMoveInput();
         CheckForDrawInput();
@@ -108,7 +112,10 @@ public class PlayerInputHandler : MonoBehaviour
         if (moveDir != Vector3.zero)
         {
             UpdateMovement();
-            UpdateRotationFromMove();
+            if (rotateTowardsMouse)
+                RotateToMouse();
+            else
+                UpdateRotationFromMove();
             UpdateAnimationTrigger("isWalking");
         }
         else
@@ -147,6 +154,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+
     private void CheckForDrawInput()
     {
         //drawing look at
@@ -177,17 +185,17 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
 
-    private void RotateToMouse()
+    private void RotateToMouse() //layerForMouseDetection
     {
-        // Get the mouse position in screen space
         Vector3 mouseScreenPosition = Input.mousePosition;
-
-        // Convert the screen position to a point in the world
+        RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        if (groundPlane.Raycast(ray, out float distance))
+        if (Physics.Raycast(ray.origin, mainCamera.transform.forward, out hit, Mathf.Infinity, layerForMouseDetection))
         {
-            Vector3 mouseWorldPosition = ray.GetPoint(distance);
+            Debug.DrawRay(ray.origin, mainCamera.transform.forward * hit.distance, Color.yellow);
+            Debug.Log("Did Hit");
+
+            Vector3 mouseWorldPosition = ray.GetPoint(hit.distance);
 
             // Calculate the direction vector from the character to the mouse position
             Vector3 direction = mouseWorldPosition - transform.position;
@@ -252,6 +260,6 @@ public class PlayerInputHandler : MonoBehaviour
     }
     #endregion Ability Camera Testing
 
-    
+
 
 }
