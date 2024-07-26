@@ -951,11 +951,11 @@ MonoBehaviour:
   TwinFireboltProjectileList: []
   TwinFireBoltDamage: 8
   TwinFireBoltRange: 8
-  FirePillar_gameObject: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
+  FirePillarPrefab: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
   FirePillarProjectileList: []
-  FP_damage_burst: 3
+  FirePillarDamage: 3
   FP_damage_overtime: 1
-  FP_range: 15
+  FirePillarRange: 12
   FP_duration: 3
   FP_DPS_rate: 0.75
 --- !u!1001 &1219712523

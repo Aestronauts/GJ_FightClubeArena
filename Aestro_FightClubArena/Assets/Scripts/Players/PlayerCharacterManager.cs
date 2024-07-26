@@ -34,22 +34,31 @@ public class PlayerCharacterManager : MonoBehaviour
     // Uses the provided information to then Activate the correct ability
     public void CastAbility(GameObject player_gameObject, string abilityName, Vector3 castLocation)
     {
+      //  Vector3 spawnLocation = new Vector3(player_gameObject.transform.position.x+1, player_gameObject.transform.position.y, player_gameObject.transform.position.z);
+
         // Choose "if" logic by matching the given ability name
         // TODO: Is there a better way of doing this???
         if (abilityName == "Firebolt")
         {
-            AbilitiesHelper.FireProjectile(player_gameObject, castLocation, 
-                abilityManager.FireboltProjectileList, abilityManager.FireBoltPrefab, abilityManager.ProjectilesHolder);
+            Vector3 spawnLocation = new Vector3(player_gameObject.transform.position.x+1, player_gameObject.transform.position.y, player_gameObject.transform.position.z);
+
+            AbilitiesHelper.SpawnAbility(player_gameObject, spawnLocation,castLocation,
+                abilityManager.FireboltProjectileList, abilityManager.FireBoltPrefab, 
+                abilityManager.ProjectilesHolder, abilityManager.FireBoltRange, abilityManager.FireBoltDamage, this);
         }
         else if (abilityName == "Fire Pillar")
         {
-            AbilitiesHelper.FireFirePillar(player_gameObject, castLocation, abilityManager,abilityManager.ProjectilesHolder, 
-                abilityManager.FirePillarProjectileList, this);
+            AbilitiesHelper.SpawnAbility(player_gameObject, castLocation,castLocation,
+                abilityManager.FirePillarProjectileList, abilityManager.FirePillarPrefab, 
+                abilityManager.ProjectilesHolder, abilityManager.FirePillarRange, abilityManager.FirePillarDamage,this);
         }
         else if (abilityName == "Twin Firebolt")
         {
-            AbilitiesHelper.TwinFireProjectile(player_gameObject, castLocation, 
-                abilityManager.TwinFireboltProjectileList, abilityManager.TwinFireBoltPrefab, abilityManager.ProjectilesHolder);
+            Vector3 spawnLocation = new Vector3(player_gameObject.transform.position.x+1, player_gameObject.transform.position.y+1, player_gameObject.transform.position.z);
+
+            AbilitiesHelper.SpawnAbility(player_gameObject, spawnLocation,castLocation,
+                abilityManager.TwinFireboltProjectileList, abilityManager.TwinFireBoltPrefab, 
+                abilityManager.ProjectilesHolder, abilityManager.TwinFireBoltRange, abilityManager.TwinFireBoltDamage,this);
         }
     }
 

@@ -19,11 +19,11 @@ public class AbilityManager : MonoBehaviour
     public float TwinFireBoltRange = 15;
     
     [Header("Fire Pillar Information")]
-    public GameObject FirePillar_gameObject;
+    public GameObject FirePillarPrefab;
     [HideInInspector]public List<GameObject> FirePillarProjectileList = new List<GameObject>();
-    public int FP_damage_burst = 3;
+    public int FirePillarDamage = 3;
     public int FP_damage_overtime = 1;
-    public int FP_range = 12;
+    public int FirePillarRange = 12;
     public float FP_duration = 3f;
     public float FP_DPS_rate = 0.75f;
     

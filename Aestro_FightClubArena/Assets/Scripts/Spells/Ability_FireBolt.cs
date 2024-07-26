@@ -55,7 +55,7 @@ public class Ability_FireBolt : Ability
         {
             Debug.Log("Foreach");
         }
-        Temp_Projectile projectile = fireBolt.GetComponent<Temp_Projectile>();
+        AbilityBehavior projectile = fireBolt.GetComponent<AbilityBehavior>();
         projectile.spawnLocation = spawnLocation;
         projectile.endLocation = castLocation;
         projectile.range = range;

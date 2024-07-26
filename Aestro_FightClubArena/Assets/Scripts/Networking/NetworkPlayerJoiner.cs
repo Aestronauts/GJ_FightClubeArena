@@ -148,7 +148,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     {
         Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
         transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
-        Temp_Projectile ref_Temp_Projectile = transAbilityClone.GetComponent<Temp_Projectile>();
+        AbilityBehavior ref_Temp_Projectile = transAbilityClone.GetComponent<AbilityBehavior>();
         ref_Temp_Projectile.spawnLocation = spawnedCharacterModel.position;
         ref_Temp_Projectile.endLocation = new Vector3(0, 0, 0);
     }

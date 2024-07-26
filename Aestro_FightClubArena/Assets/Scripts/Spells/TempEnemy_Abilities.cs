@@ -26,7 +26,7 @@ public class TempEnemy_Abilities : MonoBehaviour
     {
         if (other.tag == "Fire Bolt")
         {
-            Temp_Projectile projectile = other.gameObject.GetComponent<Temp_Projectile>();
+            AbilityBehavior projectile = other.gameObject.GetComponent<AbilityBehavior>();
             health -= projectile.damage;
             Debug.Log("Damage Dealt to TempEnemy in OnTriggerEnter! Remaining health: " + health);
             playerCharacterManager.ReceivedDamage(gameObject, projectile.damage);
