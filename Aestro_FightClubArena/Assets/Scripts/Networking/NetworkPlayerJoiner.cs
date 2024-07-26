@@ -79,6 +79,9 @@ public class NetworkPlayerJoiner : NetworkBehaviour
 
     private void Update()
     {
+        if (!IsOwner)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Pressing Space");
@@ -129,8 +132,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     }
 
 
-    ///[ServerRpc(RequireOwnership = false)]
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SpawnCharacterServerRpc(ServerRpcParams _serverRpcParams) // spawn player model
     {
         Debug.Log($"ClientOwner: {OwnerClientId}\nSenderClient - {_serverRpcParams.Receive.SenderClientId}\n Spawning Model - {transCharacterModels[characterModelSelected].name}");
@@ -138,12 +140,15 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         spawnedCharacterModel = Instantiate(transCharacterModels[characterModelSelected], transform.position, transCharacterModels[characterModelSelected].rotation);
         spawnedCharacterModel.TryGetComponent<NetworkObject>(out ref_NetworkObject);
         if (ref_NetworkObject)
+        {
             ref_NetworkObject.Spawn(true);// can despawn or delete   
+            ref_NetworkObject.ChangeOwnership(_serverRpcParams.Receive.SenderClientId);
+        }
         spawnedCharacterModel.TryGetComponent<PlayerInputHandler>(out ref_PlayerInputHandler);
         //Awake();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SpawnAbilityServerRpc(ServerRpcParams _serverRpcParams) // spawn player ability
     {
         Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
