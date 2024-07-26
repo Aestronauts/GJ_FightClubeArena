@@ -17,9 +17,6 @@ public class DrawOnScreen : MonoBehaviour
     private List<Vector3> drawnPositions = new List<Vector3>();
     private bool isDrawing = false;
 
-
-    public List<Texture2D> predefinedPattern;
-
     public TextMeshProUGUI text1;
 
 
@@ -71,7 +68,7 @@ public class DrawOnScreen : MonoBehaviour
         drawnPositions.Clear();
     }
 
-    public KeyValuePair<string,Vector3> StopDrawing()
+    public KeyValuePair<int,Vector3> StopDrawing()
     {
         isDrawing = false;
         Vector2 centroid = CalculateCentroid2D(drawnPositions);
@@ -79,12 +76,11 @@ public class DrawOnScreen : MonoBehaviour
         string s = "Comparison\n";
         float HighestSimilarity = 0;
         int HighestIndex = 0;
-        List<string> letters = new List<string> { "Firebolt", "Twin Firebolt", "Fire Pillar", "Extinguish", "Blink" };
 
         Texture2D PlayerDrawnTexture = ExtractPattern();
 
-        for (int i = 0; i < predefinedPattern.Count; i++) {
-            float similarity = ComparePatterns(PlayerDrawnTexture, predefinedPattern[i]);
+        for (int i = 0; i < AbilityManager.instance.abilitiesList.Count; i++) {
+            float similarity = ComparePatterns(PlayerDrawnTexture, AbilityManager.instance.abilitiesList[i].abilityDrawing);
             s += i + ":   " + similarity.ToString() + "\n";
             if (similarity > HighestSimilarity)
             {
@@ -92,7 +88,7 @@ public class DrawOnScreen : MonoBehaviour
                 HighestIndex = i;
             }
         }
-        s += "Matching: " + letters[HighestIndex] + " with similarity " + HighestSimilarity;
+        s += "Matching: " + AbilityManager.instance.abilitiesList[HighestIndex].abilityName + " with similarity " + HighestSimilarity;
         Debug.Log(s);
         if (text1 != null)
         {
@@ -102,9 +98,9 @@ public class DrawOnScreen : MonoBehaviour
         Vector3 v = MapTo3DGround(centroid);
         if (v != new Vector3(0, -100, 0))
         {
-            return new KeyValuePair<string, Vector3>(letters[HighestIndex], v);
+            return new KeyValuePair<int, Vector3>(HighestIndex, v);
         }
-        return new KeyValuePair<string, Vector3>();
+        return new KeyValuePair<int, Vector3>();
     }
 
     void Draw()

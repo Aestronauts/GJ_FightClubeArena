@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class AbilityData
 {
-    [HideInInspector]public int abilityID;
+    public string abilityName;
+    public int abilityID;
     public GameObject abilityPrefab;
     
     public float projectileSpeed = 50f;

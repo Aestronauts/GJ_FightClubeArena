@@ -32,24 +32,24 @@ public class PlayerCharacterManager : MonoBehaviour
 
     // Takes the game object of the player that casted the ability, the ability's name, and the cast location
     // Uses the provided information to then Activate the correct ability
-    public void CastAbility(GameObject player_gameObject, string abilityName, Vector3 castLocation, int abilityID)
+    public void CastAbility(GameObject player_gameObject, Vector3 castLocation, int abilityID)
     {
         Transform spawnPoint = player_gameObject.GetComponent<PlayerInputHandler>().abilitySpawnPoint;
         // Choose "if" logic by matching the given ability name
         // TODO: Is there a better way of doing this???
-        if (abilityName == "Firebolt")
+        if (abilityID == 0)
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.FireboltProjectileList,  
                 abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
         }
-        else if (abilityName == "Fire Pillar")
+        else if (abilityID == 1)
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, castLocation,castLocation,
                 abilityManager.FirePillarProjectileList,
                 abilityManager.ProjectilesHolder,this,abilityManager.abilitiesList,abilityID);
         }
-        else if (abilityName == "Twin Firebolt")
+        else if (abilityID == 2)
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.TwinFireboltProjectileList,

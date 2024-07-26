@@ -162,7 +162,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             if (DrawOnScreen.instance == null) return;
 
-            KeyValuePair<string, Vector3> DrawResult = DrawOnScreen.instance.StopDrawing();
+            KeyValuePair<int, Vector3> DrawResult = DrawOnScreen.instance.StopDrawing();
             if (DrawResult.Key == null)
             {
                 Debug.Log("Invalid!");
@@ -171,7 +171,7 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 //cast ability
                 //Debug.Log("Casting Ability from PlayerInputHandler.cs");                
-                PlayerCharacterManager.instance.CastAbility(GameManager.Instance.player1.gameObject, DrawResult.Key, DrawResult.Value,0);
+                PlayerCharacterManager.instance.CastAbility(GameManager.Instance.player1.gameObject, DrawResult.Value, DrawResult.Key);
             }
         }
     }
