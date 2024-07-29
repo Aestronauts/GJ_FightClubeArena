@@ -35,7 +35,8 @@ public class PlayerCharacterManager : MonoBehaviour
     public void CastAbility(GameObject player_gameObject, Vector3 castLocation, int abilityID)
     {
         Transform spawnPoint = player_gameObject.GetComponent<PlayerInputHandler>().abilitySpawnPoint;
-        Animator animator = player_gameObject.GetComponent<Animator>();
+        //Animator animator = player_gameObject.GetComponent<Animator>();
+        Animator animator = player_gameObject.GetComponent<PlayerInputHandler>().modelAnimator;
         if (animator == null) { Debug.LogError("Animator not found on PlayerCharacterManager"); }
         // Choose "if" logic by matching the given ability name
         // TODO: Is there a better way of doing this???
