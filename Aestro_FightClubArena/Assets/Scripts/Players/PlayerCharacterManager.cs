@@ -35,6 +35,8 @@ public class PlayerCharacterManager : MonoBehaviour
     public void CastAbility(GameObject player_gameObject, Vector3 castLocation, int abilityID)
     {
         Transform spawnPoint = player_gameObject.GetComponent<PlayerInputHandler>().abilitySpawnPoint;
+        Animator animator = player_gameObject.GetComponent<Animator>();
+        if (animator == null) { Debug.LogError("Animator not found on PlayerCharacterManager"); }
         // Choose "if" logic by matching the given ability name
         // TODO: Is there a better way of doing this???
         if (abilityID == 0)
@@ -42,18 +44,22 @@ public class PlayerCharacterManager : MonoBehaviour
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.FireboltProjectileList,  
                 abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
+            animator.SetTrigger("isBasicAttacks");
+                
         }
         else if (abilityID == 1)
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, castLocation,castLocation,
                 abilityManager.FirePillarProjectileList,
                 abilityManager.ProjectilesHolder,this,abilityManager.abilitiesList,abilityID);
+            animator.SetTrigger("isFirePillar");
         }
         else if (abilityID == 2)
         {
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.TwinFireboltProjectileList,
                 abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
+            animator.SetTrigger("isTwinsFlames");
         }
     }
 
