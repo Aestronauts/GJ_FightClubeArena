@@ -96,6 +96,7 @@ public class PlayerInputHandler : MonoBehaviour
         CheckForMoveInput();
         CheckForDrawInput();
 
+
         // Brett's testing camera interactions
         AbilityOne();
         AbilityTwo();
@@ -117,6 +118,7 @@ public class PlayerInputHandler : MonoBehaviour
             else
                 UpdateRotationFromMove();
             UpdateAnimationTrigger("isWalking");
+            DetermineAnimation(transform.rotation, moveDir);
         }
         else
             UpdateAnimationTrigger("isIdle");
@@ -211,6 +213,35 @@ public class PlayerInputHandler : MonoBehaviour
     {
         modelAnimator.SetTrigger(_triggerString);
     }
+
+    public void DetermineAnimation(Quaternion facingDirection, Vector3 movingDirection)
+    {
+        // Calculate the forward vectors
+        Vector3 characterForward = facingDirection * Vector3.forward;
+        Vector3 movementForward = movingDirection;
+
+        // Calculate the angle between the character's facing direction and the movement direction
+        float angle = Vector3.SignedAngle(characterForward, movementForward, Vector3.up);
+
+        // Determine the animation to play based on the angle
+        if (angle >= -45f && angle <= 45f)
+        {
+            Debug.Log("MoveForward");
+        }
+        else if (angle > 45f && angle <= 135f)
+        {
+            Debug.Log("MoveRight");
+        }
+        else if (angle < -45f && angle >= -135f)
+        {
+            Debug.Log("MoveLeft");
+        }
+        else
+        {
+            Debug.Log("MoveBackward");
+        }
+    }
+
 
     #region Ability Camera Testing
     private void AbilityOne()
