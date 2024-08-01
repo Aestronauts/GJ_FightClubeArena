@@ -69,9 +69,16 @@ MonoBehaviour:
   ref_NetworkObject: {fileID: 0}
   ref_NetworkManager: {fileID: 0}
   ref_PlayerInputHandler: {fileID: 0}
-  playersJoined_NetObjs: []
-  playerLobbyCardsList: []
+  characterModelSelected: 0
   spawnedCharacterModel: {fileID: 0}
+  mapModelSelected: 0
+  spawnedMapModel: {fileID: 0}
+  spawnedDrawingPrefab: []
+  transDrawingPrefab:
+  - {fileID: 6127339762059801033, guid: cc7587101863990439564fd8e6fbb6d5, type: 3}
+  - {fileID: 3418808514856873185, guid: c4033dae29a6c26419fbc56a88a4cfcc, type: 3}
   transAbilityPrefab: {fileID: 4422810458210577730, guid: dba8e11018721754ab716b7cc88be387, type: 3}
   transCharacterModels:
   - {fileID: 7815141611520830262, guid: 08abb74468f7d04429475f57b200a64d, type: 3}
+  transMapModels:
+  - {fileID: 2233031940504927829, guid: 683452651aac46d438154d4dba338278, type: 3}

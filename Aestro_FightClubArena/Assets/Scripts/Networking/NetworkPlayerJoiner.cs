@@ -30,15 +30,26 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     public int characterModelSelected;
     // reference to playerModelSpawned
     public Transform spawnedCharacterModel;
+    // the selected map model we'll be using
+    public int mapModelSelected;
+    // reference to map model we spawned
+    public Transform spawnedMapModel;
+    // the drawing assets we require for casting spells
+    public List<Transform> spawnedDrawingPrefab = new List<Transform>();
 
 
     [Space]
     [Header("STORED ASSET REFERENCES\n____________________")]
     [SerializeField]
+    private Transform[] transDrawingPrefab;
+    [SerializeField]
     private Transform transAbilityPrefab;
     // an example of a character we might spawn
     [SerializeField]
     private Transform[] transCharacterModels;
+    // an example of the maps we might want to spawn (can do so locally)
+    [SerializeField]
+    private Transform[] transMapModels;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -67,14 +78,18 @@ public class NetworkPlayerJoiner : NetworkBehaviour
            
         }
 
-
-        //if (ref_PlayerInputHandler)
-        //    ref_PlayerInputHandler.enabled = IsOwner;
-        //if (ref_NetworkObject)
-        //    ref_NetworkObject.enabled = IsOwner;
-
-        //if(isOnline && !spawnedCharacterModel)
-        //    SpawnCharacterServerRpc(new ServerRpcParams());
+        //spawn our only environment locally
+        if (!spawnedMapModel && transMapModels[mapModelSelected] != null)
+            spawnedMapModel = Instantiate(transMapModels[mapModelSelected]);
+        if(spawnedMapModel)
+            spawnedMapModel.transform.Rotate(0, -90, 0);
+        // spawn our drawing references locally
+        if (spawnedDrawingPrefab.Count == 0 && transDrawingPrefab.Length > 0)
+        {
+            foreach (Transform drawObj in transDrawingPrefab)
+                spawnedDrawingPrefab.Add(Instantiate(drawObj));
+        }
+            
     }
 
     private void Update()
@@ -85,7 +100,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Pressing Space");
-            if (isOnline && !spawnedCharacterModel)
+            if (isOnline && spawnedCharacterModel !=null)
             {
                 Debug.Log("Spawning Character");
                 SpawnCharacterServerRpc(new ServerRpcParams());
@@ -137,6 +152,9 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     {
         Debug.Log($"ClientOwner: {OwnerClientId}\nSenderClient - {_serverRpcParams.Receive.SenderClientId}\n Spawning Model - {transCharacterModels[characterModelSelected].name}");
 
+        if (!transCharacterModels[characterModelSelected])
+            return;
+
         spawnedCharacterModel = Instantiate(transCharacterModels[characterModelSelected], transform.position, transCharacterModels[characterModelSelected].rotation);
         spawnedCharacterModel.TryGetComponent<NetworkObject>(out ref_NetworkObject);
         if (ref_NetworkObject)
@@ -146,7 +164,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
             
         }
         spawnedCharacterModel.TryGetComponent<PlayerInputHandler>(out ref_PlayerInputHandler);
-        ref_PlayerInputHandler.enabled = IsOwner;        
+        ref_PlayerInputHandler.enabled = IsOwner;       
     }
 
     [ServerRpc(RequireOwnership = false)]
