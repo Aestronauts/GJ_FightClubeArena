@@ -35,13 +35,15 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // reference to map model we spawned
     public Transform spawnedMapModel;
     // the drawing assets we require for casting spells
-    public List<Transform> spawnedDrawingPrefab = new List<Transform>();
+    public Transform spawnedDrawingObjPrefab, spawnedDrawingCamPrefab;
 
 
     [Space]
     [Header("STORED ASSET REFERENCES\n____________________")]
     [SerializeField]
-    private Transform[] transDrawingPrefab;
+    private Transform transDrawingObjPrefab;
+    [SerializeField]
+    private Transform transDrawingCamPrefab;
     [SerializeField]
     private Transform transAbilityPrefab;
     // an example of a character we might spawn
@@ -79,17 +81,22 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         }
 
         //spawn our only environment locally
-        if (!spawnedMapModel && transMapModels[mapModelSelected] != null)
+        if (!spawnedMapModel && transMapModels[mapModelSelected])
             spawnedMapModel = Instantiate(transMapModels[mapModelSelected]);
         if(spawnedMapModel)
             spawnedMapModel.transform.Rotate(0, -90, 0);
         // spawn our drawing references locally
-        if (spawnedDrawingPrefab.Count == 0 && transDrawingPrefab.Length > 0)
+        if (!spawnedDrawingObjPrefab && transDrawingObjPrefab)
+            spawnedDrawingObjPrefab = Instantiate(transDrawingObjPrefab);
+        if (!spawnedDrawingCamPrefab && transDrawingCamPrefab)
+            spawnedDrawingCamPrefab = Instantiate(transDrawingCamPrefab);
+        if (spawnedDrawingObjPrefab && spawnedDrawingCamPrefab)
         {
-            foreach (Transform drawObj in transDrawingPrefab)
-                spawnedDrawingPrefab.Add(Instantiate(drawObj));
+            spawnedDrawingCamPrefab.position = Camera.main.transform.position;
+            spawnedDrawingCamPrefab.rotation = Camera.main.transform.rotation;
+            spawnedDrawingObjPrefab.GetComponent<DrawOnScreen>().strokesCamera = spawnedDrawingCamPrefab.GetComponent<Camera>();
         }
-            
+
     }
 
     private void Update()

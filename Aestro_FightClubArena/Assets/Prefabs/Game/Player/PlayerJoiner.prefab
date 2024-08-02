@@ -73,10 +73,10 @@ MonoBehaviour:
   spawnedCharacterModel: {fileID: 0}
   mapModelSelected: 0
   spawnedMapModel: {fileID: 0}
-  spawnedDrawingPrefab: []
-  transDrawingPrefab:
-  - {fileID: 6127339762059801033, guid: cc7587101863990439564fd8e6fbb6d5, type: 3}
-  - {fileID: 3418808514856873185, guid: c4033dae29a6c26419fbc56a88a4cfcc, type: 3}
+  spawnedDrawingObjPrefab: {fileID: 0}
+  spawnedDrawingCamPrefab: {fileID: 0}
+  transDrawingObjPrefab: {fileID: 6127339762059801033, guid: cc7587101863990439564fd8e6fbb6d5, type: 3}
+  transDrawingCamPrefab: {fileID: 3418808514856873185, guid: c4033dae29a6c26419fbc56a88a4cfcc, type: 3}
   transAbilityPrefab: {fileID: 4422810458210577730, guid: dba8e11018721754ab716b7cc88be387, type: 3}
   transCharacterModels:
   - {fileID: 7815141611520830262, guid: 08abb74468f7d04429475f57b200a64d, type: 3}

@@ -181,7 +181,8 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 //cast ability
                 //Debug.Log("Casting Ability from PlayerInputHandler.cs");                
-                PlayerCharacterManager.instance.CastAbility(GameManager.Instance.player1.gameObject, DrawResult.Value, DrawResult.Key);
+                //PlayerCharacterManager.instance.CastAbility(GameManager.Instance.player1.gameObject, DrawResult.Value, DrawResult.Key);
+                PlayerCharacterManager.instance.CastAbility(gameObject, DrawResult.Value, DrawResult.Key);
             }
         }
     }
