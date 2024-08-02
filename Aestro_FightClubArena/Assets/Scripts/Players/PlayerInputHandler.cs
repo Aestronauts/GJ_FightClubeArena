@@ -117,7 +117,7 @@ public class PlayerInputHandler : MonoBehaviour
                 RotateToMouse();
             else
                 UpdateRotationFromMove();
-            UpdateAnimationTrigger("isWalking");
+            
             DetermineAnimation(transform.rotation, moveDir);
         }
         else
@@ -227,6 +227,7 @@ public class PlayerInputHandler : MonoBehaviour
         if (angle >= -45f && angle <= 45f)
         {
             Debug.Log("MoveForward");
+            UpdateAnimationTrigger("isWalking");
         }
         else if (angle > 45f && angle <= 135f)
         {
@@ -239,6 +240,7 @@ public class PlayerInputHandler : MonoBehaviour
         else
         {
             Debug.Log("MoveBackward");
+            UpdateAnimationTrigger("isWalkingBackward");
         }
     }
 
