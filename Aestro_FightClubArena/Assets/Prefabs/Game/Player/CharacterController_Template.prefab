@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 3643507189566444433}
   m_Layer: 0
   m_Name: CharacterController_Template
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,6 +153,7 @@ Transform:
   - {fileID: 660946481384347533}
   - {fileID: 8038732056415692102}
   - {fileID: 7101759971570417845}
+  - {fileID: 4645290701964399269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3123378633958899345
@@ -277,53 +278,60 @@ MonoBehaviour:
     TransitionIndex: 0
   - IsCrossFadeExit: 0
     Layer: 0
-    OriginatingState: -1155614474
-    DestinationState: 765711723
-    TransitionDuration: 0.25
-    TriggerNameHash: -830007593
-    TransitionIndex: 1
-  - IsCrossFadeExit: 0
-    Layer: 0
     OriginatingState: -1692984280
     DestinationState: -601574123
     TransitionDuration: 0.25
     TriggerNameHash: 2098831385
     TransitionIndex: 0
-  - IsCrossFadeExit: 0
-    Layer: 0
-    OriginatingState: -1692984280
-    DestinationState: 765711723
-    TransitionDuration: 0.25
-    TriggerNameHash: -830007593
-    TransitionIndex: 1
   - IsCrossFadeExit: 0
     Layer: 0
     OriginatingState: -601574123
-    DestinationState: 765711723
+    DestinationState: -71865183
     TransitionDuration: 0.25
     TriggerNameHash: -830007593
     TransitionIndex: 0
   - IsCrossFadeExit: 0
     Layer: 0
-    OriginatingState: -625395443
-    DestinationState: -601574123
+    OriginatingState: -601574123
+    DestinationState: 840995971
     TransitionDuration: 0.25
-    TriggerNameHash: 2098831385
-    TransitionIndex: 0
-  - IsCrossFadeExit: 0
-    Layer: 0
-    OriginatingState: -625395443
-    DestinationState: 765711723
-    TransitionDuration: 0.25
-    TriggerNameHash: -830007593
+    TriggerNameHash: -155957972
     TransitionIndex: 1
   - IsCrossFadeExit: 0
     Layer: 0
-    OriginatingState: 765711723
+    OriginatingState: -625395443
     DestinationState: -601574123
     TransitionDuration: 0.25
     TriggerNameHash: 2098831385
     TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -71865183
+    DestinationState: -601574123
+    TransitionDuration: 0.25
+    TriggerNameHash: 2098831385
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -71865183
+    DestinationState: 840995971
+    TransitionDuration: 0.048725605
+    TriggerNameHash: -155957972
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 840995971
+    DestinationState: -601574123
+    TransitionDuration: 0.25
+    TriggerNameHash: 2098831385
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 840995971
+    DestinationState: -71865183
+    TransitionDuration: 0.6471261
+    TriggerNameHash: -830007593
+    TransitionIndex: 1
   m_Animator: {fileID: 3778143804288588495}
 --- !u!95 &3643507189566444433
 Animator:
@@ -450,6 +458,61 @@ BoxCollider:
   m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8955811617077629318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4645290701964399269}
+  - component: {fileID: 349910807709091254}
+  m_Layer: 0
+  m_Name: ProjectileCollider
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4645290701964399269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955811617077629318}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7815141611520830262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &349910807709091254
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955811617077629318}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &190119233671742688
 PrefabInstance:
