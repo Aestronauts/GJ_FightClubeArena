@@ -100,7 +100,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Pressing Space");
-            if (isOnline && spawnedCharacterModel !=null)
+            if (isOnline && !spawnedCharacterModel)
             {
                 Debug.Log("Spawning Character");
                 SpawnCharacterServerRpc(new ServerRpcParams());
