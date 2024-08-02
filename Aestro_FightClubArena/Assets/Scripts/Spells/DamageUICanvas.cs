@@ -18,8 +18,7 @@ public class DamageUICanvas : MonoBehaviour
     private RectTransform textTransform;
 
     [HideInInspector]public int abilityDamage;
-    //[HideInInspector]public int? abilityDamageOvertime = null;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +28,7 @@ public class DamageUICanvas : MonoBehaviour
         canvas.worldCamera = Camera.main;
 
         textTransform = GetComponent<RectTransform>();
-
-        // if (abilityDamageOvertime != 0)
-        // {
-        //     damageNumberText.text = abilityDamageOvertime.ToString();
-        // }
+        
         damageNumberText.text = abilityDamage.ToString();
         damageNumberText.fontSize = fontSize;
         
@@ -50,11 +45,7 @@ public class DamageUICanvas : MonoBehaviour
     
     private IEnumerator IncreaseFontSize()
     {
-       // float duration = 1f; // Duration of the burst effect
-        //float maxFontSize = 5f; // Maximum font size to reach
-        //float initialFontSize = damageNumberText.fontSize;
         float initialYPosition = textTransform.anchoredPosition.y;
-        //float targetYPosition = initialYPosition + 2f;
 
         float elapsed = 0f;
 
@@ -66,7 +57,9 @@ public class DamageUICanvas : MonoBehaviour
             yield return null;
         }
 
-        // Ensure the font size is set to the maximum value at the end
+        // Ensure the final values are set
         damageNumberText.fontSize = endFontSize;
+        textTransform.anchoredPosition = new Vector2(textTransform.anchoredPosition.x, targetTextDistance);
+
     }
 }

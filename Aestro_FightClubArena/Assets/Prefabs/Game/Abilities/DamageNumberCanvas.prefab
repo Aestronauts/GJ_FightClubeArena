@@ -54,14 +54,14 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &5872388082703091043
 MonoBehaviour:
@@ -118,6 +118,8 @@ MonoBehaviour:
   damageNumberText: {fileID: 3369481281403675044}
   destroyAfterSeconds: 1
   fontSize: 15
+  endFontSize: 2
+  targetTextDistance: 2
   abilityDamage: 0
 --- !u!1 &4957866386492909863
 GameObject:
@@ -130,7 +132,7 @@ GameObject:
   - component: {fileID: 5958231921484828165}
   - component: {fileID: 8795681074771545186}
   - component: {fileID: 3369481281403675044}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DamageNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +178,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -1321240245641596610, guid: 070d8360b5b5ae442b9a8d1f1bd5cc7c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -196,7 +198,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3369481281403675044
 MonoBehaviour:
@@ -220,15 +222,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: test
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 070d8360b5b5ae442b9a8d1f1bd5cc7c, type: 2}
+  m_sharedMaterial: {fileID: -1321240245641596610, guid: 070d8360b5b5ae442b9a8d1f1bd5cc7c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4285229567
+  m_fontColor: {r: 1, g: 0.41176474, b: 0.4177078, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
