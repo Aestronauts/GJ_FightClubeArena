@@ -15,10 +15,14 @@ public class AbilityBehavior : MonoBehaviour
 
     [HideInInspector]public int abilityID;
 
+    public GameObject DamageUIPrefab;
+
+    private GameObject instantiatedObjectDamageCanvas = null;
+    private GameObject instantiatedObjectDamageOvertimeCanvas = null;
+
     // // Start is called before the first frame update
     void Awake()
     {
-     //   abilityManager = FindAnyObjectByType<AbilityManager>();
     }
 
     // // Update is called once per frame
@@ -34,7 +38,31 @@ public class AbilityBehavior : MonoBehaviour
     
             if (distanceTraveled >= abilityParameters.range || transform.position == endLocation)
             {
+                instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
+                instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage = AbilityManager.instance.abilitiesList[abilityID].damage;
                 gameObject.SetActive(false);
+            }
+        }
+
+        if (instantiatedObjectDamageOvertimeCanvas == null)
+        {
+            //spawn damage number for non distance traveling attacks
+            if (AbilityManager.instance.abilitiesList[abilityID].damageOvertime != 0)
+            {
+                instantiatedObjectDamageOvertimeCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
+                instantiatedObjectDamageOvertimeCanvas.GetComponent<DamageUICanvas>().abilityDamage =
+                    AbilityManager.instance.abilitiesList[abilityID].damageOvertime;
+            }
+        }
+
+        if (instantiatedObjectDamageCanvas == null)
+        {
+            if (AbilityManager.instance.abilitiesList[abilityID].duration != 0)
+            {
+                instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity,
+                    AbilityManager.instance.ProjectilesHolder);
+                instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage =
+                    AbilityManager.instance.abilitiesList[abilityID].damage;
             }
         }
     }
@@ -43,6 +71,8 @@ public class AbilityBehavior : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("InvisWall"))
         {
+            instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
+            instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage = AbilityManager.instance.abilitiesList[abilityID].damage;
             // Disable the bullet when it hits another collider
             gameObject.SetActive(false);
         }

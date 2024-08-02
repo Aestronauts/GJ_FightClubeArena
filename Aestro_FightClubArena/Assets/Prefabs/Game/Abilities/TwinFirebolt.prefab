@@ -271,8 +271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4494570ae4a8b4080a2ec1e62c7a7780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityManager: {fileID: 0}
   abilityParameters:
+    abilityName: 
+    abilityID: 0
     abilityPrefab: {fileID: 5052831283393963684}
     projectileSpeed: 10
     damage: 3
@@ -284,6 +285,8 @@ MonoBehaviour:
   spawnLocation: {x: 0, y: 0, z: 0}
   endLocation: {x: 0, y: 0, z: 0}
   distanceTraveled: 0
+  abilityID: 0
+  DamageUIPrefab: {fileID: 2304262163274401912, guid: 1d004a49841ac2c48a5074ed46d1b222, type: 3}
 --- !u!114 &6372455418324378627
 MonoBehaviour:
   m_ObjectHideFlags: 0
