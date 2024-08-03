@@ -112,14 +112,14 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        if (ServerIsHost)
+        if (IsHost)
             Debug.Log("I AM SERVER HOST");
 
-        if (ServerIsHost && !spawnedTargetDummy && transTargetDummyModel)
-        {
-            spawnedTargetDummy = Instantiate(transTargetDummyModel);
-            spawnedTargetDummy.GetComponent<NetworkObject>().Spawn(true);
-        }
+        //if (ServerIsHost && !spawnedTargetDummy && transTargetDummyModel)
+        //{
+        //    spawnedTargetDummy = Instantiate(transTargetDummyModel);
+        //    spawnedTargetDummy.GetComponent<NetworkObject>().Spawn(true);
+        //}
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
