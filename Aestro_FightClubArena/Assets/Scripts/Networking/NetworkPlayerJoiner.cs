@@ -18,7 +18,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // Online Connection
     private bool isOnline;
     // we should have spawned in
-    private bool sentSpawnCharacterSignal;
+    private bool sentSpawnCharacterSignal, sentLocalAssetSpawnSignal;
     // HEALTH
     private NetworkVariable<int> playerHealth = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // Owner VS Server (owner is write your own, server is change others)
     
@@ -64,8 +64,6 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        
-
         if (!ref_NetworkObject && GetComponent<NetworkObject>() != null)
             ref_NetworkObject = transform.GetComponent<NetworkObject>();
 
@@ -87,33 +85,11 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         {
             Debug.Log("You Are Online Right Now");
             isOnline = true;
-           
+
         }
 
-        if(ref_NetworkObject)
+        if (ref_NetworkObject)
             Debug.Log($"OWNER CHECK FOR: {transform.name} \nIsOwner: {ref_NetworkObject.IsOwner} \nIsOwnedByServer: {ref_NetworkObject.IsOwnedByServer} \nisHost: {IsHost} \nOwnerClientID: {ref_NetworkObject.OwnerClientId} \nServerIsHost: {ServerIsHost}");
-
-        if (!IsOwnedByServer)
-            return;
-
-        //spawn our only environment locally
-        if (!spawnedMapModel && transMapModels[mapModelSelected])
-            spawnedMapModel = Instantiate(transMapModels[mapModelSelected]);
-        if(spawnedMapModel)
-            spawnedMapModel.transform.Rotate(0, -90, 0);
-        // spawn our drawing references locally
-        if (!spawnedDrawingObjPrefab && transDrawingObjPrefab)
-            spawnedDrawingObjPrefab = Instantiate(transDrawingObjPrefab);
-        if (!spawnedDrawingCamPrefab && transDrawingCamPrefab)
-            spawnedDrawingCamPrefab = Instantiate(transDrawingCamPrefab);
-        if (spawnedDrawingObjPrefab && spawnedDrawingCamPrefab)
-        {
-            spawnedDrawingCamPrefab.position = Camera.main.transform.position;
-            spawnedDrawingCamPrefab.rotation = Camera.main.transform.rotation;
-            spawnedDrawingObjPrefab.GetComponent<DrawOnScreen>().strokesCamera = spawnedDrawingCamPrefab.GetComponent<Camera>();
-        }
-        
-
 
     }
 
@@ -124,6 +100,12 @@ public class NetworkPlayerJoiner : NetworkBehaviour
 
         if (IsHost)
             Debug.Log("I AM SERVER HOST");
+
+        if (!sentLocalAssetSpawnSignal)
+        {
+            SpawnLocalAssets();
+            sentLocalAssetSpawnSignal = true;
+        }
 
         //if (ServerIsHost && !spawnedTargetDummy && transTargetDummyModel)
         //{
@@ -147,6 +129,26 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         if (!spawnedCharacterModel && sentSpawnCharacterSignal)
         {
             CheckAllJoiners();
+        }
+    }
+
+    public void SpawnLocalAssets()
+    {
+        //spawn our only environment locally
+        if (!spawnedMapModel && transMapModels[mapModelSelected])
+            spawnedMapModel = Instantiate(transMapModels[mapModelSelected]);
+        if (spawnedMapModel)
+            spawnedMapModel.transform.Rotate(0, -90, 0);
+        // spawn our drawing references locally
+        if (!spawnedDrawingObjPrefab && transDrawingObjPrefab)
+            spawnedDrawingObjPrefab = Instantiate(transDrawingObjPrefab);
+        if (!spawnedDrawingCamPrefab && transDrawingCamPrefab)
+            spawnedDrawingCamPrefab = Instantiate(transDrawingCamPrefab);
+        if (spawnedDrawingObjPrefab && spawnedDrawingCamPrefab)
+        {
+            spawnedDrawingCamPrefab.position = Camera.main.transform.position;
+            spawnedDrawingCamPrefab.rotation = Camera.main.transform.rotation;
+            spawnedDrawingObjPrefab.GetComponent<DrawOnScreen>().strokesCamera = spawnedDrawingCamPrefab.GetComponent<Camera>();
         }
     }
 
