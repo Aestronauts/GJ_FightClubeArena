@@ -21,5 +21,11 @@ public class PlayerHealthManager : MonoBehaviour
     {
         float fillAmount = (float)currentPlayerHealth / startingHealth;
         healthImage.fillAmount = fillAmount;
+
+        //yay reset for free, we never die!
+        if (currentPlayerHealth <= 0)
+        {
+            currentPlayerHealth = startingHealth;
+        }
     }
 }
