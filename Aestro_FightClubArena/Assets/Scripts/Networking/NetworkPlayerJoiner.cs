@@ -64,6 +64,9 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        if (!IsOwner)
+            return;
+
         if (!ref_NetworkObject && GetComponent<NetworkObject>() != null)
             ref_NetworkObject = transform.GetComponent<NetworkObject>();
 
