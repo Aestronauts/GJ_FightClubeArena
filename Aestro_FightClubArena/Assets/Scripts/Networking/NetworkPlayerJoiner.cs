@@ -64,8 +64,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        if (!IsOwner)
-            return;
+        
 
         if (!ref_NetworkObject && GetComponent<NetworkObject>() != null)
             ref_NetworkObject = transform.GetComponent<NetworkObject>();
@@ -90,6 +89,10 @@ public class NetworkPlayerJoiner : NetworkBehaviour
             isOnline = true;
            
         }
+
+        Debug.Log($"OWNER CHECK FOR: {transform.name} \nIsOwner: {IsOwner} \nIsOwnedByServer: {IsOwnedByServer} \nisHost: {IsHost} \nOwnerClientID: {OwnerClientId} \nisServerHost: {IsOwnedByServer}");
+        if (!IsOwner)
+            return;
 
         //spawn our only environment locally
         if (!spawnedMapModel && transMapModels[mapModelSelected])
