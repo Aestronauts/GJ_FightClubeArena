@@ -171,7 +171,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     }
 
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = true)]
     private void SpawnCharacterServerRpc(ServerRpcParams _serverRpcParams) // spawn player model
     {
         Debug.Log($"ClientOwner: {OwnerClientId}\nSenderClient - {_serverRpcParams.Receive.SenderClientId}\n Spawning Model - {transCharacterModels[characterModelSelected].name}");
