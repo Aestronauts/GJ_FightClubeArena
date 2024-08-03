@@ -90,8 +90,10 @@ public class NetworkPlayerJoiner : NetworkBehaviour
            
         }
 
-        Debug.Log($"OWNER CHECK FOR: {transform.name} \nIsOwner: {IsOwner} \nIsOwnedByServer: {IsOwnedByServer} \nisHost: {IsHost} \nOwnerClientID: {OwnerClientId} \nisServerHost: {IsOwnedByServer}");
-        if (!IsOwner)
+        if(ref_NetworkObject)
+            Debug.Log($"OWNER CHECK FOR: {transform.name} \nIsOwner: {ref_NetworkObject.IsOwner} \nIsOwnedByServer: {ref_NetworkObject.IsOwnedByServer} \nisHost: {IsHost} \nOwnerClientID: {ref_NetworkObject.OwnerClientId} \nServerIsHost: {ServerIsHost}");
+
+        if (!IsOwnedByServer)
             return;
 
         //spawn our only environment locally
