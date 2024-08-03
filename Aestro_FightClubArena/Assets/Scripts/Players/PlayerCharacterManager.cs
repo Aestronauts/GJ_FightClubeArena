@@ -60,7 +60,7 @@ public class PlayerCharacterManager : MonoBehaviour
             AbilitiesHelper.SpawnAbility(player_gameObject, spawnPoint.position,castLocation,
                 abilityManager.TwinFireboltProjectileList,
                 abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
-            animator.SetTrigger("isTwinsFlames");
+            animator.SetTrigger("isTwinFlames");
         }
     }
 
