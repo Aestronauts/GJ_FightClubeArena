@@ -102,11 +102,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
             spawnedDrawingCamPrefab.rotation = Camera.main.transform.rotation;
             spawnedDrawingObjPrefab.GetComponent<DrawOnScreen>().strokesCamera = spawnedDrawingCamPrefab.GetComponent<Camera>();
         }
-        if(ServerIsHost && !spawnedTargetDummy && transTargetDummyModel)
-        {
-            spawnedTargetDummy = Instantiate(transTargetDummyModel);
-            spawnedTargetDummy.GetComponent<NetworkObject>().Spawn(true);
-        }
+        
 
 
     }
@@ -115,6 +111,15 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     {
         if (!IsOwner)
             return;
+
+        if (ServerIsHost)
+            Debug.Log("I AM SERVER HOST");
+
+        if (ServerIsHost && !spawnedTargetDummy && transTargetDummyModel)
+        {
+            spawnedTargetDummy = Instantiate(transTargetDummyModel);
+            spawnedTargetDummy.GetComponent<NetworkObject>().Spawn(true);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
