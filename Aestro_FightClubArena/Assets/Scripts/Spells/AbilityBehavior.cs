@@ -89,6 +89,8 @@ public class AbilityBehavior : MonoBehaviour
                         AbilityManager.instance.ProjectilesHolder);
                     instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage =
                         AbilityManager.instance.abilitiesList[abilityID].damage;
+                    other.gameObject.GetComponent<PlayerHealthManager>().currentPlayerHealth -=
+                        AbilityManager.instance.abilitiesList[abilityID].damage;
                 }
 
                 if (AbilityManager.instance.abilitiesList[abilityID].duration == 0)
@@ -96,6 +98,8 @@ public class AbilityBehavior : MonoBehaviour
                     instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position,
                         Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
                     instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage =
+                        AbilityManager.instance.abilitiesList[abilityID].damage;
+                    other.gameObject.GetComponent<PlayerHealthManager>().currentPlayerHealth -=
                         AbilityManager.instance.abilitiesList[abilityID].damage;
                     gameObject.SetActive(false);
                 }
@@ -117,7 +121,7 @@ public class AbilityBehavior : MonoBehaviour
                 {
                     if (AbilityManager.instance.abilitiesList[abilityID].DPS_rate != 0)
                     {
-                        triggerStayCoroutine = StartCoroutine(TriggerStayDPS());
+                        triggerStayCoroutine = StartCoroutine(TriggerStayDPS(other.gameObject));
                     }
                 }
             }
@@ -152,7 +156,7 @@ public class AbilityBehavior : MonoBehaviour
 
     //call this coroutine to repeatedly spawn damage ui canvases for damage overtime. only do it
     //if there is a damage to be applied i.e not 0
-    private IEnumerator TriggerStayDPS()
+    private IEnumerator TriggerStayDPS(GameObject collidingObject)
     {
         dpsTickWaiting = true;
         while (true)
@@ -162,6 +166,8 @@ public class AbilityBehavior : MonoBehaviour
             {
                 instantiatedObjectDamageOvertimeCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
                 instantiatedObjectDamageOvertimeCanvas.GetComponent<DamageUICanvas>().abilityDamage =
+                    AbilityManager.instance.abilitiesList[abilityID].damageOvertime;
+                collidingObject.GetComponent<PlayerHealthManager>().currentPlayerHealth -=
                     AbilityManager.instance.abilitiesList[abilityID].damageOvertime;
             }
 

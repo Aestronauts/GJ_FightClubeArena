@@ -19,6 +19,8 @@ public class DamageUICanvas : MonoBehaviour
 
     [HideInInspector]public int abilityDamage;
 
+    public bool isDamageCanvas = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +30,15 @@ public class DamageUICanvas : MonoBehaviour
         canvas.worldCamera = Camera.main;
 
         textTransform = GetComponent<RectTransform>();
+
+        if (isDamageCanvas)
+        {
+            damageNumberText.text = abilityDamage.ToString();
+            damageNumberText.fontSize = fontSize;
         
-        damageNumberText.text = abilityDamage.ToString();
-        damageNumberText.fontSize = fontSize;
-        
-        StartCoroutine(IncreaseFontSize());
-        Destroy(gameObject, destroyAfterSeconds);
+            StartCoroutine(IncreaseFontSize());
+            Destroy(gameObject, destroyAfterSeconds);
+        }
         
     }
 
