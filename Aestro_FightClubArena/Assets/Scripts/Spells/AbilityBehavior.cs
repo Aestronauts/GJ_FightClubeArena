@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class AbilityBehavior : MonoBehaviour
@@ -24,6 +25,9 @@ public class AbilityBehavior : MonoBehaviour
     
     private Coroutine triggerStayCoroutine;
 
+    private int casterObjID;
+    private GameObject instantiator;
+
     // // Start is called before the first frame update
     void Awake()
     {
@@ -45,6 +49,8 @@ public class AbilityBehavior : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+
+        casterObjID = (int)instantiator.GetComponent<NetworkObject>().NetworkObjectId;
     }
     
     //this collision check is for environment objects mostly, if it hits, disable the projectile
@@ -72,23 +78,28 @@ public class AbilityBehavior : MonoBehaviour
         Debug.Log("Entered trigger with: " + other.gameObject.name);
 
         // You can check for specific collision types, tags, etc.
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<NetworkObject>() != null)
         {
-            if (AbilityManager.instance.abilitiesList[abilityID].duration != 0)
+            if ((int)other.gameObject.GetComponent<NetworkObject>().NetworkObjectId != casterObjID)
             {
-                instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity,
-                    AbilityManager.instance.ProjectilesHolder);
-                instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage =
-                    AbilityManager.instance.abilitiesList[abilityID].damage;
-            }
+                if (AbilityManager.instance.abilitiesList[abilityID].duration != 0)
+                {
+                    instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position,
+                        Quaternion.identity,
+                        AbilityManager.instance.ProjectilesHolder);
+                    instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage =
+                        AbilityManager.instance.abilitiesList[abilityID].damage;
+                }
 
-            if (AbilityManager.instance.abilitiesList[abilityID].duration == 0)
-            {
-                instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position, Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
-                instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage = AbilityManager.instance.abilitiesList[abilityID].damage;
-                gameObject.SetActive(false);
+                if (AbilityManager.instance.abilitiesList[abilityID].duration == 0)
+                {
+                    instantiatedObjectDamageCanvas = Instantiate(DamageUIPrefab, transform.position,
+                        Quaternion.identity, AbilityManager.instance.ProjectilesHolder);
+                    instantiatedObjectDamageCanvas.GetComponent<DamageUICanvas>().abilityDamage =
+                        AbilityManager.instance.abilitiesList[abilityID].damage;
+                    gameObject.SetActive(false);
+                }
             }
-            
         }
     }
     
@@ -98,13 +109,16 @@ public class AbilityBehavior : MonoBehaviour
     {
         // This method is called as long as another collider stays within the trigger collider
         Debug.Log("Staying in trigger with: " + other.gameObject.name);
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<NetworkObject>() != null)
         {
-            if (!dpsTickWaiting)
+            if ((int)other.gameObject.GetComponent<NetworkObject>().NetworkObjectId != casterObjID)
             {
-                if (AbilityManager.instance.abilitiesList[abilityID].DPS_rate != 0)
+                if (!dpsTickWaiting)
                 {
-                    triggerStayCoroutine = StartCoroutine(TriggerStayDPS());
+                    if (AbilityManager.instance.abilitiesList[abilityID].DPS_rate != 0)
+                    {
+                        triggerStayCoroutine = StartCoroutine(TriggerStayDPS());
+                    }
                 }
             }
         }
@@ -153,5 +167,11 @@ public class AbilityBehavior : MonoBehaviour
 
             yield return new WaitForSeconds(AbilityManager.instance.abilitiesList[abilityID].DPS_rate);
         }
+    }
+    
+    public void Initialize(GameObject instantiator)
+    {
+        this.instantiator = instantiator;
+        Debug.Log("Instantiated by: " + instantiator.name);
     }
 }

@@ -7,9 +7,9 @@ public class AbilityManager : MonoBehaviour
 {
     public Transform ProjectilesHolder;
 
-    public AbilityData firebolt;
-    public AbilityData firePillar;
-    public AbilityData twinFirebolt;
+    // public AbilityData firebolt;
+    // public AbilityData firePillar;
+    // public AbilityData twinFirebolt;
 
     public List<AbilityData> abilitiesList;
 

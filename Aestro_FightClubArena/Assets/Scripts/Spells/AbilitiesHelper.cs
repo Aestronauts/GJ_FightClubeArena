@@ -28,6 +28,12 @@ public class AbilitiesHelper
         {
             coroutineStarter.StartCoroutine(DisableAbility(abilityData[abilityID].duration, projectile));
         }
+        
+        // Get the script component from the instantiated object
+       // AbilityBehavior instantiatedScript = projectile.GetComponent<AbilityBehavior>();
+        
+        // Pass the instantiator GameObject (this GameObject) to the instantiated object
+        projectileInfo.Initialize(parent);
     }
     private static void SetProjectileInformation(AbilityBehavior projectileInfo, Vector3 castLocation, Vector3 spawnLocation)
     {

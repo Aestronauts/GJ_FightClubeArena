@@ -29,7 +29,7 @@ public class Temp__Player : MonoBehaviour
             {
                 Vector3 CastLocation = castLocation.GetValueOrDefault();
                 CastLocation = new Vector3(CastLocation.x, 0.5f, CastLocation.z);
-                playerCharacterManager.CastAbility(gameObject, CastLocation,0);
+                //playerCharacterManager.CastAbility(gameObject, CastLocation,0);
             }
 
             ////OLD CODE:
@@ -54,7 +54,7 @@ public class Temp__Player : MonoBehaviour
             {
                 Vector3 CastLocation = castLocation.GetValueOrDefault();
                 CastLocation = new Vector3(CastLocation.x, 0.01f, CastLocation.z);
-                playerCharacterManager.CastAbility(gameObject, CastLocation,1);
+              //  playerCharacterManager.CastAbility(gameObject, CastLocation,1);
             }
         }
     }
