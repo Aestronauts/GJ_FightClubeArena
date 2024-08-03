@@ -221,13 +221,17 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SpawnAbilityServerRpc(ServerRpcParams _serverRpcParams) // spawn player ability
+    public void SpawnAbilityServerRpc(int _abilitId, ServerRpcParams _serverRpcParams) // spawn player ability
     {
-        Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
-        transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
-        AbilityBehavior ref_Temp_Projectile = transAbilityClone.GetComponent<AbilityBehavior>();
-        ref_Temp_Projectile.spawnLocation = spawnedCharacterModel.position;
-        ref_Temp_Projectile.endLocation = new Vector3(0, 0, 0);
+        // CALL ABILITY MANAGER
+        // GRAB AND INSTATIATE REFERENCE
+        // SET NETWORKOBJECT .SPAWN (TRUE)
+
+        //transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
+        //Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
+        //AbilityBehavior ref_Temp_Projectile = transAbilityClone.GetComponent<AbilityBehavior>();
+        //ref_Temp_Projectile.spawnLocation = spawnedCharacterModel.position;
+        //ref_Temp_Projectile.endLocation = new Vector3(0, 0, 0);
     }
 
 
