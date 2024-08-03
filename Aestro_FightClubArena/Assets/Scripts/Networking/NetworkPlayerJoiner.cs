@@ -184,7 +184,8 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         if (ref_NetworkObject)
         {
             ref_NetworkObject.Spawn(true);// can despawn or delete   
-            ref_NetworkObject.ChangeOwnership(_serverRpcParams.Receive.SenderClientId);
+            if (ref_NetworkObject.OwnerClientId != _serverRpcParams.Receive.SenderClientId)
+                ref_NetworkObject.ChangeOwnership(_serverRpcParams.Receive.SenderClientId);
             
         }
         spawnedCharacterModel.TryGetComponent<PlayerInputHandler>(out ref_PlayerInputHandler);
