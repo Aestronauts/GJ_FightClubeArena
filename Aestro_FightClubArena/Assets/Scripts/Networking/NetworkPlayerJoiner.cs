@@ -36,10 +36,13 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     public Transform spawnedMapModel;
     // the drawing assets we require for casting spells
     public Transform spawnedDrawingObjPrefab, spawnedDrawingCamPrefab;
+    // the target dummy we spawn
+    public Transform spawnedTargetDummy;
 
 
     [Space]
     [Header("STORED ASSET REFERENCES\n____________________")]
+    // drawing stuff
     [SerializeField]
     private Transform transDrawingObjPrefab;
     [SerializeField]
@@ -52,6 +55,9 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // an example of the maps we might want to spawn (can do so locally)
     [SerializeField]
     private Transform[] transMapModels;
+    // target dummy for testing abilities and damage
+    [SerializeField]
+    private Transform transTargetDummyModel;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -96,6 +102,12 @@ public class NetworkPlayerJoiner : NetworkBehaviour
             spawnedDrawingCamPrefab.rotation = Camera.main.transform.rotation;
             spawnedDrawingObjPrefab.GetComponent<DrawOnScreen>().strokesCamera = spawnedDrawingCamPrefab.GetComponent<Camera>();
         }
+        if(IsOwnedByServer && !spawnedTargetDummy && transTargetDummyModel)
+        {
+            spawnedTargetDummy = Instantiate(transTargetDummyModel);
+            spawnedTargetDummy.GetComponent<NetworkObject>().Spawn(true);
+        }
+
 
     }
 
