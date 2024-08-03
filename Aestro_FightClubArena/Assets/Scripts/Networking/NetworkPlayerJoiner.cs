@@ -17,6 +17,8 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     [Header("NETWORK VARIABLES\n____________________")]
     // Online Connection
     private bool isOnline;
+    // we should have spawned in
+    private bool sentSpawnCharacterSignal;
     // HEALTH
     private NetworkVariable<int> playerHealth = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // Owner VS Server (owner is write your own, server is change others)
     
@@ -123,35 +125,51 @@ public class NetworkPlayerJoiner : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            sentSpawnCharacterSignal = true;
             Debug.Log("Pressing Space");
             if (isOnline && !spawnedCharacterModel)
             {
                 Debug.Log("Spawning Character");
                 SpawnCharacterServerRpc(new ServerRpcParams());
 
-                #region checking for others
-                var allJoinerObjects = FindObjectsOfType<NetworkPlayerJoiner>();
-                var allOtherPlayerObj = FindObjectsOfType<PlayerInputHandler>();
+                CheckAllJoiners();
+            }
+        }
 
-                if (allJoinerObjects.Length > 0)
-                {
-                    foreach (NetworkPlayerJoiner _joiner in allJoinerObjects)
-                    {
-                        if (_joiner != this)
-                            _joiner.enabled = false;
-                    }
-                }
-                if (allOtherPlayerObj.Length > 0)
-                {
-                    foreach (PlayerInputHandler _player in allOtherPlayerObj)
-                    {
-                        if(_player != ref_PlayerInputHandler)
-                            _player.enabled = false;
-                    }
-                }
-                #endregion
+        if (!spawnedCharacterModel && sentSpawnCharacterSignal)
+        {
+            CheckAllJoiners();
+        }
+    }
 
-                
+    public void CheckAllJoiners()
+    {
+        var allJoinerObjects = FindObjectsOfType<NetworkPlayerJoiner>();
+        var allOtherPlayerObj = FindObjectsOfType<PlayerInputHandler>();
+
+        if (allJoinerObjects.Length > 0)
+        {
+            foreach (NetworkPlayerJoiner _joiner in allJoinerObjects)
+            {
+                if (_joiner != this)
+                    _joiner.enabled = false;
+            }
+        }
+        if (allOtherPlayerObj.Length > 0)
+        {
+            NetworkObject storeRef = null;
+
+            foreach (PlayerInputHandler _player in allOtherPlayerObj)
+            {
+                _player.TryGetComponent<NetworkObject>(out storeRef);
+
+                if (storeRef && storeRef.OwnerClientId == ref_NetworkObject.OwnerClientId)
+                {
+                    spawnedCharacterModel = _player.transform;
+                    ref_PlayerInputHandler = _player;
+                }
+                else
+                    _player.enabled = false;
             }
         }
     }
