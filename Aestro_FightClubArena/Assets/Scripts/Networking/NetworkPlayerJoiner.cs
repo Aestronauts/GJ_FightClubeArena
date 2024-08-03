@@ -102,7 +102,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
             spawnedDrawingCamPrefab.rotation = Camera.main.transform.rotation;
             spawnedDrawingObjPrefab.GetComponent<DrawOnScreen>().strokesCamera = spawnedDrawingCamPrefab.GetComponent<Camera>();
         }
-        if(IsOwnedByServer && !spawnedTargetDummy && transTargetDummyModel)
+        if(ServerIsHost && !spawnedTargetDummy && transTargetDummyModel)
         {
             spawnedTargetDummy = Instantiate(transTargetDummyModel);
             spawnedTargetDummy.GetComponent<NetworkObject>().Spawn(true);
