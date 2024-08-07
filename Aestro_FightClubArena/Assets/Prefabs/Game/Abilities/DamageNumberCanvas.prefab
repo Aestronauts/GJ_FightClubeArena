@@ -85,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2839200760056013114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +121,7 @@ MonoBehaviour:
   endFontSize: 2
   targetTextDistance: 2
   abilityDamage: 0
+  isDamageCanvas: 1
 --- !u!1 &4957866386492909863
 GameObject:
   m_ObjectHideFlags: 0

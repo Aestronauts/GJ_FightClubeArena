@@ -54,6 +54,7 @@ public class PlayerCharacterManager : MonoBehaviour
                 abilityManager.FirePillarProjectileList,
                 abilityManager.ProjectilesHolder,this,abilityManager.abilitiesList,abilityID);
             animator.SetTrigger("isFirePillar");
+            PlayerCameraManager.instance.ShakeCamera(1f, .5f, .6f);
         }
         else if (abilityID == 2)
         {
@@ -61,6 +62,7 @@ public class PlayerCharacterManager : MonoBehaviour
                 abilityManager.TwinFireboltProjectileList,
                 abilityManager.ProjectilesHolder, this,abilityManager.abilitiesList,abilityID);
             animator.SetTrigger("isTwinFlames");
+
         }
     }
 
