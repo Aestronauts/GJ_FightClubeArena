@@ -53,7 +53,8 @@ public class AbilityBehavior : MonoBehaviour //NetworkBehavior
 
         if (!casterNetworkObj)
         {
-            instantiator.TryGetComponent<NetworkObject>(out casterNetworkObj);
+            if(instantiator)
+                instantiator.TryGetComponent<NetworkObject>(out casterNetworkObj);
             if(casterNetworkObj)
                 casterObjID = (int)casterNetworkObj.NetworkObjectId;
         }
