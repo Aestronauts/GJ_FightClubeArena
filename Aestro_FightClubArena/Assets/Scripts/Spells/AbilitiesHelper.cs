@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class AbilitiesHelper
@@ -16,6 +17,7 @@ public class AbilitiesHelper
         {
             projectile = Object.Instantiate(abilityData[abilityID].abilityPrefab, spawnLocation, Quaternion.identity, projectilesHolder);
             projectileList.Add(projectile);
+            projectile.GetComponent<NetworkObject>().Spawn(true);
         }
         projectile.transform.localPosition = spawnLocation;
         AbilityBehavior projectileInfo = projectile.GetComponent<AbilityBehavior>();

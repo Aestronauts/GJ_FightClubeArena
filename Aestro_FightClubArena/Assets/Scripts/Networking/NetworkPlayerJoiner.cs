@@ -20,7 +20,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     // we should have spawned in
     private bool sentSpawnCharacterSignal, sentLocalAssetSpawnSignal;
     // HEALTH
-    private NetworkVariable<int> playerHealth = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // Owner VS Server (owner is write your own, server is change others)
+    public NetworkVariable<int> playerHealth = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); // Owner VS Server (owner is write your own, server is change others)
     
 
 
@@ -177,6 +177,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
                 {
                     spawnedCharacterModel = _player.transform;
                     ref_PlayerInputHandler = _player;
+                    ref_PlayerInputHandler.playerJoiner = this;
                 }
                 else
                     _player.enabled = false;
@@ -189,6 +190,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         base.OnNetworkSpawn();
         playerHealth.OnValueChanged += (int previousValue, int newValue) => {
             Debug.Log($"Client: {OwnerClientId} - HP was:{previousValue} - HP is: {newValue}");
+            playerHealth.Value = ref_PlayerInputHandler.gameObject.GetComponent<PlayerHealthManager>().currentPlayerHealth;
         };
     }
 
@@ -217,15 +219,51 @@ public class NetworkPlayerJoiner : NetworkBehaviour
             
         }
         spawnedCharacterModel.TryGetComponent<PlayerInputHandler>(out ref_PlayerInputHandler);
-        ref_PlayerInputHandler.enabled = IsOwner;       
+        ref_PlayerInputHandler.enabled = IsOwner;      
+        ref_PlayerInputHandler.gameObject.GetComponent<PlayerHealthManager>().networkedPlayer = this;
+        playerHealth.Value = ref_PlayerInputHandler.gameObject.GetComponent<PlayerHealthManager>().currentPlayerHealth;
+
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnAbilityServerRpc(int _abilitId, ServerRpcParams _serverRpcParams) // spawn player ability
+    public void SpawnAbilityServerRpc(int _abilitId, Vector3 drawResultValue, ServerRpcParams _serverRpcParams) // spawn player ability
     {
         // CALL ABILITY MANAGER
         // GRAB AND INSTATIATE REFERENCE
         // SET NETWORKOBJECT .SPAWN (TRUE)
+        
+        //cast ability
+        Transform spawnPoint = ref_PlayerInputHandler.abilitySpawnPoint;
+        //Animator animator = player_gameObject.GetComponent<Animator>();
+        Animator animator = ref_PlayerInputHandler.modelAnimator;
+        if (animator == null) { Debug.LogError("Animator not found on PlayerCharacterManager"); }
+        // Choose "if" logic by matching the given ability name
+        // TODO: Is there a better way of doing this???
+        if (_abilitId == 0)
+        {
+            AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, spawnPoint.position,drawResultValue,
+                AbilityManager.instance.FireboltProjectileList,  
+                AbilityManager.instance.ProjectilesHolder, this,AbilityManager.instance.abilitiesList,_abilitId);
+            animator.SetTrigger("isBasicAttacks");
+                
+        }
+        else if (_abilitId == 1)
+        {
+            AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, drawResultValue,drawResultValue,
+                AbilityManager.instance.FirePillarProjectileList,
+                AbilityManager.instance.ProjectilesHolder,this,AbilityManager.instance.abilitiesList,_abilitId);
+            animator.SetTrigger("isFirePillar");
+        }
+        else if (_abilitId == 2)
+        {
+            AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, spawnPoint.position,drawResultValue,
+                AbilityManager.instance.TwinFireboltProjectileList,
+                AbilityManager.instance.ProjectilesHolder, this,AbilityManager.instance.abilitiesList,_abilitId);
+            animator.SetTrigger("isTwinFlames");
+        }
+        
+        //PlayerCharacterManager.instance.CastAbility(ref_PlayerInputHandler.gameObject, drawResultValue, _abilitId);
+        //ref_NetworkObject.Spawn(true);
 
         //transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
         //Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);

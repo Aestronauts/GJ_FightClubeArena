@@ -9,6 +9,8 @@ public class PlayerHealthManager : MonoBehaviour
     public int startingHealth = 100;
     public Image healthImage;
     public int currentPlayerHealth;
+
+    [HideInInspector]public NetworkPlayerJoiner networkedPlayer;
     
     // Start is called before the first frame update
     void Start()
@@ -19,7 +21,7 @@ public class PlayerHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float fillAmount = (float)currentPlayerHealth / startingHealth;
+        float fillAmount = (float)networkedPlayer.playerHealth.Value / startingHealth;
         healthImage.fillAmount = fillAmount;
 
         //yay reset for free, we never die!

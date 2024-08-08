@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 /// <summary>
@@ -58,6 +59,8 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     [Tooltip("The (Main) Camera we will be using to move / adjust")]
     private Camera mainCamera;
+
+    [HideInInspector]public NetworkPlayerJoiner playerJoiner;
 
 
     private void Start()
@@ -182,7 +185,8 @@ public class PlayerInputHandler : MonoBehaviour
                 //cast ability
                 //Debug.Log("Casting Ability from PlayerInputHandler.cs");                
                 //PlayerCharacterManager.instance.CastAbility(GameManager.Instance.player1.gameObject, DrawResult.Value, DrawResult.Key);
-                PlayerCharacterManager.instance.CastAbility(gameObject, DrawResult.Value, DrawResult.Key);
+                playerJoiner.SpawnAbilityServerRpc(DrawResult.Key,DrawResult.Value, new ServerRpcParams()); // spawn player ability
+                //PlayerCharacterManager.instance.CastAbility(gameObject, DrawResult.Value, DrawResult.Key);
             }
         }
     }
