@@ -253,6 +253,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
                 AbilityManager.instance.FirePillarProjectileList,
                 AbilityManager.instance.ProjectilesHolder,this,AbilityManager.instance.abilitiesList,_abilitId);
             animator.SetTrigger("isFirePillar");
+            PlayerCameraManager.instance.ShakeCamera(1f, .5f, .6f);
         }
         else if (_abilitId == 2)
         {
