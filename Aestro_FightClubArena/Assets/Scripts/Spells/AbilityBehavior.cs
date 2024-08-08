@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class AbilityBehavior : MonoBehaviour
+public class AbilityBehavior : MonoBehaviour //NetworkBehavior
 {
    // public AbilityManager abilityManager;
 
@@ -25,6 +25,7 @@ public class AbilityBehavior : MonoBehaviour
     
     private Coroutine triggerStayCoroutine;
 
+    private NetworkObject casterNetworkObj;
     private int casterObjID;
     private GameObject instantiator;
 
@@ -50,7 +51,12 @@ public class AbilityBehavior : MonoBehaviour
             }
         }
 
-        casterObjID = (int)instantiator.GetComponent<NetworkObject>().NetworkObjectId;
+        if (!casterNetworkObj)
+        {
+            instantiator.TryGetComponent<NetworkObject>(out casterNetworkObj);
+            if(casterNetworkObj)
+                casterObjID = (int)casterNetworkObj.NetworkObjectId;
+        }
     }
     
     //this collision check is for environment objects mostly, if it hits, disable the projectile
@@ -146,11 +152,12 @@ public class AbilityBehavior : MonoBehaviour
     //make sure we set the dps tick waiting to false when we disable the
     //object so it can spawn damage over time when its turned on again
     void OnDisable()
-    {
+    {        
         if (triggerStayCoroutine != null)
         {
             StopCoroutine(triggerStayCoroutine);
         }
+        casterNetworkObj = null;
         dpsTickWaiting = false;
     }
 
