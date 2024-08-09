@@ -216,6 +216,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void UpdateAnimationTrigger(string _triggerString)
     {
+        foreach (var param in modelAnimator.parameters)
+        {
+            if (param.type == AnimatorControllerParameterType.Trigger)
+            {
+                modelAnimator.ResetTrigger(param.name);
+            }
+        }
         modelAnimator.SetTrigger(_triggerString);
     }
 
@@ -229,7 +236,7 @@ public class PlayerInputHandler : MonoBehaviour
         float angle = Vector3.SignedAngle(characterForward, movementForward, Vector3.up);
 
         // Determine the animation to play based on the angle
-        if (angle >= -45f && angle <= 45f)
+        if (angle > -45f && angle <= 45f)
         {
             Debug.Log("MoveForward");
             UpdateAnimationTrigger("isWalking");
