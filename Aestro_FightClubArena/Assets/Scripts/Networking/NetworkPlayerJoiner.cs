@@ -6,6 +6,10 @@ using Unity.Netcode;
 [RequireComponent(typeof(NetworkObject))]
 public class NetworkPlayerJoiner : NetworkBehaviour
 {
+    [Header("ONLY IF WE DIDNT HAVE ENOUGH TIME")]
+    [Tooltip("Nearing the end of the project Noah and Millie were working together to fix some networking ability issues likely related to ownership. To do this, Noah decided it would be best to refactor 4 scripts down to 3, and it takes more time than we had if you're still seeing this.")]
+    public bool useLegacyAbilitySpawning = true;
+
     [Header("REALTIME SCRIPT REFERENCES\n____________________")]
     // script refs to our own variables
     public NetworkObject ref_NetworkObject;    
@@ -242,115 +246,117 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         Animator animator = ref_PlayerInputHandler.modelAnimator;
         if (animator == null) { Debug.LogError("Animator not found on PlayerCharacterManager"); }
 
-        // if we can get all our ability references then spawn the ability
-        Transform spawnedAbilityClone = null;
-        AbilityBehavior cloneBehavior = null;
-        //if we are using pooling
-        if (useAbilityPooling && spawnedAbilitiesPool.Count > 0)
+        if (useLegacyAbilitySpawning)
         {
-            foreach(Transform _poolObj in spawnedAbilitiesPool)
+
+            // if we can get all our ability references then spawn the ability
+            Transform spawnedAbilityClone = null;
+            AbilityBehavior cloneBehavior = null;
+            //if we are using pooling
+            if (useAbilityPooling && spawnedAbilitiesPool.Count > 0)
             {
-                if (!_poolObj)
-                    continue;
-                _poolObj.TryGetComponent<AbilityBehavior>(out cloneBehavior);
-                if (cloneBehavior && cloneBehavior.abilityID == _abilitId && _poolObj.gameObject.activeSelf == false)
+                foreach (Transform _poolObj in spawnedAbilitiesPool)
                 {
-                    spawnedAbilityClone = _poolObj;
-                    spawnedAbilityClone.gameObject.SetActive(true);
-                    break;
+                    if (!_poolObj)
+                        continue;
+                    _poolObj.TryGetComponent<AbilityBehavior>(out cloneBehavior);
+                    if (cloneBehavior && cloneBehavior.abilityID == _abilitId && _poolObj.gameObject.activeSelf == false)
+                    {
+                        spawnedAbilityClone = _poolObj;
+                        spawnedAbilityClone.gameObject.SetActive(true);
+                        break;
+                    }
+                    else
+                        cloneBehavior = null;
                 }
-                else
-                    cloneBehavior = null;
-            }            
-        }
-
-        if (!spawnedAbilityClone && AbilityManager.instance && AbilityManager.instance.SpawnAbilityById(_abilitId))
-        {
-            // spawn our ability
-            spawnedAbilityClone = Instantiate(AbilityManager.instance.SpawnAbilityById(_abilitId)).transform;
-            spawnedAbilitiesPool.Add(spawnedAbilityClone);           
-        }
-
-        // assign the ability behavior         
-        if (cloneBehavior)
-        {
-            cloneBehavior.distanceTraveled = 0f;
-            cloneBehavior.spawnLocation = spawnPoint.position;
-            cloneBehavior.endLocation = drawResultValue;
-        }
-
-        // reference the online capabilities
-        NetworkObject cloneNetworkObj = null;
-        if(spawnedAbilityClone)
-            spawnedAbilityClone.TryGetComponent<NetworkObject>(out cloneNetworkObj);
-        if (cloneNetworkObj)
-            cloneNetworkObj.Spawn(true);
-
-        if (animator)
-        {
-            Debug.Log("ASK BRETT about changing these to be standardized / scalable");
-            //string newAbilityUse = "Attack_" + _abilitId.ToString(); // --> we could instead do this if the ability animator strings are all "Attack_#"
-            switch (_abilitId)
-            {
-                case 0:
-                    animator.SetTrigger("isBasicAttacks");
-                    break;
-                case 1:
-                    animator.SetTrigger("isFirePillar");
-                    break;
-                case 2:
-                    animator.SetTrigger("isTwinFlames");
-                    break;
-                default:
-                    Debug.Log($"We Tried To Spawn Ability: {_abilitId} - \nWhich Doesn't have an animation condition \nScript: NetworkPlayerJoiner - Function: SpawnAbilityServerRpc");
-                    return;
             }
-        }
 
-        //-----------------------------Might Be Able To Simplify Below Here----------------------------------------------------------------------------||
+            if (!spawnedAbilityClone && AbilityManager.instance && AbilityManager.instance.SpawnAbilityById(_abilitId))
+            {
+                // spawn our ability
+                spawnedAbilityClone = Instantiate(AbilityManager.instance.SpawnAbilityById(_abilitId)).transform;
+                spawnedAbilitiesPool.Add(spawnedAbilityClone);
+            }
 
-        bool noahMetWithMillie = false;
-        if (!noahMetWithMillie)
-            return;
-        
-        // Choose "if" logic by matching the given ability name
-        // TODO: Is there a better way of doing this???
-        if (_abilitId == 0)
-        {
-            AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, spawnPoint.position, drawResultValue,
-                AbilityManager.instance.FireboltProjectileList,  
-                AbilityManager.instance.ProjectilesHolder, this,AbilityManager.instance.abilitiesList,_abilitId);
+            // assign the ability behavior         
+            if (cloneBehavior)
+            {
+                cloneBehavior.distanceTraveled = 0f;
+                cloneBehavior.spawnLocation = spawnPoint.position;
+                cloneBehavior.endLocation = drawResultValue;
+            }
+
+            // reference the online capabilities
+            NetworkObject cloneNetworkObj = null;
+            if (spawnedAbilityClone)
+                spawnedAbilityClone.TryGetComponent<NetworkObject>(out cloneNetworkObj);
+            if (cloneNetworkObj)
+                cloneNetworkObj.Spawn(true);
+
             if (animator)
-            animator.SetTrigger("isBasicAttacks");
-                
-        }
-        else if (_abilitId == 1)
+            {
+                Debug.Log("ASK BRETT about changing these to be standardized / scalable");
+                //string newAbilityUse = "Attack_" + _abilitId.ToString(); // --> we could instead do this if the ability animator strings are all "Attack_#"
+                switch (_abilitId)
+                {
+                    case 0:
+                        animator.SetTrigger("isBasicAttacks");
+                        break;
+                    case 1:
+                        animator.SetTrigger("isFirePillar");
+                        break;
+                    case 2:
+                        animator.SetTrigger("isTwinFlames");
+                        break;
+                    default:
+                        Debug.Log($"We Tried To Spawn Ability: {_abilitId} - \nWhich Doesn't have an animation condition \nScript: NetworkPlayerJoiner - Function: SpawnAbilityServerRpc");
+                        return;
+                }
+            }
+        } //-----------------------------Might Be Able To Simplify Below Here----------------------------------------------------------------------------||
+        else
         {
-            AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, drawResultValue,drawResultValue,
-                AbilityManager.instance.FirePillarProjectileList,
-                AbilityManager.instance.ProjectilesHolder,this,AbilityManager.instance.abilitiesList,_abilitId);
-            if (animator)
-                animator.SetTrigger("isFirePillar");
-            PlayerCameraManager.instance.ShakeCamera(1f, .5f, .6f);
-        }
-        else if (_abilitId == 2)
-        {
-            AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, spawnPoint.position,drawResultValue,
-                AbilityManager.instance.TwinFireboltProjectileList,
-                AbilityManager.instance.ProjectilesHolder, this,AbilityManager.instance.abilitiesList,_abilitId);
-            if (animator)
-                animator.SetTrigger("isTwinFlames");
-        }
 
-        
-        //PlayerCharacterManager.instance.CastAbility(ref_PlayerInputHandler.gameObject, drawResultValue, _abilitId);
-        //ref_NetworkObject.Spawn(true);
 
-        //transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
-        //Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
-        //AbilityBehavior ref_Temp_Projectile = transAbilityClone.GetComponent<AbilityBehavior>();
-        //ref_Temp_Projectile.spawnLocation = spawnedCharacterModel.position;
-        //ref_Temp_Projectile.endLocation = new Vector3(0, 0, 0);
+            // Choose "if" logic by matching the given ability name
+            // TODO: Is there a better way of doing this???
+            if (_abilitId == 0)
+            {
+                AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, spawnPoint.position, drawResultValue,
+                    AbilityManager.instance.FireboltProjectileList,
+                    AbilityManager.instance.ProjectilesHolder, this, AbilityManager.instance.abilitiesList, _abilitId);
+                if (animator)
+                    animator.SetTrigger("isBasicAttacks");
+
+            }
+            else if (_abilitId == 1)
+            {
+                AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, drawResultValue, drawResultValue,
+                    AbilityManager.instance.FirePillarProjectileList,
+                    AbilityManager.instance.ProjectilesHolder, this, AbilityManager.instance.abilitiesList, _abilitId);
+                if (animator)
+                    animator.SetTrigger("isFirePillar");
+                PlayerCameraManager.instance.ShakeCamera(1f, .5f, .6f);
+            }
+            else if (_abilitId == 2)
+            {
+                AbilitiesHelper.SpawnAbility(ref_PlayerInputHandler.gameObject, spawnPoint.position, drawResultValue,
+                    AbilityManager.instance.TwinFireboltProjectileList,
+                    AbilityManager.instance.ProjectilesHolder, this, AbilityManager.instance.abilitiesList, _abilitId);
+                if (animator)
+                    animator.SetTrigger("isTwinFlames");
+            }
+
+
+            //PlayerCharacterManager.instance.CastAbility(ref_PlayerInputHandler.gameObject, drawResultValue, _abilitId);
+            //ref_NetworkObject.Spawn(true);
+
+            //transAbilityClone.GetComponent<NetworkObject>().Spawn(true); // can despawn or delete
+            //Transform transAbilityClone = Instantiate(transAbilityPrefab, spawnedCharacterModel.position, transAbilityPrefab.rotation);
+            //AbilityBehavior ref_Temp_Projectile = transAbilityClone.GetComponent<AbilityBehavior>();
+            //ref_Temp_Projectile.spawnLocation = spawnedCharacterModel.position;
+            //ref_Temp_Projectile.endLocation = new Vector3(0, 0, 0);
+        }
     }
 
 
