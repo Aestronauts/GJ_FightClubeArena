@@ -189,6 +189,15 @@ public class PlayerInputHandler : MonoBehaviour
                 //PlayerCharacterManager.instance.CastAbility(gameObject, DrawResult.Value, DrawResult.Key);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !LocalMenuManager.instance.menu.activeSelf)
+        {
+            LocalMenuManager.instance.menu.SetActive(true);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            LocalMenuManager.instance.menu.SetActive(false);
+        }
     }
 
 

@@ -15,6 +15,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
     public NetworkObject ref_NetworkObject;    
     public NetworkManager ref_NetworkManager;
     public PlayerInputHandler ref_PlayerInputHandler;
+    public LocalMenuManager ref_LocalMenuManager;
 
 
     [Space]
@@ -99,6 +100,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
         if (ref_NetworkObject)
             Debug.Log($"OWNER CHECK FOR: {transform.name} \nIsOwner: {ref_NetworkObject.IsOwner} \nIsOwnedByServer: {ref_NetworkObject.IsOwnedByServer} \nisHost: {IsHost} \nOwnerClientID: {ref_NetworkObject.OwnerClientId} \nServerIsHost: {ServerIsHost}");
 
+        ref_LocalMenuManager = LocalMenuManager.instance;
     }
 
     private void Update()
@@ -186,6 +188,7 @@ public class NetworkPlayerJoiner : NetworkBehaviour
                     spawnedCharacterModel = _player.transform;
                     ref_PlayerInputHandler = _player;
                     ref_PlayerInputHandler.playerJoiner = this;
+                    ref_LocalMenuManager.playerJoiner = this;
                 }
                 else
                     _player.enabled = false;
