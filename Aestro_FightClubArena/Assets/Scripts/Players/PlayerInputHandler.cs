@@ -237,10 +237,13 @@ public class PlayerInputHandler : MonoBehaviour
         else if (angle > 45f && angle <= 135f)
         {
             Debug.Log("MoveRight");
+            UpdateAnimationTrigger("isShuffleRight");
         }
         else if (angle < -45f && angle >= -135f)
         {
             Debug.Log("MoveLeft");
+            UpdateAnimationTrigger("isShuffleLeft");
+
         }
         else
         {
