@@ -44,4 +44,13 @@ public class AbilityManager : MonoBehaviour
     [HideInInspector]public List<GameObject> FirePillarProjectileList = new List<GameObject>();
     // public int FirePillarDamage = 3;
     // public int FirePillarRange = 12;
+
+    // a function that can return the ability we want as a gameobject
+    public GameObject SpawnAbilityById(int _passedId)
+    {
+        if (_passedId > abilitiesList.Count - 1 || abilitiesList[_passedId] == null)
+            return null;
+
+        return abilitiesList[_passedId].abilityPrefab;
+    }
 }

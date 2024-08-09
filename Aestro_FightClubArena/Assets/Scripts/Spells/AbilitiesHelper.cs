@@ -5,6 +5,17 @@ using UnityEngine;
 
 public class AbilitiesHelper
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="parent">The 3d model / player controller that spawned us</param>
+    /// <param name="spawnLocation">The origin position for the ability on spawn / creation</param>
+    /// <param name="castLocation">The target position for the ability to move towards</param>
+    /// <param name="projectileList">The List of abilities we have already spawned and pull from</param>
+    /// <param name="projectilesHolder">The object we will nest the ability under (for organization)</param>
+    /// <param name="coroutineStarter">?-Unsure-?</param>
+    /// <param name="abilityData">Passing the information for each ability in case we want to use it</param>
+    /// <param name="abilityID">The integer for the ability we want to spawn</param>
     public static void SpawnAbility(GameObject parent, Vector3 spawnLocation, Vector3 castLocation, 
         List<GameObject> projectileList, Transform projectilesHolder, MonoBehaviour coroutineStarter, List<AbilityData> abilityData, int abilityID)
     {
