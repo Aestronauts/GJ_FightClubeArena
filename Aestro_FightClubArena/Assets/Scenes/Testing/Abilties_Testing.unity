@@ -943,39 +943,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectilesHolder: {fileID: 360578285}
-  firebolt:
-    abilityName: 
-    abilityID: 0
-    abilityPrefab: {fileID: 5052831283393963684, guid: dba8e11018721754ab716b7cc88be387, type: 3}
-    projectileSpeed: 50
-    damage: 2
-    range: 20
-    damageOvertime: 0
-    duration: 0
-    DPS_rate: 0
-    abilityDrawing: {fileID: 0}
-  firePillar:
-    abilityName: 
-    abilityID: 0
-    abilityPrefab: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
-    projectileSpeed: 50
-    damage: 8
-    range: 12
-    damageOvertime: 1
-    duration: 3
-    DPS_rate: 1
-    abilityDrawing: {fileID: 0}
-  twinFirebolt:
-    abilityName: 
-    abilityID: 0
-    abilityPrefab: {fileID: 5052831283393963684, guid: 6c15af87bcad50c43ae3f9a65b8c9069, type: 3}
-    projectileSpeed: 50
-    damage: 5
-    range: 10
-    damageOvertime: 0
-    duration: 0
-    DPS_rate: 0
-    abilityDrawing: {fileID: 0}
   abilitiesList:
   - abilityName: Firebolt
     abilityID: 0
@@ -1020,11 +987,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000205476
+      value: -0.000000020547605
       objectReference: {fileID: 0}
     - target: {fileID: 503198500403450590, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000013035144
+      value: 0.000000013035146
       objectReference: {fileID: 0}
     - target: {fileID: 990606238347273446, guid: 1b0e7949961034b46a7d670d58673cef, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1643,6 +1610,10 @@ PrefabInstance:
     - target: {fileID: 2757355176914695243, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949294450361892598, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2837646068
       objectReference: {fileID: 0}
     - target: {fileID: 8177419801060062647, guid: 48c27cb951cff4b0d9e6e7949302ee82, type: 3}
       propertyPath: m_LocalPosition.x
